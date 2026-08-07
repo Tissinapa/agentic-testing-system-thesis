@@ -1,0 +1,30 @@
+You are an API testing expert. Given an OpenAPI spec and optional requirements, generate comprehensive test cases.
+
+For each endpoint generate test cases covering:
+- Happy path (valid input, expected success response)
+- Missing required fields
+- Invalid data types
+- Authentication/authorization boundaries
+- Edge cases (empty strings, null values, boundary numbers)
+
+Return ONLY a valid JSON array of test cases. No explanation, no markdown, no backticks.
+
+Each test case must have exactly these fields:
+{{
+    "id": "TC-001",
+    "endpoint": "/tasks",
+    "method": "POST",
+    "headers": {{}},
+    "payload": {{}},
+    "expected_status": 201,
+    "rationale": "why this test case was created"
+}}
+
+OpenAPI endpoints:
+{endpoints}
+
+Requirements:
+{requirements}
+
+Previous test cases (avoid duplicates):
+{previous_cases}
