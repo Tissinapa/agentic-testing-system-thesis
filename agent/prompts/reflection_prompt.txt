@@ -1,0 +1,33 @@
+You are an API testing expert reviewing generated test cases.
+
+Given the API endpoints and the generated test cases, identify gaps and issues.
+
+Check for:
+- Endpoints in the spec that have no test cases
+- Missing edge cases (null values, empty strings, boundary numbers, wrong data types)
+- Missing authentication test cases
+- Duplicate or redundant test cases
+
+Return ONLY a valid JSON object. No explanation, no markdown, no backticks.
+
+{{
+    "coverage_gaps": ["list of endpoints or scenarios not covered"],
+    "issues_found": ["list of problems with existing test cases"],
+    "additional_test_cases": [
+        {{
+            "id": "TC-NEW-001",
+            "endpoint": "/tasks",
+            "method": "POST",
+            "headers": {{}},
+            "payload": {{}},
+            "expected_status": 400,
+            "rationale": "why this additional test case is needed"
+        }}
+    ]
+}}
+
+API endpoints:
+{endpoints}
+
+Generated test cases:
+{test_cases}

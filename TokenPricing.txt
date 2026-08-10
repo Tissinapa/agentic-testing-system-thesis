@@ -1,0 +1,3 @@
+Model | Base Input Tokens | 5m Cache Writes | 1h Cache Writes |	Cache Hits & Refreshes | Output Tokens
+
+Claude Sonnet 4.6 | $3 / MTok | $3.75 / MTok |$6 / MTok | $0.30 / MTok | $15 / MTok

@@ -1,7 +1,7 @@
 import json
 import uuid
 from langchain_anthropic import ChatAnthropic
-from agent.models import AgentState, TestCase
+from agent.models import AgentState, ApiTestCase
 from pathlib import Path
 
 
@@ -36,7 +36,7 @@ async def generator_node(state: AgentState) -> AgentState:
     new_cases = []
     for tc in test_cases_data:
         tc["id"] = f"TC-{str(uuid.uuid4())[:8].upper()}"
-        new_cases.append(TestCase(**tc))
+        new_cases.append(ApiTestCase(**tc))
         
     #New test case tracking during iteration
     new_count = len(new_cases)  

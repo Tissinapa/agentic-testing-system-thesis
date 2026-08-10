@@ -5,7 +5,7 @@ from typing_extensions import TypedDict
 
 
 # For test case generation
-class TestCase(BaseModel):
+class ApiTestCase(BaseModel):
     id: str         
     endpoint: str       # api endpoint
     method: Literal["GET","POST","PUT","DELETE","PATCH"]
@@ -17,8 +17,8 @@ class TestCase(BaseModel):
 
 
 #For test executor
-class TestResult(BaseModel):
-    test_case: TestCase
+class ApiTestResult(BaseModel):
+    test_case: ApiTestCase
     status_received: int
     response_body: Optional[dict] = None
     passsed: bool
@@ -28,7 +28,7 @@ class TestResult(BaseModel):
 
 #For test evaluation
 class EvaluationResult(BaseModel):
-    test_case: TestCase
+    test_case: ApiTestCase
     status_received: int
     passed: bool
     bug_detected: bool
@@ -38,8 +38,8 @@ class EvaluationResult(BaseModel):
         
 # For Lang Graph config
 class AgentConfig(BaseModel):
-    
-    
+    base_url: str
+    spec_url: str
     
     
     max_iterations: int = 3    #This can be changed later
@@ -50,8 +50,8 @@ class AgentState(TypedDict):
     config: AgentConfig
 
     spec: dict
-    test_cases: list[TestCase]
-    results: list[TestResult]
+    test_cases: list[ApiTestCase]
+    results: list[ApiTestResult]
     evaluations: list[EvaluationResult]
     iteration: int
     new_cases_this_iteration: int
