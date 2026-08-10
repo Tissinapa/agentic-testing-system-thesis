@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional, Literal
+from typing import Optional, Literal, Union
 from typing_extensions import TypedDict
 
 
@@ -20,8 +20,8 @@ class ApiTestCase(BaseModel):
 class ApiTestResult(BaseModel):
     test_case: ApiTestCase
     status_received: int
-    response_body: Optional[dict] = None
-    passsed: bool
+    response_body: Optional[Union[dict,list]] = None
+    passed: bool
     error: Optional[str] = None
 
 
