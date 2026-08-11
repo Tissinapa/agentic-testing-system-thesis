@@ -12,7 +12,7 @@ async def evaluator_node(state: AgentState) -> AgentState:
     llm = ChatAnthropic(model= "claude-sonne-4-6",max_tokens=2000)# Change this later
     
     results= state["results"]
-    requirements = state["requirements"] or "No additional requirements provided"
+    requirements = state.get("requirements") or "No additional requirements provided."
     
     prompt_template = PROMPT_PATH.read_text()
     prompt = prompt_template.format(
@@ -37,15 +37,26 @@ async def evaluator_node(state: AgentState) -> AgentState:
     evaluations_data = json.loads(raw)
     evaluations = []
     
-    for evals in evaluations_data:
+    def find_test_case(results, test_case_id):
+        for r in results:
+            if r.test_case.id == test_case_id:
+                return r.test_case
+        # Fallback — return first result if only one exists
+        if len(results) == 1:
+            return results[0].test_case
+        return None
+    
+    for e in evaluations_data:
+        test_case = find_test_case(results, e["test_case_id"])
+        if test_case is None:
+            continue
         evaluations.append(EvaluationResult(
-            test_case=next(r.test_case for r in results if r.test_case.id == evals["test_case_id"]),
-            status_received=evals["status_received"],
-            passed=evals["passed"],
-            bug_detected=evals["bug_detected"],
-            verdict=evals["verdict"],
-            reasoning=evals["reasoning"],
-            
+            test_case=test_case,
+            status_received=e["status_received"],
+            passed=e["passed"],
+            bug_detected=e["bug_detected"],
+            verdict=e["verdict"],
+            reasoning=e["reasoning"],
         ))
     
     return {

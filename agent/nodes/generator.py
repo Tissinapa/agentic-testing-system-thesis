@@ -13,7 +13,8 @@ async def generator_node(state: AgentState) -> AgentState:
     llm = ChatAnthropic(model="claude-sonnet-4-6", max_tokens=4000) #Change tokens later
     
     endpoints = state["spec"]["endpoints"]
-    requirements = state["requirements"] or "No additional requirements provided."
+    requirements = state.get("requirements") or "No additional requirements provided."
+    #source_code = state.get("source_code") or "No source code provided."
     previous_cases = [tc.model_dump() for tc in state["test_cases"]]
     
     prompt_template = PROMPT_PATH.read_text()

@@ -23,7 +23,7 @@ async def execute_single(client: httpx.AsyncClient, tc: ApiTestCase, base_url: s
             test_case=tc,
             status_received=0,
             response_body=None,
-            passsed=False,
+            passed=False,
             error=str(e),
         )
 async def executor_node(state: AgentState) -> AgentState:
