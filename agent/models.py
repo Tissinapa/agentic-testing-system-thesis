@@ -44,7 +44,7 @@ class AgentConfig(BaseModel):
     target: Literal["java","python"] = "python"
     mode: Literal["black","white"] = "black"
     max_iterations: int = 3    #This can be changed later
-    token_budget: int = 22   #Change this later
+    token_budget: int = 10000   #Change this later
     requirements: Optional[str] = None
     source_code: Optional[str] = None
         
