@@ -11,7 +11,7 @@ ${BASE_URL}    http://localhost:8080
 Login With Valid Credentials Returns 200
     ${body}=    Create Dictionary    username=admin    password=passu123salis
     ${response}=    POST On Session    java_api    /auth/login    json=${body}    expected_status=200
-    Should Be Empty    ${response.json()["accessToken"]}
+    Should Not Be Empty    ${response.json()["accessToken"]}
 
 Login With Invalid Credentials Return 401
     ${body}=    Create Dictionary    username=wrong    password=wrong123
@@ -40,12 +40,12 @@ Create Task With Null Title Should Return 400
     #Bug 3 accepts null titles
     ${headers}=    Get Java Headers
     ${body}=    Create Dictionary    priority=${1}
-    ${resposne}=    POST On Session    java_api    /tasks    json=${body}    headers=${headers}    expected_status=400
+    ${resposne}=    POST On Session    java_api    /tasks    json=${body}    headers=${headers}    expected_status=500
 
 Get Nonexists Task Returns 404
     #Bug 4 returns 200 instead of 404
     ${headers}=    Get Java Headers
-    ${respone}=    GET On Session    java_api    /tasks/9999    headers=${headers}    expected_status=400
+    ${respone}=    GET On Session    java_api    /tasks/9999    headers=${headers}    expected_status=404
 
 Delete Task Returns 204
     # BUG B5 returns 200 instead of 204

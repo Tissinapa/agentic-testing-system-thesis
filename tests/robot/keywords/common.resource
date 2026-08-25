@@ -5,7 +5,7 @@ Library    RequestsLibrary
 ${JAVA_URL}    http://localhost:8080
 ${PYTHON_URL}    http://localhost:8000
 ${VALID_TOKEN}    Bearer Taman-ei-p1t1a1s-0lla-na1n-123
-${JAVA_TOKEN}    Brearer validation-token-123
+${JAVA_TOKEN}    Bearer validation-token-123
 
 *** Keywords ***
 Create Authenticated Session Python
@@ -19,6 +19,6 @@ Get Python Headers
     RETURN    ${headers}
 
 Get Java Headers
-    &{headers}=    Create Dictionary    Authorization=${VALID_TOKEN}    Content-Type=application/json
+    &{headers}=    Create Dictionary    Authorization=${JAVA_TOKEN}    Content-Type=application/json
     RETURN    ${headers}
     
