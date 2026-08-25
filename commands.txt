@@ -5,5 +5,9 @@ uvicorn app.main:app --reload --port 8000
 
 
 CMD run robot framework tests Python and java
-uv run robot --outputdir results/robot tests/robot/python_api.robot
 
+uv run robot --outputdir results/robot tests/robot/python_api.robot
+uv run robot --outputdir results/robot tests/robot/java_api.robot
+
+CMD run pytest
+pytest tests/pytest/test_python_api.py -v
