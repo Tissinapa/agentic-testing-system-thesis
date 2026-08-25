@@ -1,0 +1,100 @@
+{
+  "operation": "POST /tasks",
+  "method": "POST",
+  "path_template": "/tasks",
+  "fingerprint": "f8d1e912",
+  "case_id": "mXur2e",
+  "code_sample": "curl -X POST -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{\"\\u00f0\": null, \"description\": \"-362\", \"title\": \"\\u00ae\\u00ae\\ud9d4\\udfc8uZ\\u00ab\\udbbb\\udcf1\\u00ea\\u0018G\\u00f1\\u0082\\u00b5\\ud95e\\udc46\\u001b^\", \"priority\": 1068}' http://localhost:8080/tasks",
+  "sequence": [
+    {
+      "method": "POST",
+      "url": "http://localhost:8080/tasks",
+      "url_template": "http://localhost:8080/tasks",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "Authorization": "[Filtered]",
+        "X-Schemathesis-TestCaseId": "mXur2e",
+        "Content-Type": "application/json",
+        "Content-Length": "164"
+      },
+      "response": {
+        "status_code": 200,
+        "headers": {
+          "content-type": "application/json",
+          "transfer-encoding": "chunked",
+          "date": "Tue, 25 Aug 2026 10:14:17 GMT",
+          "keep-alive": "timeout=60",
+          "connection": "keep-alive"
+        },
+        "body": "{\"completed\":false,\"createdAt\":\"2026-08-25T13:14:17.2374518\",\"description\":\"-362\",\"id\":248,\"priority\":1068,\"title\":\"\u00ae\u00ae\ud9d4\udfc8uZ\u00ab\udbbb\udcf1\u00ea\\u0018G\u00f1\u0082\u00b5\ud95e\udc46\\u001B^\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "response_schema_conformance",
+          "status": "failure",
+          "message": "Response violates schema\n\n\"2026-08-25T13:14:17.2374518\" is not a \"date-time\"\n\nValidated against the response schema for status code 200.\n\nSchema at /properties/createdAt:\n\n    {\n        \"format\": \"date-time\",\n        \"type\": \"string\"\n    }\n\nValue:\n\n    \"2026-08-25T13:14:17.2374518\""
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.0024986999997054227,
+          "mode": "positive"
+        },
+        "components": {
+          "BODY": "positive"
+        },
+        "phase": {
+          "name": "stateful",
+          "data": {
+            "type": "StatefulPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [
+          {
+            "path": [
+              "description"
+            ],
+            "type_token": "string",
+            "format_token": null,
+            "pattern_hash": null,
+            "normalized_name": "description",
+            "value": "-362",
+            "source_operation": "PUT /tasks/{id}"
+          }
+        ],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/tasks",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {
+        "Authorization": "[Filtered]"
+      },
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {
+          "\u00f0": null,
+          "description": "-362",
+          "title": "\u00ae\u00ae\ud9d4\udfc8uZ\u00ab\udbbb\udcf1\u00ea\u0018G\u00f1\u0082\u00b5\ud95e\udc46\u001b^",
+          "priority": 1068
+        }
+      },
+      "media_type": "application/json",
+      "parent_index": null
+    }
+  ]
+}

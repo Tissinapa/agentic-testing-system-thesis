@@ -1,0 +1,190 @@
+{
+  "operation": "PUT /tasks/{id}",
+  "method": "PUT",
+  "path_template": "/tasks/{id}",
+  "fingerprint": "a752cfa0",
+  "case_id": "qnaRIs",
+  "code_sample": "curl -X POST -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{\"priority\": -380, \"title\": \"undefined\", \"description\": \"q\"}' http://localhost:8080/tasks\ncurl -X PUT -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{\"title\": -7.119245319519188e+88}' http://localhost:8080/tasks/279",
+  "sequence": [
+    {
+      "method": "POST",
+      "url": "http://localhost:8080/tasks",
+      "url_template": "http://localhost:8080/tasks",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "Authorization": "[Filtered]",
+        "X-Schemathesis-TestCaseId": "4qwFFd",
+        "Content-Type": "application/json",
+        "Content-Length": "60"
+      },
+      "response": {
+        "status_code": 200,
+        "headers": {
+          "content-type": "application/json",
+          "transfer-encoding": "chunked",
+          "date": "Tue, 25 Aug 2026 10:14:21 GMT",
+          "keep-alive": "timeout=60",
+          "connection": "keep-alive"
+        },
+        "body": "{\"completed\":false,\"createdAt\":\"2026-08-25T13:14:21.3625415\",\"description\":\"q\",\"id\":279,\"priority\":-380,\"title\":\"undefined\"}"
+      },
+      "link": null,
+      "checks": [],
+      "meta": {
+        "generation": {
+          "time": 0.001099700002669124,
+          "mode": "positive"
+        },
+        "components": {
+          "BODY": "positive"
+        },
+        "phase": {
+          "name": "stateful",
+          "data": {
+            "type": "StatefulPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [
+          {
+            "path": [
+              "description"
+            ],
+            "type_token": "string",
+            "format_token": null,
+            "pattern_hash": null,
+            "normalized_name": "description",
+            "value": "q",
+            "source_operation": "PUT /tasks/{id}"
+          }
+        ],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/tasks",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {
+        "Authorization": "[Filtered]"
+      },
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {
+          "priority": -380,
+          "title": "undefined",
+          "description": "q"
+        }
+      },
+      "media_type": "application/json",
+      "parent_index": null
+    },
+    {
+      "method": "PUT",
+      "url": "http://localhost:8080/tasks/279",
+      "url_template": "http://localhost:8080/tasks/{id}",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "Authorization": "[Filtered]",
+        "X-Schemathesis-TestCaseId": "qnaRIs",
+        "Content-Type": "application/json",
+        "Content-Length": "33"
+      },
+      "response": {
+        "status_code": 200,
+        "headers": {
+          "content-type": "application/json",
+          "transfer-encoding": "chunked",
+          "date": "Tue, 25 Aug 2026 10:14:21 GMT",
+          "keep-alive": "timeout=60",
+          "connection": "keep-alive"
+        },
+        "body": "{\"completed\":false,\"createdAt\":\"2026-08-25T13:14:21.362542\",\"description\":\"q\",\"id\":279,\"priority\":-380,\"title\":\"-7.119245319519188e+88\"}"
+      },
+      "link": {
+        "operationId": "POST /tasks -> [200] PutTaskResponse -> PUT /tasks/{id}",
+        "parameters": {
+          "path.id": "$response.body#/id"
+        }
+      },
+      "checks": [
+        {
+          "name": "negative_data_rejection",
+          "status": "failure",
+          "message": "API accepted schema-violating request\n\nInvalid data should have been rejected\nExpected: 400, 401, 403, 404, 405, 406, 409, 422, 428, 5xx\nInvalid component: in body - violates `type` at /properties/title (was string, became number)"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.009973700001864927,
+          "mode": "negative"
+        },
+        "components": {
+          "BODY": "negative"
+        },
+        "phase": {
+          "name": "stateful",
+          "data": {
+            "type": "StatefulPhaseData",
+            "description": "violates `type` at /properties/title (was string, became number)",
+            "location": "/properties/title",
+            "parameter": "title",
+            "parameter_location": "BODY",
+            "mutations": [
+              {
+                "path": [
+                  "title"
+                ],
+                "schema_pointer": "/properties/title",
+                "channel": "schema",
+                "operator": "change_type",
+                "keywords": [
+                  "type"
+                ],
+                "parameter": "title",
+                "original_value": "string",
+                "new_value": "number"
+              }
+            ]
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/tasks/{id}",
+      "path_parameters": {
+        "id": 279
+      },
+      "query": {},
+      "case_headers": {
+        "Authorization": "[Filtered]"
+      },
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {
+          "title": -7.119245319519188e+88
+        }
+      },
+      "media_type": "application/json",
+      "parent_index": 0
+    }
+  ]
+}

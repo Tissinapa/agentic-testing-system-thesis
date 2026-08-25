@@ -1,0 +1,195 @@
+{
+  "operation": "PUT /tasks/{task_id}",
+  "method": "PUT",
+  "path_template": "/tasks/{task_id}",
+  "fingerprint": "165a6006",
+  "case_id": "Fbg5Q5",
+  "code_sample": "curl -X POST -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{\"\\u0085\\u0086\\u0016s,\\udaa2\\uddf1\\u0089\\u00c4X\\u3251\\ud999\\udca1\\uda27\\ude23\": {\"+\\\"@\\u69c1\": {\"I\\u0098 \\u007fZ\\u00cey\": false}, \"\\u0095\": \"]A\\u009b\\u00bb\\u00bcn\\u0014\\udaf1\\udca9\", \"t\\u00e6\\u00a9\": {}}, \"NIL\": [], \"\\u00d1\\u00c5\\u009a+\\u009ai\\u0010\\u0093\\u00d9\\u00ab\\u00e5\\udbc9\\udee1\\u009bnm\\u00e8\\u00fb\": [false], \"\\ud9c1\\ude4b}\\u00ab\\u008e\\u00b7=\\ud9f6\\udd165\\u00c0/\\u00d3\": {\"S7\\u00de\\u00aa\\ufd7d\\u00a0\": -2.5111518615854624e+16, \"\\u00e8\\u0002\\u0094(9\\ud940\\udf9a\\u001f\\u00b4\\u6dabL\\u00f0\\u0000\\u00e1\\uda45\\udc28\\u00b8n\\ud98d\\udefb)0\": false, \"J\\u00f2\\u00e5\\u00b1\\u00a6\\ud99a\\udcdez%\\udafd\\udc45]\\u001e\\u00c5\": {\"=\\u00ff\\uda39\\udfc2\\u0003\\u0086\": false, \"\\u009a4{\\u008f\\u00b2\": null, \"\\u092a\\u0928\\u094d\\u0939 \\u092a\\u0928\\u094d\\u0939 \\u0924\\u094d\\u0930 \\u0930\\u094d\\u091a \\u0915\\u0943\\u0915\\u0943 \\u0921\\u094d\\u0921 \\u0928\\u094d\\u0939\\u0943\\u0947 \\u0625\\u0644\\u0627 \\u0628\\u0633\\u0645 \\u0627\\u0644\\u0644\\u0647\": false}}, \"VB\": {\"\\u007f\\u00e9\\u00b7#\\ud941\\uddd2I]\\u00ed\\udb67\\udf7f{\\u00ec\\u0014\\u00fe\\u00e3\\u000b\\u0010R\\u00ea\\udba4\\udf52UE\": [\"\\u0001\\u00eeE\", -20695], \"\\u008a-\\ud914\\udebe\": {}}, \"title\": \"\\u00b7\\u00d5\\u00b7\\u00db\\uda67\\udfdd\\u00db\\ud9d4\\uded0\\u0019\"}' http://localhost:8000/tasks\ncurl -X PUT -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d $'\ufffd\ufffd\\x02\ufffd' http://localhost:8000/tasks/63",
+  "sequence": [
+    {
+      "method": "POST",
+      "url": "http://localhost:8000/tasks",
+      "url_template": "http://localhost:8000/tasks",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "Authorization": "[Filtered]",
+        "X-Schemathesis-TestCaseId": "c6MUD1",
+        "Content-Type": "application/json",
+        "Content-Length": "1174"
+      },
+      "response": {
+        "status_code": 200,
+        "headers": {
+          "date": "Tue, 25 Aug 2026 10:01:46 GMT",
+          "server": "uvicorn",
+          "content-length": "129",
+          "content-type": "application/json"
+        },
+        "body": "{\"id\":63,\"title\":\"\u00b7\u00d5\u00b7\u00db\uda67\udfdd\u00db\ud9d4\uded0\\u0019\",\"description\":null,\"priority\":1,\"completed\":false,\"created_at\":\"2026-08-25T10:01:47\"}"
+      },
+      "link": null,
+      "checks": [],
+      "meta": {
+        "generation": {
+          "time": 0.006602199999178993,
+          "mode": "positive"
+        },
+        "components": {
+          "BODY": "positive"
+        },
+        "phase": {
+          "name": "stateful",
+          "data": {
+            "type": "StatefulPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/tasks",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {
+        "Authorization": "[Filtered]"
+      },
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {
+          "\u0085\u0086\u0016s,\udaa2\uddf1\u0089\u00c4X\u3251\ud999\udca1\uda27\ude23": {
+            "+\"@\u69c1": {
+              "I\u0098 \u007fZ\u00cey": false
+            },
+            "\u0095": "]A\u009b\u00bb\u00bcn\u0014\udaf1\udca9",
+            "t\u00e6\u00a9": {}
+          },
+          "NIL": [],
+          "\u00d1\u00c5\u009a+\u009ai\u0010\u0093\u00d9\u00ab\u00e5\udbc9\udee1\u009bnm\u00e8\u00fb": [
+            false
+          ],
+          "\ud9c1\ude4b}\u00ab\u008e\u00b7=\ud9f6\udd165\u00c0/\u00d3": {
+            "S7\u00de\u00aa\ufd7d\u00a0": -2.5111518615854624e+16,
+            "\u00e8\u0002\u0094(9\ud940\udf9a\u001f\u00b4\u6dabL\u00f0\u0000\u00e1\uda45\udc28\u00b8n\ud98d\udefb)0": false,
+            "J\u00f2\u00e5\u00b1\u00a6\ud99a\udcdez%\udafd\udc45]\u001e\u00c5": {
+              "=\u00ff\uda39\udfc2\u0003\u0086": false,
+              "\u009a4{\u008f\u00b2": null,
+              "\u092a\u0928\u094d\u0939 \u092a\u0928\u094d\u0939 \u0924\u094d\u0930 \u0930\u094d\u091a \u0915\u0943\u0915\u0943 \u0921\u094d\u0921 \u0928\u094d\u0939\u0943\u0947 \u0625\u0644\u0627 \u0628\u0633\u0645 \u0627\u0644\u0644\u0647": false
+            }
+          },
+          "VB": {
+            "\u007f\u00e9\u00b7#\ud941\uddd2I]\u00ed\udb67\udf7f{\u00ec\u0014\u00fe\u00e3\u000b\u0010R\u00ea\udba4\udf52UE": [
+              "\u0001\u00eeE",
+              -20695
+            ],
+            "\u008a-\ud914\udebe": {}
+          },
+          "title": "\u00b7\u00d5\u00b7\u00db\uda67\udfdd\u00db\ud9d4\uded0\u0019"
+        }
+      },
+      "media_type": "application/json",
+      "parent_index": null
+    },
+    {
+      "method": "PUT",
+      "url": "http://localhost:8000/tasks/63",
+      "url_template": "http://localhost:8000/tasks/{task_id}",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "Authorization": "[Filtered]",
+        "X-Schemathesis-TestCaseId": "Fbg5Q5",
+        "Content-Type": "application/json",
+        "Content-Length": "4"
+      },
+      "response": {
+        "status_code": 400,
+        "headers": {
+          "date": "Tue, 25 Aug 2026 10:01:46 GMT",
+          "server": "uvicorn",
+          "content-length": "48",
+          "content-type": "application/json"
+        },
+        "body": "{\"detail\":\"There was an error parsing the body\"}"
+      },
+      "link": {
+        "operationId": "POST /tasks -> [200] PutTaskResponse -> PUT /tasks/{task_id}",
+        "parameters": {
+          "path.task_id": "$response.body#/id"
+        }
+      },
+      "checks": [
+        {
+          "name": "status_code_conformance",
+          "status": "failure",
+          "message": "Undocumented HTTP status code\n\nReceived: 400\nDocumented: 200, 422"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.0018449000017426442,
+          "mode": "negative"
+        },
+        "components": {
+          "BODY": "negative"
+        },
+        "phase": {
+          "name": "stateful",
+          "data": {
+            "type": "StatefulPhaseData",
+            "description": "Invalid syntax: random bytes",
+            "location": null,
+            "parameter": null,
+            "parameter_location": "BODY",
+            "mutations": [
+              {
+                "path": [],
+                "schema_pointer": "",
+                "channel": "schema",
+                "operator": "syntax_fuzzing",
+                "keywords": [],
+                "parameter": null,
+                "original_value": null,
+                "new_value": null
+              }
+            ]
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/tasks/{task_id}",
+      "path_parameters": {
+        "task_id": 63
+      },
+      "query": {},
+      "case_headers": {
+        "Authorization": "[Filtered]"
+      },
+      "cookies": {},
+      "case_body": {
+        "encoding": "base64",
+        "value": "l9QCwg=="
+      },
+      "media_type": "application/json",
+      "parent_index": 0
+    }
+  ]
+}

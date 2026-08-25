@@ -1,0 +1,117 @@
+{
+  "operation": "POST /tasks",
+  "method": "POST",
+  "path_template": "/tasks",
+  "fingerprint": "4ad603c7",
+  "case_id": "Fzj4rT",
+  "code_sample": "curl -X POST -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{\"\\u00c9\\udb37\\udc16\\ud97c\\udc92A\\u0012O\\u0007+\\ud850\\udec2@\": -1469157187, \"\\u00f6\": {}, \"description\": -60092249, \"title\": -953204547609716864}' http://localhost:8080/tasks",
+  "sequence": [
+    {
+      "method": "POST",
+      "url": "http://localhost:8080/tasks",
+      "url_template": "http://localhost:8080/tasks",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "Authorization": "[Filtered]",
+        "X-Schemathesis-TestCaseId": "Fzj4rT",
+        "Content-Type": "application/json",
+        "Content-Length": "145"
+      },
+      "response": {
+        "status_code": 200,
+        "headers": {
+          "content-type": "application/json",
+          "transfer-encoding": "chunked",
+          "date": "Tue, 25 Aug 2026 10:14:29 GMT",
+          "keep-alive": "timeout=60",
+          "connection": "keep-alive"
+        },
+        "body": "{\"completed\":false,\"createdAt\":\"2026-08-25T13:14:29.9255851\",\"description\":\"-60092249\",\"id\":327,\"priority\":1,\"title\":\"-953204547609716864\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "negative_data_rejection",
+          "status": "failure",
+          "message": "API accepted schema-violating request\n\nInvalid data should have been rejected\nExpected: 400, 401, 403, 404, 405, 406, 409, 422, 428, 5xx\nInvalid component: in body\n  - violates `type` at /properties/description (was string, became integer)\n  - violates `type` at /properties/title (was string, became integer)"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.0052986000009696,
+          "mode": "negative"
+        },
+        "components": {
+          "BODY": "negative"
+        },
+        "phase": {
+          "name": "stateful",
+          "data": {
+            "type": "StatefulPhaseData",
+            "description": "- violates `type` at /properties/description (was string, became integer)\n- violates `type` at /properties/title (was string, became integer)",
+            "location": null,
+            "parameter": null,
+            "parameter_location": "BODY",
+            "mutations": [
+              {
+                "path": [
+                  "description"
+                ],
+                "schema_pointer": "/properties/description",
+                "channel": "schema",
+                "operator": "change_type",
+                "keywords": [
+                  "type"
+                ],
+                "parameter": "description",
+                "original_value": "string",
+                "new_value": "integer"
+              },
+              {
+                "path": [
+                  "title"
+                ],
+                "schema_pointer": "/properties/title",
+                "channel": "schema",
+                "operator": "change_type",
+                "keywords": [
+                  "type"
+                ],
+                "parameter": "title",
+                "original_value": "string",
+                "new_value": "integer"
+              }
+            ]
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/tasks",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {
+        "Authorization": "[Filtered]"
+      },
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {
+          "\u00c9\udb37\udc16\ud97c\udc92A\u0012O\u0007+\ud850\udec2@": -1469157187,
+          "\u00f6": {},
+          "description": -60092249,
+          "title": -953204547609716864
+        }
+      },
+      "media_type": "application/json",
+      "parent_index": null
+    }
+  ]
+}

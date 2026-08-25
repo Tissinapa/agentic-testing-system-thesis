@@ -1,0 +1,177 @@
+{
+  "operation": "DELETE /tasks/{id}",
+  "method": "DELETE",
+  "path_template": "/tasks/{id}",
+  "fingerprint": "8cb088bb",
+  "case_id": "TrjatD",
+  "code_sample": "curl -X POST -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{\"\": [[], -5e-324], \"\\u00ef\\u00ceGz}N\\u007f9\\u00dd\\udbcf\\udf15\\u00f7\\u0086\": [false, null], \"\\u0093\": [], \"priority\": -28272, \"title\": \"-4294967296\"}' http://localhost:8080/tasks\ncurl -X DELETE -H 'Authorization: [Filtered]' http://localhost:8080/tasks/264",
+  "sequence": [
+    {
+      "method": "POST",
+      "url": "http://localhost:8080/tasks",
+      "url_template": "http://localhost:8080/tasks",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "Authorization": "[Filtered]",
+        "X-Schemathesis-TestCaseId": "UffEUU",
+        "Content-Type": "application/json",
+        "Content-Length": "149"
+      },
+      "response": {
+        "status_code": 200,
+        "headers": {
+          "content-type": "application/json",
+          "transfer-encoding": "chunked",
+          "date": "Tue, 25 Aug 2026 10:14:18 GMT",
+          "keep-alive": "timeout=60",
+          "connection": "keep-alive"
+        },
+        "body": "{\"completed\":false,\"createdAt\":\"2026-08-25T13:14:18.9828697\",\"description\":null,\"id\":264,\"priority\":-28272,\"title\":\"-4294967296\"}"
+      },
+      "link": null,
+      "checks": [],
+      "meta": {
+        "generation": {
+          "time": 0.00516799999968498,
+          "mode": "positive"
+        },
+        "components": {
+          "BODY": "positive"
+        },
+        "phase": {
+          "name": "stateful",
+          "data": {
+            "type": "StatefulPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [
+          {
+            "path": [
+              "title"
+            ],
+            "type_token": "string",
+            "format_token": null,
+            "pattern_hash": null,
+            "normalized_name": "title",
+            "value": "-4294967296",
+            "source_operation": "PUT /tasks/{id}"
+          }
+        ],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/tasks",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {
+        "Authorization": "[Filtered]"
+      },
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {
+          "": [
+            [],
+            -5e-324
+          ],
+          "\u00ef\u00ceGz}N\u007f9\u00dd\udbcf\udf15\u00f7\u0086": [
+            false,
+            null
+          ],
+          "\u0093": [],
+          "priority": -28272,
+          "title": "-4294967296"
+        }
+      },
+      "media_type": "application/json",
+      "parent_index": null
+    },
+    {
+      "method": "DELETE",
+      "url": "http://localhost:8080/tasks/264",
+      "url_template": "http://localhost:8080/tasks/{id}",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "Authorization": "[Filtered]",
+        "X-Schemathesis-TestCaseId": "TrjatD",
+        "Content-Length": "0"
+      },
+      "response": {
+        "status_code": 200,
+        "headers": {
+          "content-type": "application/json",
+          "transfer-encoding": "chunked",
+          "date": "Tue, 25 Aug 2026 10:14:19 GMT",
+          "keep-alive": "timeout=60",
+          "connection": "keep-alive"
+        },
+        "body": "{\"completed\":false,\"createdAt\":\"2026-08-25T13:14:18.98287\",\"description\":null,\"id\":264,\"priority\":-28272,\"title\":\"-4294967296\"}"
+      },
+      "link": {
+        "operationId": "POST /tasks -> [200] DeleteTaskResponse -> DELETE /tasks/{id}",
+        "parameters": {
+          "path.id": "$response.body#/id"
+        }
+      },
+      "checks": [
+        {
+          "name": "response_schema_conformance",
+          "status": "failure",
+          "message": "Response violates schema\n\nnull is not of type \"string\"\n\nValidated against the response schema for status code 200.\n\nSchema at /properties/description:\n\n    {\n        \"type\": \"string\"\n    }\n\nValue:\n\n    null"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.0004645000008167699,
+          "mode": "positive"
+        },
+        "components": {},
+        "phase": {
+          "name": "stateful",
+          "data": {
+            "type": "StatefulPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/tasks/{id}",
+      "path_parameters": {
+        "id": 264
+      },
+      "query": {},
+      "case_headers": {
+        "Authorization": "[Filtered]"
+      },
+      "cookies": {},
+      "case_body": {
+        "encoding": "none"
+      },
+      "media_type": null,
+      "parent_index": 0
+    }
+  ]
+}

@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites errors="2" failures="7" skipped="0" tests="8" time="43.269680">
+  <testsuite name="schemathesis" hostname="DESKTOP-ME2TPEA" errors="2" failures="7" skipped="0" tests="8" time="43.269680">
+    <testcase name="POST /auth/login" time="4.280809">
+      <failure type="failure">1. Test Case ID: peKWIw
+
+- Undocumented HTTP status code
+
+    Received: 401
+    Documented: 200, 422
+
+[401] Unauthorized:
+
+    `{"detail":"Invalid credentials"}`
+
+Reproduce with:
+
+    curl -X POST -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{"username": "", "password": ""}' http://localhost:8000/auth/login</failure>
+    </testcase>
+    <testcase name="POST /tasks" time="0.031607">
+      <failure type="failure">1. Test Case ID: 2zN9aV
+
+- Invalid Allow header
+
+    `Allow` header does not match the schema — missing documented methods: POST
+
+    List exactly the methods this resource supports in `Allow`
+
+[405] Method Not Allowed:
+
+    `{"detail":"Method Not Allowed"}`
+
+Reproduce with:
+
+    curl -X OPTIONS -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{"title": "", "description": null, "priority": 1}' http://localhost:8000/tasks</failure>
+      <failure type="failure">1. Test Case ID: tFfHb3
+
+- Response violates schema
+
+    "2026-08-25T10:01:43" is not valid under any of the schemas listed in the 'anyOf' keyword
+
+    Validated against the response schema for status code 200.
+
+    Schema at /properties/created_at:
+
+        {
+            "anyOf": [
+                {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "title": "Created At"
+        }
+
+    Value:
+
+        "2026-08-25T10:01:43"
+
+[200] OK:
+
+    `{"id":56,"title":"","description":null,"priority":1,"completed":false,"created_at":"2026-08-25T10:01:43"}`
+
+Reproduce with:
+
+    curl -X POST -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{"title": ""}' http://localhost:8000/tasks</failure>
+    </testcase>
+    <testcase name="GET /health" time="0.017533" />
+    <testcase name="GET /tasks" time="0.020353">
+      <failure type="failure">1. Test Case ID: x8jZ2x
+
+- Response violates schema
+
+    "2026-08-24T12:28:25" is not valid under any of the schemas listed in the 'anyOf' keyword
+
+    Validated against the response schema for status code 200.
+
+    Schema at /components/schemas/TaskResponse/properties/created_at:
+
+        {
+            "anyOf": [
+                {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "title": "Created At"
+        }
+
+    Value:
+
+        "2026-08-24T12:28:25"
+
+[200] OK:
+
+    `[{"id":3,"title":"Testing Task","description":null,"priority":1,"completed":false,"created_at":"2026-08-24T12:28:25"},{"id":5,"title":"Testing Task","description":null,"priority":1,"completed":false,"created_at":"2026-08-24T12:47:38"},{"id":7,"title":"Testing Task","description":null,"priority":1,"completed":false,"created_at":"2026-08-25T07:37:24"},{"id":9,"title":"Testing Task","description":null,"priority":1,"completed":false,"created_at":"2026-08-25T07:38:06"},{"id":11,"title":"Testing Task","descriptio // Output truncated...`
+
+Reproduce with:
+
+    curl -X GET -H 'Authorization: [Filtered]' http://localhost:8000/tasks</failure>
+    </testcase>
+    <testcase name="DELETE /tasks/{task_id}" time="0.069100">
+      <failure type="failure">1. Test Case ID: pjHjJ7
+
+- Invalid Allow header
+
+    `Allow` header does not match the schema — missing documented methods: DELETE, PUT
+
+    List exactly the methods this resource supports in `Allow`
+
+[405] Method Not Allowed:
+
+    `{"detail":"Method Not Allowed"}`
+
+Reproduce with:
+
+    curl -X OPTIONS -H 'Authorization: [Filtered]' http://localhost:8000/tasks/0</failure>
+      <failure type="failure">1. Test Case ID: E24yiX
+
+- Undocumented HTTP status code
+
+    Received: 404
+    Documented: 200, 422
+
+[404] Not Found:
+
+    `{"detail":"Task was not found"}`
+
+Reproduce with:
+
+    curl -X DELETE -H 'Authorization: [Filtered]' http://localhost:8000/tasks/1</failure>
+    </testcase>
+    <testcase name="PUT /tasks/{task_id}" time="0.029678">
+      <failure type="failure">1. Test Case ID: uQiRGe
+
+- Server error
+
+- Undocumented HTTP status code
+
+    Received: 500
+    Documented: 200, 422
+
+[500] Internal Server Error:
+
+    `Internal Server Error`
+
+Reproduce with:
+
+    curl -X PUT -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{"title": null, "description": null, "priority": null, "completed": null}' http://localhost:8000/tasks/3</failure>
+      <failure type="failure">1. Test Case ID: 6qKl1V
+
+- Response violates schema
+
+    "2026-08-24T12:28:25" is not valid under any of the schemas listed in the 'anyOf' keyword
+
+    Validated against the response schema for status code 200.
+
+    Schema at /properties/created_at:
+
+        {
+            "anyOf": [
+                {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "title": "Created At"
+        }
+
+    Value:
+
+        "2026-08-24T12:28:25"
+
+[200] OK:
+
+    `{"id":3,"title":"Testing Task","description":null,"priority":1,"completed":false,"created_at":"2026-08-24T12:28:25"}`
+
+Reproduce with:
+
+    curl -X PUT -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{}' http://localhost:8000/tasks/3</failure>
+    </testcase>
+    <testcase name="GET /tasks/{task_id}" time="0.016465">
+      <failure type="failure">1. Test Case ID: 2fBc4Y
+
+- Response violates schema
+
+    "2026-08-24T12:47:38" is not valid under any of the schemas listed in the 'anyOf' keyword
+
+    Validated against the response schema for status code 200.
+
+    Schema at /properties/created_at:
+
+        {
+            "anyOf": [
+                {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "title": "Created At"
+        }
+
+    Value:
+
+        "2026-08-24T12:47:38"
+
+[200] OK:
+
+    `{"id":5,"title":"Testing Task","description":null,"priority":1,"completed":false,"created_at":"2026-08-24T12:47:38"}`
+
+Reproduce with:
+
+    curl -X GET -H 'Authorization: [Filtered]' http://localhost:8000/tasks/5</failure>
+      <error type="error">Network Error
+
+Connection failed
+
+    Connection aborted. [WinError 10054] An existing connection was forcibly closed by the remote host
+
+Reproduce with:
+
+    curl -X GET -H 'Authorization: [Filtered]' http://localhost:8000/tasks/5</error>
+    </testcase>
+    <testcase name="Stateful tests" time="38.804135">
+      <failure type="failure">1. Test Case ID: Fbg5Q5
+
+- Undocumented HTTP status code
+
+    Received: 400
+    Documented: 200, 422
+
+[400] Bad Request:
+
+    `{"detail":"There was an error parsing the body"}`
+
+Reproduce with:
+
+    curl -X POST -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{"\u0085\u0086\u0016s,\udaa2\uddf1\u0089\u00c4X\u3251\ud999\udca1\uda27\ude23": {"+\"@\u69c1": {"I\u0098 \u007fZ\u00cey": false}, "\u0095": "]A\u009b\u00bb\u00bcn\u0014\udaf1\udca9", "t\u00e6\u00a9": {}}, "NIL": [], "\u00d1\u00c5\u009a+\u009ai\u0010\u0093\u00d9\u00ab\u00e5\udbc9\udee1\u009bnm\u00e8\u00fb": [false], "\ud9c1\ude4b}\u00ab\u008e\u00b7=\ud9f6\udd165\u00c0/\u00d3": {"S7\u00de\u00aa\ufd7d\u00a0": -2.5111518615854624e+16, "\u00e8\u0002\u0094(9\ud940\udf9a\u001f\u00b4\u6dabL\u00f0\u0000\u00e1\uda45\udc28\u00b8n\ud98d\udefb)0": false, "J\u00f2\u00e5\u00b1\u00a6\ud99a\udcdez%\udafd\udc45]\u001e\u00c5": {"=\u00ff\uda39\udfc2\u0003\u0086": false, "\u009a4{\u008f\u00b2": null, "\u092a\u0928\u094d\u0939 \u092a\u0928\u094d\u0939 \u0924\u094d\u0930 \u0930\u094d\u091a \u0915\u0943\u0915\u0943 \u0921\u094d\u0921 \u0928\u094d\u0939\u0943\u0947 \u0625\u0644\u0627 \u0628\u0633\u0645 \u0627\u0644\u0644\u0647": false}}, "VB": {"\u007f\u00e9\u00b7#\ud941\uddd2I]\u00ed\udb67\udf7f{\u00ec\u0014\u00fe\u00e3\u000b\u0010R\u00ea\udba4\udf52UE": ["\u0001\u00eeE", -20695], "\u008a-\ud914\udebe": {}}, "title": "\u00b7\u00d5\u00b7\u00db\uda67\udfdd\u00db\ud9d4\uded0\u0019"}' http://localhost:8000/tasks
+    curl -X PUT -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d $'��\x02�' http://localhost:8000/tasks/63</failure>
+      <failure type="failure">1. Test Case ID: AWcnIL
+
+- Undocumented HTTP status code
+
+    Received: 400
+    Documented: 200, 422
+
+[400] Bad Request:
+
+    `{"detail":"There was an error parsing the body"}`
+
+Reproduce with:
+
+    curl -X POST -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '�B�P' http://localhost:8000/tasks</failure>
+      <failure type="failure">1. Test Case ID: yn01l4
+
+- Server error
+
+- Undocumented HTTP status code
+
+    Received: 500
+    Documented: 200, 422
+
+[500] Internal Server Error:
+
+    `Internal Server Error`
+
+Reproduce with:
+
+    curl -X POST -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{"\u00c3\udb07\ude64\u00c9n": [[]], "q\udbcb\udda5\u00a0&amp;\u0080\u00a8\u00abo": ["\u00f1\u00e5\u00be\u00cc", null], "\u00f7q\udbe4\udcde{": {"\u00c6\ud933\udf09\u00ed!\ud93a\ude68": {}, "\u0017\u00de\udae6\ude5b\ud992\udc89\u0093\ud8b0\udf72\u009b\udab2\udde9": [], "}": [5707, null]}, "then": -1.5512869480118816e+16, "%M": {}, "description": "\ud855\udcaf\u00e8\u00df?U\ud83c\udf23\u00b0\u00fc\ud8bc\uded5\u00a83\u00f2\u00ad\ud82f\udf71&amp;{\u00ad\u0014\u001a\u00c0\uda47\udf4ao\u0091I", "priority": 346253741231188, "title": "\udbe3\ude92\u00b4\ud943\udedcx\u00d1\u00b7\u0013\udbb3\udf594\u00e2\uda94\udead\u00a1)\u00e4"}' http://localhost:8000/tasks</failure>
+      <error type="error">Network Error
+
+Connection failed
+
+    Connection aborted. [WinError 10054] An existing connection was forcibly closed by the remote host
+
+Reproduce with:
+
+    curl -X POST -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{"title": "6\u00ba\ud87b\udd7e"}' http://localhost:8000/tasks</error>
+    </testcase>
+  </testsuite>
+</testsuites>

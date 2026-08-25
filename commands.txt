@@ -11,3 +11,30 @@ uv run robot --outputdir results/robot tests/robot/java_api.robot
 
 CMD run pytest
 pytest tests/pytest/test_python_api.py -v
+
+Bash run Schemathesis
+PYTHON
+uv run schemathesis run http://localhost:8000/openapi.json \
+  --checks all \
+  --output-truncate false \
+  -H "Authorization: Bearer Taman-ei-p1t1a1s-0lla-na1n-123" \
+  --report junit \
+  --report results/schemathesis/python_report.xml
+
+  uv run schemathesis run http://localhost:8000/openapi.json \
+  --checks all \
+  --output-truncate false \
+  -H "Authorization: Bearer Taman-ei-p1t1a1s-0lla-na1n-123" \
+
+  uv run schemathesis run http://localhost:8000/openapi.json \
+  --checks all \
+  -H "Authorization: Bearer Taman-ei-p1t1a1s-0lla-na1n-123" \
+  --report junit \
+  --report-dir results/schemathesis/python
+
+JAVA
+uv run schemathesis run http://localhost:8080/v3/api-docs \
+  --checks all \
+  -H "Authorization: Bearer validation-token-123" \
+  --report junit \
+  --report-dir results/schemathesis/java

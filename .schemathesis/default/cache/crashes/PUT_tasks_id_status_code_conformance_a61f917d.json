@@ -1,0 +1,104 @@
+{
+  "operation": "PUT /tasks/{id}",
+  "method": "PUT",
+  "path_template": "/tasks/{id}",
+  "fingerprint": "a61f917d",
+  "case_id": "diMEH8",
+  "code_sample": "curl -X PUT -H 'Content-Type: application/json' -d '{\"title\": \"\", \"description\": \"\", \"priority\": 0, \"completed\": false}' http://localhost:8080/tasks/145",
+  "sequence": [
+    {
+      "method": "PUT",
+      "url": "http://localhost:8080/tasks/145",
+      "url_template": "http://localhost:8080/tasks/{id}",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "diMEH8",
+        "Content-Type": "application/json",
+        "Content-Length": "67"
+      },
+      "response": {
+        "status_code": 401,
+        "headers": {
+          "content-length": "0",
+          "date": "Tue, 25 Aug 2026 10:14:16 GMT",
+          "keep-alive": "timeout=60",
+          "connection": "keep-alive"
+        },
+        "body": ""
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "status_code_conformance",
+          "status": "failure",
+          "message": "Undocumented HTTP status code\n\nReceived: 401\nDocumented: 200"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 7.069999992381781e-05,
+          "mode": "negative"
+        },
+        "components": {
+          "PATH": "positive",
+          "HEADER": "negative",
+          "BODY": "positive"
+        },
+        "phase": {
+          "name": "coverage",
+          "data": {
+            "type": "CoveragePhaseData",
+            "description": "Missing `Authorization` at header",
+            "location": null,
+            "parameter": "Authorization",
+            "parameter_location": "HEADER",
+            "scenario": "missing_parameter"
+          }
+        },
+        "pool_draws": [
+          {
+            "location": "path",
+            "parameter_name": "id",
+            "resource_name": "TaskResponse",
+            "resource_field": "id",
+            "source_operation": "GET /tasks",
+            "source_status": 200
+          }
+        ],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {
+          "PATH": {
+            "id": 145
+          },
+          "HEADER": {}
+        }
+      },
+      "path": "/tasks/{id}",
+      "path_parameters": {
+        "id": "145"
+      },
+      "query": {},
+      "case_headers": {
+        "Authorization": "[Filtered]"
+      },
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {
+          "title": "",
+          "description": "",
+          "priority": 0,
+          "completed": false
+        }
+      },
+      "media_type": "application/json",
+      "parent_index": null
+    }
+  ]
+}

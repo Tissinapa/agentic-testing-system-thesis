@@ -1,0 +1,176 @@
+{
+  "operation": "PUT /tasks/{id}",
+  "method": "PUT",
+  "path_template": "/tasks/{id}",
+  "fingerprint": "30a0283e",
+  "case_id": "2mQrVh",
+  "code_sample": "curl -X GET -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' http://localhost:8080/tasks\ncurl -X PUT -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{\"completed\": false, \"description\": \"dsa\"}' http://localhost:8080/tasks/None",
+  "sequence": [
+    {
+      "method": "GET",
+      "url": "http://localhost:8080/tasks",
+      "url_template": "http://localhost:8080/tasks",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "Authorization": "[Filtered]",
+        "X-Schemathesis-TestCaseId": "5gpttd"
+      },
+      "response": {
+        "status_code": 200,
+        "headers": {
+          "content-type": "application/json",
+          "content-length": "2",
+          "date": "Tue, 25 Aug 2026 09:54:43 GMT",
+          "keep-alive": "timeout=60",
+          "connection": "keep-alive"
+        },
+        "body": "[]"
+      },
+      "link": null,
+      "checks": [],
+      "meta": {
+        "generation": {
+          "time": 0.00014259999807109125,
+          "mode": "positive"
+        },
+        "components": {},
+        "phase": {
+          "name": "stateful",
+          "data": {
+            "type": "StatefulPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/tasks",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {
+        "Authorization": "[Filtered]"
+      },
+      "cookies": {},
+      "case_body": {
+        "encoding": "none"
+      },
+      "media_type": null,
+      "parent_index": null
+    },
+    {
+      "method": "PUT",
+      "url": "http://localhost:8080/tasks/None",
+      "url_template": "http://localhost:8080/tasks/{id}",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "Authorization": "[Filtered]",
+        "X-Schemathesis-TestCaseId": "2mQrVh",
+        "Content-Type": "application/json",
+        "Content-Length": "42"
+      },
+      "response": {
+        "status_code": 400,
+        "headers": {
+          "content-type": "application/json",
+          "transfer-encoding": "chunked",
+          "date": "Tue, 25 Aug 2026 09:54:43 GMT",
+          "connection": "close"
+        },
+        "body": "{\"timestamp\":\"2026-08-25T09:54:43.090Z\",\"status\":400,\"error\":\"Bad Request\",\"path\":\"/tasks/None\"}"
+      },
+      "link": {
+        "operationId": "GET /tasks -> [200] PutTaskResponse -> PUT /tasks/{id}",
+        "parameters": {
+          "path.id": "$response.body#/*/id"
+        }
+      },
+      "checks": [
+        {
+          "name": "positive_data_acceptance",
+          "status": "failure",
+          "message": "API rejected schema-compliant request\n\nValid data should have been accepted\nExpected: 2xx, 401, 403, 404, 409, 5xx"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.002263000002130866,
+          "mode": "positive"
+        },
+        "components": {
+          "PATH": "positive",
+          "BODY": "positive"
+        },
+        "phase": {
+          "name": "stateful",
+          "data": {
+            "type": "StatefulPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [
+          {
+            "location": "path",
+            "parameter_name": "id",
+            "resource_name": "TaskResponse",
+            "resource_field": "id",
+            "source_operation": "GET /tasks/{id}",
+            "source_status": 200
+          }
+        ],
+        "pool_misses": [],
+        "semantic_draws": [
+          {
+            "path": [
+              "description"
+            ],
+            "type_token": "string",
+            "format_token": null,
+            "pattern_hash": null,
+            "normalized_name": "description",
+            "value": "dsa",
+            "source_operation": "PUT /tasks/{id}"
+          }
+        ],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/tasks/{id}",
+      "path_parameters": {
+        "id": null
+      },
+      "query": {},
+      "case_headers": {
+        "Authorization": "[Filtered]"
+      },
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {
+          "completed": false,
+          "description": "dsa"
+        }
+      },
+      "media_type": "application/json",
+      "parent_index": 0
+    }
+  ]
+}

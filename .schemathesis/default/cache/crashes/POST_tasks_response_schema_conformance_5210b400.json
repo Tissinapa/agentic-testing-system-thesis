@@ -1,0 +1,84 @@
+{
+  "operation": "POST /tasks",
+  "method": "POST",
+  "path_template": "/tasks",
+  "fingerprint": "5210b400",
+  "case_id": "tFfHb3",
+  "code_sample": "curl -X POST -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{\"title\": \"\"}' http://localhost:8000/tasks",
+  "sequence": [
+    {
+      "method": "POST",
+      "url": "http://localhost:8000/tasks",
+      "url_template": "http://localhost:8000/tasks",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "Authorization": "[Filtered]",
+        "X-Schemathesis-TestCaseId": "tFfHb3",
+        "Content-Type": "application/json",
+        "Content-Length": "13"
+      },
+      "response": {
+        "status_code": 200,
+        "headers": {
+          "date": "Tue, 25 Aug 2026 10:01:43 GMT",
+          "server": "uvicorn",
+          "content-length": "105",
+          "content-type": "application/json"
+        },
+        "body": "{\"id\":56,\"title\":\"\",\"description\":null,\"priority\":1,\"completed\":false,\"created_at\":\"2026-08-25T10:01:43\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "response_schema_conformance",
+          "status": "failure",
+          "message": "Response violates schema\n\n\"2026-08-25T10:01:43\" is not valid under any of the schemas listed in the 'anyOf' keyword\n\nValidated against the response schema for status code 200.\n\nSchema at /properties/created_at:\n\n    {\n        \"anyOf\": [\n            {\n                \"type\": \"string\",\n                \"format\": \"date-time\"\n            },\n            {\n                \"type\": \"null\"\n            }\n        ],\n        \"title\": \"Created At\"\n    }\n\nValue:\n\n    \"2026-08-25T10:01:43\""
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.0032122999982675537,
+          "mode": "positive"
+        },
+        "components": {
+          "BODY": "positive"
+        },
+        "phase": {
+          "name": "fuzzing",
+          "data": {
+            "type": "FuzzingPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/tasks",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {
+        "Authorization": "[Filtered]"
+      },
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {
+          "title": ""
+        }
+      },
+      "media_type": "application/json",
+      "parent_index": null
+    }
+  ]
+}

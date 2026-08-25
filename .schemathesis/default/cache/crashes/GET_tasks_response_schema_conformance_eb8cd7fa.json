@@ -1,0 +1,83 @@
+{
+  "operation": "GET /tasks",
+  "method": "GET",
+  "path_template": "/tasks",
+  "fingerprint": "eb8cd7fa",
+  "case_id": "x8jZ2x",
+  "code_sample": "curl -X GET -H 'Authorization: [Filtered]' http://localhost:8000/tasks",
+  "sequence": [
+    {
+      "method": "GET",
+      "url": "http://localhost:8000/tasks",
+      "url_template": "http://localhost:8000/tasks",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "Authorization": "[Filtered]",
+        "X-Schemathesis-TestCaseId": "x8jZ2x"
+      },
+      "response": {
+        "status_code": 200,
+        "headers": {
+          "date": "Tue, 25 Aug 2026 10:01:40 GMT",
+          "server": "uvicorn",
+          "content-length": "4872",
+          "content-type": "application/json"
+        },
+        "body": "[{\"id\":3,\"title\":\"Testing Task\",\"description\":null,\"priority\":1,\"completed\":false,\"created_at\":\"2026-08-24T12:28:25\"},{\"id\":5,\"title\":\"Testing Task\",\"description\":null,\"priority\":1,\"completed\":false,\"created_at\":\"2026-08-24T12:47:38\"},{\"id\":7,\"title\":\"Testing Task\",\"description\":null,\"priority\":1,\"completed\":false,\"created_at\":\"2026-08-25T07:37:24\"},{\"id\":9,\"title\":\"Testing Task\",\"description\":null,\"priority\":1,\"completed\":false,\"created_at\":\"2026-08-25T07:38:06\"},{\"id\":11,\"title\":\"Testing Task\",\"description\":null,\"priority\":1,\"completed\":false,\"created_at\":\"2026-08-25T07:42:12\"},{\"id\":13,\"title\":\"Testing Task\",\"description\":null,\"priority\":1,\"completed\":false,\"created_at\":\"2026-08-25T07:45:39\"},{\"id\":15,\"title\":\"Testing Task\",\"description\":null,\"priority\":1,\"completed\":false,\"created_at\":\"2026-08-25T07:47:45\"},{\"id\":17,\"title\":\"Testing Task\",\"description\":null,\"priority\":1,\"completed\":false,\"created_at\":\"2026-08-25T07:55:43\"},{\"id\":19,\"title\":\"Testing Task\",\"description\":null,\"priority\":1,\"completed\":false,\"created_at\":\"2026-08-25T07:59:43\"},{\"id\":21,\"title\":\"Testing Task\",\"description\":null,\"priority\":1,\"completed\":false,\"created_at\":\"2026-08-25T08:09:37\"},{\"id\":23,\"title\":\"Testing Task\",\"description\":null,\"priority\":1,\"completed\":false,\"created_at\":\"2026-08-25T08:16:15\"},{\"id\":25,\"title\":\"TESTing\",\"description\":null,\"priority\":1,\"completed\":false,\"created_at\":\"2026-08-25T09:27:05\"},{\"id\":26,\"title\":\"\",\"description\":null,\"priority\":1,\"completed\":false,\"created_at\":\"2026-08-25T09:27:08\"},{\"id\":28,\"title\":\"\",\"description\":null,\"priority\":1,\"completed\":false,\"created_at\":\"2026-08-25T09:46:01\"},{\"id\":29,\"title\":\"Testing Task\",\"description\":null,\"priority\":2788055,\"completed\":false,\"created_at\":\"2026-08-25T09:46:03\"},{\"id\":30,\"title\":\"Testing Task\",\"description\":null,\"priority\":2788055,\"completed\":false,\"created_at\":\"2026-08-25T09:46:03\"},{\"id\":31,\"title\":\"Testing Task\",\"description\":null,\"priority\":2788055,\"completed\":false,\"created_at\":\"2026-08-25T09:46:03\"},{\"id\":32,\"title\":\"Testing Task\",\"description\":null,\"priority\":2788055,\"completed\":false,\"created_at\":\"2026-08-25T09:46:03\"},{\"id\":33,\"title\":\"Testing Task\",\"description\":null,\"priority\":null,\"completed\":false,\"created_at\":\"2026-08-25T09:46:03\"},{\"id\":34,\"title\":\"Testing Task\",\"description\":null,\"priority\":2788055,\"completed\":false,\"created_at\":\"2026-08-25T09:46:04\"},{\"id\":35,\"title\":\"\",\"description\":null,\"priority\":1,\"completed\":false,\"created_at\":\"2026-08-25T09:46:04\"},{\"id\":36,\"title\":\"Testing Task\",\"description\":null,\"priority\":2788055,\"completed\":false,\"created_at\":\"2026-08-25T09:46:04\"},{\"id\":37,\"title\":\"Testing Task\",\"description\":null,\"priority\":2788055,\"completed\":false,\"created_at\":\"2026-08-25T09:46:06\"},{\"id\":38,\"title\":\"Testing Task\",\"description\":null,\"priority\":2788055,\"completed\":false,\"created_at\":\"2026-08-25T09:46:08\"},{\"id\":39,\"title\":\"\",\"description\":null,\"priority\":1,\"completed\":false,\"created_at\":\"2026-08-25T09:46:08\"},{\"id\":40,\"title\":\"Testing Task\",\"description\":null,\"priority\":2788055,\"completed\":false,\"created_at\":\"2026-08-25T09:46:08\"},{\"id\":41,\"title\":\"Testing Task\",\"description\":null,\"priority\":2788055,\"completed\":false,\"created_at\":\"2026-08-25T09:46:10\"},{\"id\":42,\"title\":\"Testing Task\",\"description\":null,\"priority\":null,\"completed\":false,\"created_at\":\"2026-08-25T09:46:13\"},{\"id\":43,\"title\":\"Testing Task\",\"description\":null,\"priority\":2788055,\"completed\":false,\"created_at\":\"2026-08-25T09:46:13\"},{\"id\":44,\"title\":\"Testing Task\",\"description\":null,\"priority\":2788055,\"completed\":false,\"created_at\":\"2026-08-25T09:46:15\"},{\"id\":45,\"title\":\"Testing Task\",\"description\":null,\"priority\":2788055,\"completed\":false,\"created_at\":\"2026-08-25T09:46:17\"},{\"id\":46,\"title\":\"Testing Task\",\"description\":null,\"priority\":2788055,\"completed\":false,\"created_at\":\"2026-08-25T09:46:19\"},{\"id\":47,\"title\":\"Testing Task\",\"description\":null,\"priority\":2788055,\"completed\":false,\"created_at\":\"2026-08-25T09:46:21\"},{\"id\":48,\"title\":\"\",\"description\":null,\"priority\":2788055,\"completed\":false,\"created_at\":\"2026-08-25T09:46:23\"},{\"id\":49,\"title\":\"\",\"description\":null,\"priority\":2788055,\"completed\":false,\"created_at\":\"2026-08-25T09:46:23\"},{\"id\":50,\"title\":\"\",\"description\":null,\"priority\":2788055,\"completed\":false,\"created_at\":\"2026-08-25T09:46:23\"},{\"id\":51,\"title\":\"\",\"description\":null,\"priority\":2788055,\"completed\":false,\"created_at\":\"2026-08-25T09:46:23\"},{\"id\":52,\"title\":\"Testing Task\",\"description\":null,\"priority\":1,\"completed\":false,\"created_at\":\"2026-08-25T09:46:23\"},{\"id\":53,\"title\":\"Testing Task\",\"description\":null,\"priority\":2788055,\"completed\":false,\"created_at\":\"2026-08-25T09:46:23\"},{\"id\":54,\"title\":\"Testing Task\",\"description\":null,\"priority\":2788055,\"completed\":false,\"created_at\":\"2026-08-25T09:46:25\"},{\"id\":55,\"title\":\"Testing Task\",\"description\":null,\"priority\":2788055,\"completed\":false,\"created_at\":\"2026-08-25T09:46:28\"}]"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "response_schema_conformance",
+          "status": "failure",
+          "message": "Response violates schema\n\n\"2026-08-24T12:28:25\" is not valid under any of the schemas listed in the 'anyOf' keyword\n\nValidated against the response schema for status code 200.\n\nSchema at /components/schemas/TaskResponse/properties/created_at:\n\n    {\n        \"anyOf\": [\n            {\n                \"type\": \"string\",\n                \"format\": \"date-time\"\n            },\n            {\n                \"type\": \"null\"\n            }\n        ],\n        \"title\": \"Created At\"\n    }\n\nValue:\n\n    \"2026-08-24T12:28:25\""
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 1.4899997040629387e-05,
+          "mode": "negative"
+        },
+        "components": {
+          "HEADER": "negative"
+        },
+        "phase": {
+          "name": "coverage",
+          "data": {
+            "type": "CoveragePhaseData",
+            "description": "Incorrect type",
+            "location": "/anyOf/1/type",
+            "parameter": "authorization",
+            "parameter_location": "HEADER",
+            "scenario": "incorrect_type"
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {
+          "HEADER": {
+            "authorization": {}
+          }
+        }
+      },
+      "path": "/tasks",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {
+        "Authorization": "[Filtered]"
+      },
+      "cookies": {},
+      "case_body": {
+        "encoding": "none"
+      },
+      "media_type": null,
+      "parent_index": null
+    }
+  ]
+}

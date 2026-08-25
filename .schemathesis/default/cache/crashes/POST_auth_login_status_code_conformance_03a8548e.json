@@ -1,0 +1,85 @@
+{
+  "operation": "POST /auth/login",
+  "method": "POST",
+  "path_template": "/auth/login",
+  "fingerprint": "03a8548e",
+  "case_id": "Pp57nE",
+  "code_sample": "curl -X POST -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{\"username\": \"\", \"password\": {}}' http://localhost:8080/auth/login",
+  "sequence": [
+    {
+      "method": "POST",
+      "url": "http://localhost:8080/auth/login",
+      "url_template": "http://localhost:8080/auth/login",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "Authorization": "[Filtered]",
+        "X-Schemathesis-TestCaseId": "Pp57nE",
+        "Content-Type": "application/json",
+        "Content-Length": "32"
+      },
+      "response": {
+        "status_code": 400,
+        "headers": {
+          "content-type": "application/json",
+          "transfer-encoding": "chunked",
+          "date": "Tue, 25 Aug 2026 10:14:16 GMT",
+          "connection": "close"
+        },
+        "body": "{\"timestamp\":\"2026-08-25T10:14:16.571Z\",\"status\":400,\"error\":\"Bad Request\",\"path\":\"/auth/login\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "status_code_conformance",
+          "status": "failure",
+          "message": "Undocumented HTTP status code\n\nReceived: 400\nDocumented: 200"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 9.999999747378752e-06,
+          "mode": "negative"
+        },
+        "components": {
+          "BODY": "negative"
+        },
+        "phase": {
+          "name": "coverage",
+          "data": {
+            "type": "CoveragePhaseData",
+            "description": "password: Incorrect type",
+            "location": "/properties/password/type",
+            "parameter": "application/json",
+            "parameter_location": "BODY",
+            "scenario": "incorrect_type"
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/auth/login",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {
+        "Authorization": "[Filtered]"
+      },
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {
+          "username": "",
+          "password": "[Filtered]"
+        }
+      },
+      "media_type": "application/json",
+      "parent_index": null
+    }
+  ]
+}

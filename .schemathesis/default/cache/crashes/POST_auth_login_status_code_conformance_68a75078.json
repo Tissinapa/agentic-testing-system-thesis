@@ -1,0 +1,85 @@
+{
+  "operation": "POST /auth/login",
+  "method": "POST",
+  "path_template": "/auth/login",
+  "fingerprint": "68a75078",
+  "case_id": "peKWIw",
+  "code_sample": "curl -X POST -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{\"username\": \"\", \"password\": \"\"}' http://localhost:8000/auth/login",
+  "sequence": [
+    {
+      "method": "POST",
+      "url": "http://localhost:8000/auth/login",
+      "url_template": "http://localhost:8000/auth/login",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "Authorization": "[Filtered]",
+        "X-Schemathesis-TestCaseId": "peKWIw",
+        "Content-Type": "application/json",
+        "Content-Length": "32"
+      },
+      "response": {
+        "status_code": 401,
+        "headers": {
+          "date": "Tue, 25 Aug 2026 10:01:40 GMT",
+          "server": "uvicorn",
+          "content-length": "32",
+          "content-type": "application/json"
+        },
+        "body": "{\"detail\":\"Invalid credentials\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "status_code_conformance",
+          "status": "failure",
+          "message": "Undocumented HTTP status code\n\nReceived: 401\nDocumented: 200, 422"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.033972999997786246,
+          "mode": "positive"
+        },
+        "components": {
+          "BODY": "positive"
+        },
+        "phase": {
+          "name": "coverage",
+          "data": {
+            "type": "CoveragePhaseData",
+            "description": "Valid object",
+            "location": null,
+            "parameter": "application/json",
+            "parameter_location": "BODY",
+            "scenario": "valid_object"
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/auth/login",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {
+        "Authorization": "[Filtered]"
+      },
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {
+          "username": "",
+          "password": "[Filtered]"
+        }
+      },
+      "media_type": "application/json",
+      "parent_index": null
+    }
+  ]
+}

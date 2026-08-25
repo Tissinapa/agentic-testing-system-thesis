@@ -14,6 +14,7 @@ dependencies = [
     "python-dotenv>=1.2.2",
     "robotframework>=7.4.2",
     "robotframework-requests>=0.9.7",
+    "schemathesis>=4.25.2",
     "typing>=3.10.0.0",
 ]
 

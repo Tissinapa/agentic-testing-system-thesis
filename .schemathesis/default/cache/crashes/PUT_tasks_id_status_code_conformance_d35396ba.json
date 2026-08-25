@@ -1,0 +1,221 @@
+{
+  "operation": "PUT /tasks/{id}",
+  "method": "PUT",
+  "path_template": "/tasks/{id}",
+  "fingerprint": "d35396ba",
+  "case_id": "1DGRh7",
+  "code_sample": "curl -X GET -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' http://localhost:8080/tasks\ncurl -X DELETE -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' http://localhost:8080/tasks/195\ncurl -X PUT -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{}' http://localhost:8080/tasks/195",
+  "sequence": [
+    {
+      "method": "GET",
+      "url": "http://localhost:8080/tasks",
+      "url_template": "http://localhost:8080/tasks",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "Authorization": "[Filtered]",
+        "X-Schemathesis-TestCaseId": "r3nM4W"
+      },
+      "response": {
+        "status_code": 200,
+        "headers": {
+          "content-type": "application/json",
+          "content-length": "7127",
+          "date": "Tue, 25 Aug 2026 10:14:21 GMT",
+          "keep-alive": "timeout=60",
+          "connection": "keep-alive"
+        },
+        "body": "[{\"completed\":false,\"createdAt\":\"2026-08-25T12:55:14.610076\",\"description\":\"\u00a7\u00ba\ud9de\ude9c\ud9f9\udf37\\u0003\u0097Sz1\",\"id\":148,\"priority\":-44,\"title\":\"?\"},{\"completed\":false,\"createdAt\":\"2026-08-25T12:55:15.220176\",\"description\":\"\u009e\u009f\\u0002\u00c4\ud9a3\udde1\",\"id\":157,\"priority\":-2147483647,\"title\":\"\u00b0\"},{\"completed\":false,\"createdAt\":\"2026-08-25T12:55:15.41768\",\"description\":\"w\",\"id\":158,\"priority\":-1707,\"title\":\"b\\u0016\"},{\"completed\":false,\"createdAt\":\"2026-08-25T12:55:15.472418\",\"description\":\"\u00d9d\ud86c\udf7a\",\"id\":160,\"priority\":1,\"title\":\"\u00f3\"},{\"completed\":false,\"createdAt\":\"2026-08-25T12:55:15.506638\",\"description\":\"\",\"id\":161,\"priority\":1,\"title\":\"\u00bf\\u0016\u00ee\u00efp\u00f1C\u00b7\\t\u00d1>\u009d\"},{\"completed\":true,\"createdAt\":\"2026-08-25T12:55:15.71031\",\"description\":\"r\ud90a\udd9c\u00a0!H\u00e3\\u001D\\u001FM\u00d6\u00e6=\",\"id\":163,\"priority\":1644,\"title\":\">\"},{\"completed\":true,\"createdAt\":\"2026-08-25T12:55:15.777601\",\"description\":\"\u00e5\\u001B\u00b2?\u00fe\ud82e\udf65\",\"id\":164,\"priority\":2549,\"title\":\"\u00c9\\u0010\"},{\"completed\":false,\"createdAt\":\"2026-08-25T12:55:15.805307\",\"description\":\"\udbdf\udc0dh\",\"id\":165,\"priority\":-121887,\"title\":\"\uda8c\ude41\udabb\udcad\u00f0\u00cf\u00d5\u00ce\u00c0\u00cd\u00b1\u00ae\u00ee\u00e1\u0099'\u00f1\udb43\ude76\"},{\"completed\":false,\"createdAt\":\"2026-08-25T12:55:15.871845\",\"description\":\"\u00b7\u00d4\ud9d9\ude44\u00bc\uda2d\udf98\",\"id\":166,\"priority\":331808,\"title\":\"L\\u0010\\u0011\"},{\"completed\":false,\"createdAt\":\"2026-08-25T12:55:16.22423\",\"description\":\"\\\"?\uda13\ude96\",\"id\":167,\"priority\":25573177,\"title\":\"+0.0\"},{\"completed\":false,\"createdAt\":\"2026-08-25T12:55:16.343413\",\"description\":\"\ud9ba\udd54\",\"id\":170,\"priority\":10541,\"title\":\"\u00df0\u0089\udb96\udfe3e\u00c0Q\u00ab\u0080t\"},{\"completed\":false,\"createdAt\":\"2026-08-25T12:55:16.67915\",\"description\":\"\",\"id\":174,\"priority\":991,\"title\":\"\u00a6\u008b\"},{\"completed\":false,\"createdAt\":\"2026-08-25T12:55:16.763803\",\"description\":\"2.46552812307895e+253\",\"id\":175,\"priority\":-624297,\"title\":\"\ud99f\udc35\"},{\"completed\":false,\"createdAt\":\"2026-08-25T12:55:16.862145\",\"description\":\"Y\u00ea\u00dd\u00e8\ud9a6\udcf3\u00fc\ub760\u00ec\\u0018\ud946\udd81\\\"\ud930\ude0bt\u009a\u00d3\ud8aa\udedf`\\u0016\u00d0\u00a2:\u00c1~\ud965\udf0d\u00b9\u00cc\ud913\udcdb\u00e6\u00c1\\u0014\udb84\udcf3\ud888\udcefn\",\"id\":176,\"priority\":6108624,\"title\":\"\u0092\u00e4\u00ed\u00bf\u00e3\"},{\"completed\":false,\"createdAt\":\"2026-08-25T12:55:17.280475\",\"description\":\"Y\u00ea\u00dd\u00e8\ud9a6\udcf3\u00fc\ub760\u00ec\\u0018\ud946\udd81\\\"\ud930\ude0bt\u009a\u00d3\ud8aa\udedf`\\u0016\u00d0\u00a2:\u00c1~\ud965\udf0d\u00b9\u00cc\ud913\udcdb\u00e6\u00c1\\u0014\udb84\udcf3\ud888\udcefn\",\"id\":179,\"priority\":2147483646,\"title\":\"\u00df0\u0089\udb96\udfe3e\u00c0Q\u00ab\u0080t\"},{\"completed\":false,\"createdAt\":\"2026-08-25T12:55:17.322441\",\"description\":\"\u009d\\u001C\ud9fc\udc7a{\udb2e\ude98\",\"id\":180,\"priority\":-280,\"title\":\"?\"},{\"completed\":false,\"createdAt\":\"2026-08-25T12:55:19.980146\",\"description\":\"\udbeb\ude9e\u00ed\\u0003\",\"id\":183,\"priority\":-1130889956,\"title\":\"\udbcc\udc74\\u0016\u00b6\u0097\u00cf\udaec\udc87\u00c7\u00fd\u00fa\"},{\"completed\":false,\"createdAt\":\"2026-08-25T12:55:20.036668\",\"description\":\"\udbeb\ude9e\u00ed\\u0003\",\"id\":184,\"priority\":-1130889956,\"title\":\"\udbcc\udc74\\u0016\u00b6\u0097\u00cf\udaec\udc87\u00c7\u00fd\u00fa\"},{\"completed\":false,\"createdAt\":\"2026-08-25T12:55:20.101647\",\"description\":\"\udbeb\ude9e\u00ed\\u0003\",\"id\":185,\"priority\":-1130889956,\"title\":\"\udbcc\udc74\\u0016\u00b6\u0097\u00cf\udaec\udc87\u00c7\u00fd\u00fa\"},{\"completed\":false,\"createdAt\":\"2026-08-25T12:55:20.179992\",\"description\":\"\udbeb\ude9e\u00ed\\u0003\",\"id\":186,\"priority\":-1130889956,\"title\":\"\udbcc\udc74\\u0016\u00b6\u0097\u00cf\udaec\udc87\u00c7\u00fd\u00fa\"},{\"completed\":false,\"createdAt\":\"2026-08-25T12:55:20.247548\",\"description\":\"\udbeb\ude9e\u00ed\\u0003\",\"id\":187,\"priority\":-1130889956,\"title\":\"\udbcc\udc74\\u0016\u00b6\u0097\u00cf\udaec\udc87\u00c7\u00fd\u00fa\"},{\"completed\":false,\"createdAt\":\"2026-08-25T12:55:20.83385\",\"description\":\"3\u00a9\",\"id\":188,\"priority\":-24660,\"title\":\"\ud887\udf92^ \"},{\"completed\":false,\"createdAt\":\"2026-08-25T12:55:21.487556\",\"description\":\"3\u00a9\",\"id\":192,\"priority\":-24660,\"title\":\"\ud887\udf92^ \"},{\"completed\":false,\"createdAt\":\"2026-08-25T12:55:21.563392\",\"description\":\"3\u00a9\",\"id\":193,\"priority\":-24660,\"title\":\"\ud887\udf92^ \"},{\"completed\":false,\"createdAt\":\"2026-08-25T12:55:21.701914\",\"description\":\"3\u00a9\",\"id\":195,\"priority\":-24660,\"title\":\"\ud887\udf92^ \"},{\"completed\":false,\"createdAt\":\"2026-08-25T12:55:21.802291\",\"description\":\"3\u00a9\",\"id\":196,\"priority\":-24660,\"title\":\"\ud887\udf92^ \"},{\"completed\":false,\"createdAt\":\"2026-08-25T12:55:21.87873\",\"description\":\"3\u00a9\",\"id\":197,\"priority\":-24660,\"title\":\"\ud887\udf92^ \"},{\"completed\":false,\"createdAt\":\"2026-08-25T13:14:17.237452\",\"description\":\"-362\",\"id\":248,\"priority\":1068,\"title\":\"\u00ae\u00ae\ud9d4\udfc8uZ\u00ab\udbbb\udcf1\u00ea\\u0018G\u00f1\u0082\u00b5\ud95e\udc46\\u001B^\"},{\"completed\":false,\"createdAt\":\"2026-08-25T13:14:17.481679\",\"description\":\"\u00a7\u00ba\ud9de\ude9c\ud9f9\udf37\\u0003\u0097Sz1\",\"id\":249,\"priority\":261489,\"title\":\"-4294967296\"},{\"completed\":false,\"createdAt\":\"2026-08-25T13:14:17.512313\",\"description\":\"-362\",\"id\":250,\"priority\":-2397,\"title\":\"\u00ea\"},{\"completed\":false,\"createdAt\":\"2026-08-25T13:14:17.626321\",\"description\":\"-362\",\"id\":251,\"priority\":250,\"title\":\"?\"},{\"completed\":false,\"createdAt\":\"2026-08-25T13:14:17.695415\",\"description\":\"\",\"id\":252,\"priority\":454833,\"title\":\"\u00ae\u00ae\ud9d4\udfc8uZ\u00ab\udbbb\udcf1\u00ea\\u0018G\u00f1\u0082\u00b5\ud95e\udc46\\u001B^\"},{\"completed\":false,\"createdAt\":\"2026-08-25T13:14:17.905746\",\"description\":null,\"id\":254,\"priority\":-28272,\"title\":\"-4294967296\"},{\"completed\":false,\"createdAt\":\"2026-08-25T13:14:17.99018\",\"description\":\"\u00a7\u00ba\ud9de\ude9c\ud9f9\udf37\\u0003\u0097Sz1\",\"id\":255,\"priority\":1,\"title\":\"\u00bf\\u0016\u00ee\u00efp\u00f1C\u00b7\\t\u00d1>\u009d\"},{\"completed\":false,\"createdAt\":\"2026-08-25T13:14:18.096552\",\"description\":\"\u00a7\u00ba\ud9de\ude9c\ud9f9\udf37\\u0003\u0097Sz1\",\"id\":256,\"priority\":10792,\"title\":\"\u00bf\\u0016\u00ee\u00efp\u00f1C\u00b7\\t\u00d1>\u009d\"},{\"completed\":false,\"createdAt\":\"2026-08-25T13:14:18.190571\",\"description\":\"\",\"id\":257,\"priority\":31215,\"title\":\"\u00bf\\u0016\u00ee\u00efp\u00f1C\u00b7\\t\u00d1>\u009d\"},{\"completed\":false,\"createdAt\":\"2026-08-25T13:14:18.371017\",\"description\":\"-362\",\"id\":259,\"priority\":1068,\"title\":\"\u00ae\u00ae\ud9d4\udfc8uZ\u00ab\udbbb\udcf1\u00ea\\u0018G\u00f1\u0082\u00b5\ud95e\udc46\\u001B^\"},{\"completed\":false,\"createdAt\":\"2026-08-25T13:14:18.554465\",\"description\":\"-362\",\"id\":260,\"priority\":250,\"title\":\"?\"},{\"completed\":false,\"createdAt\":\"2026-08-25T13:14:18.663859\",\"description\":\"-362\",\"id\":261,\"priority\":-2397,\"title\":\"\u00ea\"},{\"completed\":false,\"createdAt\":\"2026-08-25T13:14:18.780209\",\"description\":null,\"id\":262,\"priority\":-28272,\"title\":\"-4294967296\"},{\"completed\":false,\"createdAt\":\"2026-08-25T13:14:18.873309\",\"description\":null,\"id\":263,\"priority\":41371,\"title\":\"\ud9e9\udf66\u0088\\u0014qV\u7e8b\u00bd\u0088h\u0089\u00c9\ud926\udd21\"},{\"completed\":false,\"createdAt\":\"2026-08-25T13:14:19.310273\",\"description\":\"\u00a7\u00ba\ud9de\ude9c\ud9f9\udf37\\u0003\u0097Sz1\",\"id\":268,\"priority\":10792,\"title\":\"\u00bf\\u0016\u00ee\u00efp\u00f1C\u00b7\\t\u00d1>\u009d\"},{\"completed\":false,\"createdAt\":\"2026-08-25T13:14:19.411676\",\"description\":null,\"id\":269,\"priority\":-2634189,\"title\":\"\u00ae\u00ae\ud9d4\udfc8uZ\u00ab\udbbb\udcf1\u00ea\\u0018G\u00f1\u0082\u00b5\ud95e\udc46\\u001B^\"},{\"completed\":false,\"createdAt\":\"2026-08-25T13:14:19.804895\",\"description\":\"\u00ec\",\"id\":271,\"priority\":-221,\"title\":\"-4294967296\"},{\"completed\":false,\"createdAt\":\"2026-08-25T13:14:20.194707\",\"description\":null,\"id\":274,\"priority\":98617,\"title\":\"?\"},{\"completed\":false,\"createdAt\":\"2026-08-25T13:14:20.246674\",\"description\":null,\"id\":275,\"priority\":1,\"title\":\"9\\u0019\ud9b6\ude4a\\u0017\u0095\u00b4\ud9ec\uddfa\u00d7\u00df*\ua384/7(\u00bf\u00c9\u00d63\"},{\"completed\":false,\"createdAt\":\"2026-08-25T13:14:20.268956\",\"description\":\"-362\",\"id\":276,\"priority\":-489076580,\"title\":\"?\"},{\"completed\":true,\"createdAt\":\"2026-08-25T13:14:20.731876\",\"description\":\"\u00ec\",\"id\":277,\"priority\":1,\"title\":\"\u0085\\u0005\u00dfB\u009b\ud843\udeb6\u00cc\\u0010;\u00e9\\u0012\"},{\"completed\":false,\"createdAt\":\"2026-08-25T13:14:20.838921\",\"description\":\"\u00ec\",\"id\":278,\"priority\":-18617,\"title\":\"\u00bf\\u0016\u00ee\u00efp\u00f1C\u00b7\\t\u00d1>\u009d\"},{\"completed\":false,\"createdAt\":\"2026-08-25T13:14:21.362542\",\"description\":\"q\",\"id\":279,\"priority\":-380,\"title\":\"-7.119245319519188e+88\"}]"
+      },
+      "link": null,
+      "checks": [],
+      "meta": {
+        "generation": {
+          "time": 0.0001494999996793922,
+          "mode": "positive"
+        },
+        "components": {},
+        "phase": {
+          "name": "stateful",
+          "data": {
+            "type": "StatefulPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/tasks",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {
+        "Authorization": "[Filtered]"
+      },
+      "cookies": {},
+      "case_body": {
+        "encoding": "none"
+      },
+      "media_type": null,
+      "parent_index": null
+    },
+    {
+      "method": "DELETE",
+      "url": "http://localhost:8080/tasks/195",
+      "url_template": "http://localhost:8080/tasks/{id}",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "Authorization": "[Filtered]",
+        "X-Schemathesis-TestCaseId": "PscTac",
+        "Content-Length": "0"
+      },
+      "response": {
+        "status_code": 200,
+        "headers": {
+          "content-type": "application/json",
+          "transfer-encoding": "chunked",
+          "date": "Tue, 25 Aug 2026 10:14:21 GMT",
+          "keep-alive": "timeout=60",
+          "connection": "keep-alive"
+        },
+        "body": "{\"completed\":false,\"createdAt\":\"2026-08-25T12:55:21.701914\",\"description\":\"3\u00a9\",\"id\":195,\"priority\":-24660,\"title\":\"\ud887\udf92^ \"}"
+      },
+      "link": {
+        "operationId": "GET /tasks -> [200] DeleteTaskResponse -> DELETE /tasks/{id}",
+        "parameters": {
+          "path.id": "$response.body#/*/id"
+        }
+      },
+      "checks": [],
+      "meta": {
+        "generation": {
+          "time": 0.0004284999995434191,
+          "mode": "positive"
+        },
+        "components": {},
+        "phase": {
+          "name": "stateful",
+          "data": {
+            "type": "StatefulPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/tasks/{id}",
+      "path_parameters": {
+        "id": 195
+      },
+      "query": {},
+      "case_headers": {
+        "Authorization": "[Filtered]"
+      },
+      "cookies": {},
+      "case_body": {
+        "encoding": "none"
+      },
+      "media_type": null,
+      "parent_index": 0
+    },
+    {
+      "method": "PUT",
+      "url": "http://localhost:8080/tasks/195",
+      "url_template": "http://localhost:8080/tasks/{id}",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "Authorization": "[Filtered]",
+        "X-Schemathesis-TestCaseId": "1DGRh7",
+        "Content-Type": "application/json",
+        "Content-Length": "2"
+      },
+      "response": {
+        "status_code": 404,
+        "headers": {
+          "content-length": "0",
+          "date": "Tue, 25 Aug 2026 10:14:21 GMT",
+          "keep-alive": "timeout=60",
+          "connection": "keep-alive"
+        },
+        "body": ""
+      },
+      "link": {
+        "operationId": "DELETE /tasks/{id} -> [200] PutTaskResponse -> PUT /tasks/{id}",
+        "parameters": {
+          "path.id": "$response.body#/id"
+        }
+      },
+      "checks": [
+        {
+          "name": "status_code_conformance",
+          "status": "failure",
+          "message": "Undocumented HTTP status code\n\nReceived: 404\nDocumented: 200"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.00137919999906444,
+          "mode": "positive"
+        },
+        "components": {
+          "BODY": "positive"
+        },
+        "phase": {
+          "name": "stateful",
+          "data": {
+            "type": "StatefulPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/tasks/{id}",
+      "path_parameters": {
+        "id": 195
+      },
+      "query": {},
+      "case_headers": {
+        "Authorization": "[Filtered]"
+      },
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {}
+      },
+      "media_type": "application/json",
+      "parent_index": 1
+    }
+  ]
+}

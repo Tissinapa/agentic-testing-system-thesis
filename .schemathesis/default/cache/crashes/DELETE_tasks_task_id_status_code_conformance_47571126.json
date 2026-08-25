@@ -1,0 +1,82 @@
+{
+  "operation": "DELETE /tasks/{task_id}",
+  "method": "DELETE",
+  "path_template": "/tasks/{task_id}",
+  "fingerprint": "47571126",
+  "case_id": "E24yiX",
+  "code_sample": "curl -X DELETE -H 'Authorization: [Filtered]' http://localhost:8000/tasks/1",
+  "sequence": [
+    {
+      "method": "DELETE",
+      "url": "http://localhost:8000/tasks/1",
+      "url_template": "http://localhost:8000/tasks/{task_id}",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "Authorization": "[Filtered]",
+        "X-Schemathesis-TestCaseId": "E24yiX",
+        "Content-Length": "0"
+      },
+      "response": {
+        "status_code": 404,
+        "headers": {
+          "date": "Tue, 25 Aug 2026 10:01:43 GMT",
+          "server": "uvicorn",
+          "content-length": "31",
+          "content-type": "application/json"
+        },
+        "body": "{\"detail\":\"Task was not found\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "status_code_conformance",
+          "status": "failure",
+          "message": "Undocumented HTTP status code\n\nReceived: 404\nDocumented: 200, 422"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.002062399998976616,
+          "mode": "positive"
+        },
+        "components": {
+          "PATH": "positive"
+        },
+        "phase": {
+          "name": "fuzzing",
+          "data": {
+            "type": "FuzzingPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/tasks/{task_id}",
+      "path_parameters": {
+        "task_id": 1
+      },
+      "query": {},
+      "case_headers": {
+        "Authorization": "[Filtered]"
+      },
+      "cookies": {},
+      "case_body": {
+        "encoding": "none"
+      },
+      "media_type": null,
+      "parent_index": null
+    }
+  ]
+}

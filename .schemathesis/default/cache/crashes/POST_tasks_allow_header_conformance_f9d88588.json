@@ -1,0 +1,92 @@
+{
+  "operation": "POST /tasks",
+  "method": "OPTIONS",
+  "path_template": "/tasks",
+  "fingerprint": "f9d88588",
+  "case_id": "2zN9aV",
+  "code_sample": "curl -X OPTIONS -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{\"title\": \"\", \"description\": null, \"priority\": 1}' http://localhost:8000/tasks",
+  "sequence": [
+    {
+      "method": "OPTIONS",
+      "url": "http://localhost:8000/tasks",
+      "url_template": "http://localhost:8000/tasks",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "Authorization": "[Filtered]",
+        "X-Schemathesis-TestCaseId": "2zN9aV",
+        "Content-Type": "application/json",
+        "Content-Length": "49"
+      },
+      "response": {
+        "status_code": 405,
+        "headers": {
+          "date": "Tue, 25 Aug 2026 10:01:40 GMT",
+          "server": "uvicorn",
+          "allow": "GET",
+          "content-length": "31",
+          "content-type": "application/json"
+        },
+        "body": "{\"detail\":\"Method Not Allowed\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "allow_header_conformance",
+          "status": "failure",
+          "message": "Invalid Allow header\n\n`Allow` header does not match the schema \u2014 missing documented methods: POST\n\nList exactly the methods this resource supports in `Allow`"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 8.200000593205914e-06,
+          "mode": "negative"
+        },
+        "components": {
+          "HEADER": "positive",
+          "BODY": "positive"
+        },
+        "phase": {
+          "name": "coverage",
+          "data": {
+            "type": "CoveragePhaseData",
+            "description": "Unspecified HTTP method: OPTIONS",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "scenario": "unspecified_http_method"
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {
+          "HEADER": {
+            "authorization": ""
+          }
+        }
+      },
+      "path": "/tasks",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {
+        "Authorization": "[Filtered]"
+      },
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {
+          "title": "",
+          "description": null,
+          "priority": 1
+        }
+      },
+      "media_type": "application/json",
+      "parent_index": null
+    }
+  ]
+}

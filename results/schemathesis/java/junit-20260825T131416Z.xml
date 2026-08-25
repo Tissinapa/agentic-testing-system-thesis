@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites errors="0" failures="7" skipped="0" tests="7" time="27.453756">
+  <testsuite name="schemathesis" hostname="DESKTOP-ME2TPEA" errors="0" failures="7" skipped="0" tests="7" time="27.453756">
+    <testcase name="POST /auth/login" time="0.243005">
+      <failure type="failure">1. Test Case ID: Pp57nE
+
+- Undocumented HTTP status code
+
+    Received: 400
+    Documented: 200
+
+[400] Bad Request:
+
+    `{"timestamp":"2026-08-25T10:14:16.571Z","status":400,"error":"Bad Request","path":"/auth/login"}`
+
+Reproduce with:
+
+    curl -X POST -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{"username": "", "password": {}}' http://localhost:8080/auth/login</failure>
+    </testcase>
+    <testcase name="POST /tasks" time="0.030515">
+      <failure type="failure">1. Test Case ID: r9ttVm
+
+- Undocumented HTTP status code
+
+    Received: 401
+    Documented: 200
+
+[401] Unauthorized:
+
+    &lt;EMPTY&gt;
+
+Reproduce with:
+
+    curl -X POST -H 'Content-Type: application/json' -d '{"title": "", "description": "", "priority": 0}' http://localhost:8080/tasks</failure>
+      <failure type="failure">1. Test Case ID: SG45oe
+
+- Server error
+
+- Undocumented HTTP status code
+
+    Received: 500
+    Documented: 200
+
+[500] Internal Server Error:
+
+    `{"timestamp":"2026-08-25T10:14:16.918Z","status":500,"error":"Internal Server Error","path":"/tasks"}`
+
+Reproduce with:
+
+    curl -X POST -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{}' http://localhost:8080/tasks</failure>
+    </testcase>
+    <testcase name="GET /tasks" time="0.037902">
+      <failure type="failure">1. Test Case ID: aAlXIg
+
+- API accepts requests without authentication
+
+    Expected 401, got `200 OK` for `GET /tasks`
+
+- Response violates schema (2 violations)
+
+    "2026-08-25T12:55:14.284584" is not a "date-time"
+
+    Validated against the response schema for status code 200.
+
+    Schema at /components/schemas/TaskResponse/properties/createdAt:
+
+        {
+            "format": "date-time",
+            "type": "string"
+        }
+
+    Value:
+
+        "2026-08-25T12:55:14.284584"
+
+    null is not of type "string"
+
+    Validated against the response schema for status code 200.
+
+    Schema at /components/schemas/TaskResponse/properties/description:
+
+        {
+            "type": "string"
+        }
+
+    Value:
+
+        null
+
+- Missing header not rejected
+
+    Got 200 when missing required 'Authorization' header, expected 401
+
+[200] OK:
+
+    `[{"completed":false,"createdAt":"2026-08-25T12:55:14.284584","description":"-362","id":145,"priority":-188706489,"title":"-4294967296"},{"completed":false,"createdAt":"2026-08-25T12:55:14.610076","description":"§º򇪜򎜷\u0003Sz1","id":148,"priority":-44,"title":"?"},{"completed":false,"createdAt":"2026-08-25T12:55:15.220176","description":"\u0002Ä񸷡","id":157,"priority":-2147483647,"title":"°"},{"completed":false,"createdAt":"2026-08-25T12:55:15.41768","description":"w","id":158,"priority":-1707,"title":"b\u0 // Output truncated...`
+
+Reproduce with:
+
+    curl -X GET http://localhost:8080/tasks</failure>
+    </testcase>
+    <testcase name="PUT /tasks/{id}" time="0.079532">
+      <failure type="failure">1. Test Case ID: diMEH8
+
+- Undocumented HTTP status code
+
+    Received: 401
+    Documented: 200
+
+[401] Unauthorized:
+
+    &lt;EMPTY&gt;
+
+Reproduce with:
+
+    curl -X PUT -H 'Content-Type: application/json' -d '{"title": "", "description": "", "priority": 0, "completed": false}' http://localhost:8080/tasks/145</failure>
+      <failure type="failure">1. Test Case ID: RFj2hl
+
+- Response violates schema
+
+    "2026-08-25T12:55:14.284584" is not a "date-time"
+
+    Validated against the response schema for status code 200.
+
+    Schema at /properties/createdAt:
+
+        {
+            "format": "date-time",
+            "type": "string"
+        }
+
+    Value:
+
+        "2026-08-25T12:55:14.284584"
+
+[200] OK:
+
+    `{"completed":false,"createdAt":"2026-08-25T12:55:14.284584","description":"-362","id":145,"priority":-188706489,"title":"-4294967296"}`
+
+Reproduce with:
+
+    curl -X PUT -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{}' http://localhost:8080/tasks/145</failure>
+    </testcase>
+    <testcase name="GET /tasks/{id}" time="0.017817">
+      <failure type="failure">1. Test Case ID: EKUy9a
+
+- Undocumented HTTP status code
+
+    Received: 401
+    Documented: 200
+
+[401] Unauthorized:
+
+    &lt;EMPTY&gt;
+
+Reproduce with:
+
+    curl -X GET http://localhost:8080/tasks/148</failure>
+      <failure type="failure">1. Test Case ID: TPp5b1
+
+- Response violates schema
+
+    "2026-08-25T12:55:14.610076" is not a "date-time"
+
+    Validated against the response schema for status code 200.
+
+    Schema at /properties/createdAt:
+
+        {
+            "format": "date-time",
+            "type": "string"
+        }
+
+    Value:
+
+        "2026-08-25T12:55:14.610076"
+
+[200] OK:
+
+    `{"completed":false,"createdAt":"2026-08-25T12:55:14.610076","description":"§º򇪜򎜷\u0003Sz1","id":148,"priority":-44,"title":"?"}`
+
+Reproduce with:
+
+    curl -X GET -H 'Authorization: [Filtered]' http://localhost:8080/tasks/148</failure>
+    </testcase>
+    <testcase name="DELETE /tasks/{id}" time="0.046429">
+      <failure type="failure">1. Test Case ID: NRKPJ9
+
+- Undocumented HTTP status code
+
+    Received: 401
+    Documented: 200
+
+[401] Unauthorized:
+
+    &lt;EMPTY&gt;
+
+Reproduce with:
+
+    curl -X DELETE http://localhost:8080/tasks/157</failure>
+      <failure type="failure">1. Test Case ID: PPX96Q
+
+- Response violates schema
+
+    "2026-08-25T12:55:14.284584" is not a "date-time"
+
+    Validated against the response schema for status code 200.
+
+    Schema at /properties/createdAt:
+
+        {
+            "format": "date-time",
+            "type": "string"
+        }
+
+    Value:
+
+        "2026-08-25T12:55:14.284584"
+
+[200] OK:
+
+    `{"completed":false,"createdAt":"2026-08-25T12:55:14.284584","description":"-362","id":145,"priority":-188706489,"title":"-4294967296"}`
+
+Reproduce with:
+
+    curl -X DELETE -H 'Authorization: [Filtered]' http://localhost:8080/tasks/145</failure>
+    </testcase>
+    <testcase name="Stateful tests" time="26.998556">
+      <failure type="failure">1. Test Case ID: mXur2e
+
+- Response violates schema
+
+    "2026-08-25T13:14:17.2374518" is not a "date-time"
+
+    Validated against the response schema for status code 200.
+
+    Schema at /properties/createdAt:
+
+        {
+            "format": "date-time",
+            "type": "string"
+        }
+
+    Value:
+
+        "2026-08-25T13:14:17.2374518"
+
+[200] OK:
+
+    `{"completed":false,"createdAt":"2026-08-25T13:14:17.2374518","description":"-362","id":248,"priority":1068,"title":"®®򅏈uZ«󾳱ê\u0018Gñµ񧡆\u001B^"}`
+
+Reproduce with:
+
+    curl -X POST -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{"\u00f0": null, "description": "-362", "title": "\u00ae\u00ae\ud9d4\udfc8uZ\u00ab\udbbb\udcf1\u00ea\u0018G\u00f1\u0082\u00b5\ud95e\udc46\u001b^", "priority": 1068}' http://localhost:8080/tasks</failure>
+      <failure type="failure">1. Test Case ID: kvxLfM
+
+- Undocumented HTTP status code
+
+    Received: 400
+    Documented: 200
+
+[400] Bad Request:
+
+    `{"timestamp":"2026-08-25T10:14:17.642Z","status":400,"error":"Bad Request","path":"/tasks/251"}`
+
+Reproduce with:
+
+    curl -X POST -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{"description": "-362", "title": "?", "priority": 250}' http://localhost:8080/tasks
+    curl -X PUT -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d $'�hȖ��v&lt;pvi��\x0e�=r���' http://localhost:8080/tasks/251</failure>
+      <failure type="failure">1. Test Case ID: YRyrtE
+
+- Undocumented HTTP status code
+
+    Received: 400
+    Documented: 200
+
+[400] Bad Request:
+
+    `{"timestamp":"2026-08-25T10:14:17.775Z","status":400,"error":"Bad Request","path":"/tasks"}`
+
+Reproduce with:
+
+    curl -X POST -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d $'\x00' http://localhost:8080/tasks</failure>
+      <failure type="failure">1. Test Case ID: Ny27BY
+
+- Response violates schema
+
+    null is not of type "string"
+
+    Validated against the response schema for status code 200.
+
+    Schema at /properties/description:
+
+        {
+            "type": "string"
+        }
+
+    Value:
+
+        null
+
+[200] OK:
+
+    `{"completed":false,"createdAt":"2026-08-25T13:14:17.9057462","description":null,"id":254,"priority":-28272,"title":"-4294967296"}`
+
+Reproduce with:
+
+    curl -X POST -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{"": [[], -5e-324], "\u00ef\u00ceGz}N\u007f9\u00dd\udbcf\udf15\u00f7\u0086": [false, null], "\u0093": [], "priority": -28272, "title": "-4294967296"}' http://localhost:8080/tasks</failure>
+      <failure type="failure">1. Test Case ID: 9NSewV
+
+- Response violates schema
+
+    null is not of type "string"
+
+    Validated against the response schema for status code 200.
+
+    Schema at /properties/description:
+
+        {
+            "type": "string"
+        }
+
+    Value:
+
+        null
+
+[200] OK:
+
+    `{"completed":false,"createdAt":"2026-08-25T13:14:18.780209","description":null,"id":262,"priority":-28272,"title":"-4294967296"}`
+
+Reproduce with:
+
+    curl -X POST -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{"": [[], -5e-324], "\u00ef\u00ceGz}N\u007f9\u00dd\udbcf\udf15\u00f7\u0086": [false, null], "\u0093": [], "priority": -28272, "title": "-4294967296"}' http://localhost:8080/tasks
+    curl -X GET -H 'Authorization: [Filtered]' http://localhost:8080/tasks/262</failure>
+      <failure type="failure">1. Test Case ID: pZn9QF
+
+- Response violates schema
+
+    null is not of type "string"
+
+    Validated against the response schema for status code 200.
+
+    Schema at /properties/description:
+
+        {
+            "type": "string"
+        }
+
+    Value:
+
+        null
+
+[200] OK:
+
+    `{"completed":false,"createdAt":"2026-08-25T13:14:18.873309","description":null,"id":263,"priority":41371,"title":"򊝦\u0014qV纋½hÉ񙤡"}`
+
+Reproduce with:
+
+    curl -X POST -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{"": [[], -5e-324], "\u00ef\u00ceGz}N\u007f9\u00dd\udbcf\udf15\u00f7\u0086": [false, null], "\u0093": [], "priority": -28272, "title": "-4294967296"}' http://localhost:8080/tasks
+    curl -X PUT -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{"": [[], {"Infinity": null}], "[H\u00d9\u00ef\uab09\ud8be\udf02\u00b99": {"\uda5d\udd831": "W\u00a4B\u0092", "0..0": true}, "-": false, ":@\udbf2\udf02\ud984\uded5\u00c7\u0003\ud8b4\udc39\u00c3\u00e9\u001d\u000b\u0091\u0085": {"&lt;\u00c8\u0018El\u0081\ud873\ude3cG\ud80e\ude23\u00ad\u0099\u001cC\u0015uE\u0099\u00e7U": [null, "\udb02\udf35x\u00e2\udbac\udce6", -3.5187988837155524e+16]}, "e\u00ba\u00a0\u009c\u00bf1\ud94e\udffc\u00fd\u00ee\ud879\udf54": {"\u00a0\r": 6.909399489699534e-13}, "title": "\ud9e9\udf66\u0088\u0014qV\u7e8b\u00bd\u0088h\u0089\u00c9\ud926\udd21", "priority": 41371}' http://localhost:8080/tasks/263</failure>
+      <failure type="failure">1. Test Case ID: TrjatD
+
+- Response violates schema
+
+    null is not of type "string"
+
+    Validated against the response schema for status code 200.
+
+    Schema at /properties/description:
+
+        {
+            "type": "string"
+        }
+
+    Value:
+
+        null
+
+[200] OK:
+
+    `{"completed":false,"createdAt":"2026-08-25T13:14:18.98287","description":null,"id":264,"priority":-28272,"title":"-4294967296"}`
+
+Reproduce with:
+
+    curl -X POST -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{"": [[], -5e-324], "\u00ef\u00ceGz}N\u007f9\u00dd\udbcf\udf15\u00f7\u0086": [false, null], "\u0093": [], "priority": -28272, "title": "-4294967296"}' http://localhost:8080/tasks
+    curl -X DELETE -H 'Authorization: [Filtered]' http://localhost:8080/tasks/264</failure>
+      <failure type="failure">1. Test Case ID: YhE5YI
+
+- Use after free
+
+    The API did not return a `HTTP 404 Not Found` response (got `HTTP 200 OK`) for a resource that was previously deleted.
+
+    The resource was deleted with `DELETE /tasks/177`
+
+- Response violates schema (5 violations)
+
+    null is not of type "boolean"
+
+    Validated against the response schema for status code 200.
+
+    Schema at /properties/completed:
+
+        {
+            "type": "boolean"
+        }
+
+    Value:
+
+        null
+
+    null is not of type "integer"
+
+    Validated against the response schema for status code 200.
+
+    Schema at /properties/id:
+
+        {
+            "type": "integer",
+            "format": "int64"
+        }
+
+    Value:
+
+        null
+
+    null is not of type "integer"
+
+    Validated against the response schema for status code 200.
+
+    Schema at /properties/priority:
+
+        {
+            "type": "integer",
+            "format": "int32"
+        }
+
+    Value:
+
+        null
+
+    null is not of type "string"
+
+    Validated against the response schema for status code 200.
+
+    Schema at /properties/createdAt:
+
+        {
+            "type": "string",
+            "format": "date-time"
+        }
+
+    Value:
+
+        null
+
+    null is not of type "string"
+
+    Validated against the response schema for status code 200.
+
+    Schema at /properties/title:
+
+        {
+            "type": "string"
+        }
+
+    Value:
+
+        null
+
+[200] OK:
+
+    `{"completed":null,"createdAt":null,"description":null,"id":null,"priority":null,"title":null}`
+
+Reproduce with:
+
+    curl -X GET -H 'Authorization: [Filtered]' http://localhost:8080/tasks
+    curl -X PUT -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{"completed": false, "title": "\ud92d\udf04T\u00e8\udb41\udf03a\ud96f\udf78\u0091\u00e2,i]\u0082\ud9ff\ude579\u0010\u00bc\uda0a\ude36@c\u0091", "priority": 1205749}' http://localhost:8080/tasks/177
+    curl -X DELETE -H 'Authorization: [Filtered]' http://localhost:8080/tasks/177
+    curl -X GET -H 'Authorization: [Filtered]' http://localhost:8080/tasks/177</failure>
+      <failure type="failure">1. Test Case ID: qnaRIs
+
+- API accepted schema-violating request
+
+    Invalid data should have been rejected
+    Expected: 400, 401, 403, 404, 405, 406, 409, 422, 428, 5xx
+    Invalid component: in body - violates `type` at /properties/title (was string, became number)
+
+[200] OK:
+
+    `{"completed":false,"createdAt":"2026-08-25T13:14:21.362542","description":"q","id":279,"priority":-380,"title":"-7.119245319519188e+88"}`
+
+Reproduce with:
+
+    curl -X POST -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{"priority": -380, "title": "undefined", "description": "q"}' http://localhost:8080/tasks
+    curl -X PUT -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{"title": -7.119245319519188e+88}' http://localhost:8080/tasks/279</failure>
+      <failure type="failure">1. Test Case ID: 1DGRh7
+
+- Undocumented HTTP status code
+
+    Received: 404
+    Documented: 200
+
+[404] Not Found:
+
+    &lt;EMPTY&gt;
+
+Reproduce with:
+
+    curl -X GET -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' http://localhost:8080/tasks
+    curl -X DELETE -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' http://localhost:8080/tasks/195
+    curl -X PUT -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{}' http://localhost:8080/tasks/195</failure>
+      <failure type="failure">1. Test Case ID: xZsiyB
+
+- Undocumented HTTP status code
+
+    Received: 404
+    Documented: 200
+
+[404] Not Found:
+
+    &lt;EMPTY&gt;
+
+Reproduce with:
+
+    curl -X POST -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{"description": "-362", "title": "-4294967296"}' http://localhost:8080/tasks
+    curl -X DELETE -H 'Authorization: [Filtered]' http://localhost:8080/tasks/282</failure>
+      <failure type="failure">1. Test Case ID: dSami8
+
+- Undocumented HTTP status code
+
+    Received: 400
+    Documented: 200
+
+[400] Bad Request:
+
+    `{"timestamp":"2026-08-25T10:14:24.430Z","status":400,"error":"Bad Request","path":"/tasks/124746904293618630000640"}`
+
+Reproduce with:
+
+    curl -X GET -H 'Authorization: [Filtered]' http://localhost:8080/tasks
+    curl -X GET -H 'Authorization: [Filtered]' http://localhost:8080/tasks/176
+    curl -X DELETE -H 'Authorization: [Filtered]' http://localhost:8080/tasks/124746904293618630000640</failure>
+      <failure type="failure">1. Test Case ID: Fzj4rT
+
+- API accepted schema-violating request
+
+    Invalid data should have been rejected
+    Expected: 400, 401, 403, 404, 405, 406, 409, 422, 428, 5xx
+    Invalid component: in body
+      - violates `type` at /properties/description (was string, became integer)
+      - violates `type` at /properties/title (was string, became integer)
+
+[200] OK:
+
+    `{"completed":false,"createdAt":"2026-08-25T13:14:29.9255851","description":"-60092249","id":327,"priority":1,"title":"-953204547609716864"}`
+
+Reproduce with:
+
+    curl -X POST -H 'Authorization: [Filtered]' -H 'Content-Type: application/json' -d '{"\u00c9\udb37\udc16\ud97c\udc92A\u0012O\u0007+\ud850\udec2@": -1469157187, "\u00f6": {}, "description": -60092249, "title": -953204547609716864}' http://localhost:8080/tasks</failure>
+    </testcase>
+  </testsuite>
+</testsuites>
