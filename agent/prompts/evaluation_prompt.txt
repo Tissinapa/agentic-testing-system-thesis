@@ -9,6 +9,9 @@ Consider:
 - Could this indicate a security vulnerability?
 
 Return ONLY a valid JSON array. No explanation, no markdown, no backticks.
+Keep reasoning concise maximum 2 sentences per test case.
+Use only simple ASCII characters in your response.
+Do not include newlines inside string values.
 
 Each evaluation must have exactly these fields:
 [
@@ -18,7 +21,7 @@ Each evaluation must have exactly these fields:
         "passed": true,
         "bug_detected": false,
         "verdict": "short one-line verdict",
-        "reasoning": "detailed explanation of why this is or is not a bug"
+        "reasoning": "one or two sentence explanation"
     }}
 ]
 

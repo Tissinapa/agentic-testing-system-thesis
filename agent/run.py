@@ -57,6 +57,12 @@ def parse_args():
         default=None,
         help="Path to source code file for white-box mode"            
     )
+    parser.add_argument(
+        "--auth-token",
+        type=str,
+        default=None,
+        help="Authentication token"
+    )
     
     return parser.parse_args()
 
@@ -80,6 +86,7 @@ async def run(args):
         mode= args.mode,
         max_iterations= args.max_iterations,
         token_budget= args.token_budget,
+        auth_token= args.auth_token
     )
     initial_state: AgentState={
         "config": config,
@@ -107,7 +114,7 @@ async def run(args):
     print(f"Agent finished after {final_state['iteration']} iteration")
     print(f"Tokens used: {final_state['token_usage']}")
     print(f"Test cases generated: {len(final_state['test_cases'])}")
-    print(f"Bugs detected: {len([ e for e in final_state['evaluations'] if e.bugs_detecated])}")
+    print(f"Bugs detected: {len([ e for e in final_state['evaluations'] if e.bug_detected])}")
     
     output = export_results(final_state, args.target)
     return output

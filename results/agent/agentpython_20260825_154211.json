@@ -1,0 +1,2160 @@
+{
+  "meta": {
+    "target": "python",
+    "timestamp": "2026-08-25T15:42:11.829716",
+    "base_url": "http://localhost:8000",
+    "spec_url": "http://localhost:8000/openapi.json",
+    "iterations": 1,
+    "token_usage": 19073,
+    "termination_reason": null
+  },
+  "summary": {
+    "test_cases_generated": 65,
+    "tests_executed": 65,
+    "bugs_detected": 40,
+    "false_positives": 0,
+    "endpoints_covered": 10
+  },
+  "test_cases": [
+    {
+      "id": "TC-6392EFB7",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "username": "testuser",
+        "password": "testpass123"
+      },
+      "expected_status": 200,
+      "rationale": "Happy path login with valid credentials should return 200 with a token response."
+    },
+    {
+      "id": "TC-0F7114C7",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "password": "testpass123"
+      },
+      "expected_status": 422,
+      "rationale": "Missing required username field should trigger validation error 422."
+    },
+    {
+      "id": "TC-30303811",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "username": "testuser"
+      },
+      "expected_status": 422,
+      "rationale": "Missing required password field should trigger validation error 422."
+    },
+    {
+      "id": "TC-0B5887E8",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": {},
+      "expected_status": 422,
+      "rationale": "Empty payload with no fields should trigger validation error 422."
+    },
+    {
+      "id": "TC-1EB5FAA1",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "username": "",
+        "password": ""
+      },
+      "expected_status": 422,
+      "rationale": "Empty string values for username and password should be rejected as invalid."
+    },
+    {
+      "id": "TC-B68E31A4",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "username": "wronguser",
+        "password": "wrongpass"
+      },
+      "expected_status": 401,
+      "rationale": "Invalid credentials should return an unauthorized error, typically 401."
+    },
+    {
+      "id": "TC-C12F47CA",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "username": 12345,
+        "password": 67890
+      },
+      "expected_status": 422,
+      "rationale": "Numeric values instead of strings for username and password should fail validation."
+    },
+    {
+      "id": "TC-A5CC96DB",
+      "endpoint": "/health",
+      "method": "GET",
+      "headers": {},
+      "payload": {},
+      "expected_status": 200,
+      "rationale": "Health endpoint should always return 200 with no authentication required."
+    },
+    {
+      "id": "TC-E51318E9",
+      "endpoint": "/tasks",
+      "method": "GET",
+      "headers": {
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {},
+      "expected_status": 200,
+      "rationale": "Happy path get tasks with a valid authorization header should return 200 with a list of tasks."
+    },
+    {
+      "id": "TC-4FAC51A1",
+      "endpoint": "/tasks",
+      "method": "GET",
+      "headers": {},
+      "payload": {},
+      "expected_status": 401,
+      "rationale": "Getting tasks without any authorization header should be rejected as unauthorized."
+    },
+    {
+      "id": "TC-0C5D2501",
+      "endpoint": "/tasks",
+      "method": "GET",
+      "headers": {
+        "authorization": "Bearer invalidtoken"
+      },
+      "payload": {},
+      "expected_status": 401,
+      "rationale": "Getting tasks with an invalid or expired token should be rejected as unauthorized."
+    },
+    {
+      "id": "TC-6E6394F9",
+      "endpoint": "/tasks",
+      "method": "GET",
+      "headers": {
+        "authorization": ""
+      },
+      "payload": {},
+      "expected_status": 401,
+      "rationale": "Empty authorization header value should be treated as unauthenticated."
+    },
+    {
+      "id": "TC-BDEE2744",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {
+        "title": "My first task",
+        "description": "This is a test task"
+      },
+      "expected_status": 200,
+      "rationale": "Happy path create task with valid token and required fields should return 200 with created task."
+    },
+    {
+      "id": "TC-360A7131",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {
+        "title": "Task with no description"
+      },
+      "expected_status": 200,
+      "rationale": "Creating a task with only the title field should succeed if description is optional."
+    },
+    {
+      "id": "TC-8E2DF05C",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {},
+      "expected_status": 422,
+      "rationale": "Creating a task with an empty payload should fail if title is required."
+    },
+    {
+      "id": "TC-410D3AFF",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {
+        "title": ""
+      },
+      "expected_status": 422,
+      "rationale": "Creating a task with an empty string title should fail validation."
+    },
+    {
+      "id": "TC-5CE7DC0F",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "title": "Unauthorized task"
+      },
+      "expected_status": 401,
+      "rationale": "Creating a task without an authorization header should be rejected as unauthorized."
+    },
+    {
+      "id": "TC-F4B89345",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "authorization": "Bearer invalidtoken"
+      },
+      "payload": {
+        "title": "Unauthorized task"
+      },
+      "expected_status": 401,
+      "rationale": "Creating a task with an invalid token should be rejected as unauthorized."
+    },
+    {
+      "id": "TC-DC8C9CC1",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {
+        "title": 99999
+      },
+      "expected_status": 422,
+      "rationale": "Providing a numeric value for title instead of a string should fail validation."
+    },
+    {
+      "id": "TC-FAE327B8",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {
+        "title": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_status": 200,
+      "rationale": "Creating a task with a very long title tests boundary behavior for string length."
+    },
+    {
+      "id": "TC-54FA75ED",
+      "endpoint": "/tasks/1",
+      "method": "GET",
+      "headers": {
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {},
+      "expected_status": 200,
+      "rationale": "Happy path get task by valid integer ID with valid token should return 200 with task data."
+    },
+    {
+      "id": "TC-DB8D6F19",
+      "endpoint": "/tasks/99999",
+      "method": "GET",
+      "headers": {
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {},
+      "expected_status": 404,
+      "rationale": "Requesting a task with a non-existent ID should return 404 not found."
+    },
+    {
+      "id": "TC-39227205",
+      "endpoint": "/tasks/abc",
+      "method": "GET",
+      "headers": {
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {},
+      "expected_status": 422,
+      "rationale": "Providing a non-integer string as task_id should trigger validation error 422."
+    },
+    {
+      "id": "TC-D9062C59",
+      "endpoint": "/tasks/0",
+      "method": "GET",
+      "headers": {
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {},
+      "expected_status": 404,
+      "rationale": "Task ID of 0 is a boundary value and likely does not exist, expecting 404."
+    },
+    {
+      "id": "TC-C697F009",
+      "endpoint": "/tasks/1",
+      "method": "GET",
+      "headers": {},
+      "payload": {},
+      "expected_status": 401,
+      "rationale": "Getting a specific task without authorization header should be rejected as unauthorized."
+    },
+    {
+      "id": "TC-F6B93E57",
+      "endpoint": "/tasks/1",
+      "method": "GET",
+      "headers": {
+        "authorization": "Bearer invalidtoken"
+      },
+      "payload": {},
+      "expected_status": 401,
+      "rationale": "Getting a specific task with an invalid token should be rejected as unauthorized."
+    },
+    {
+      "id": "TC-AAAFB218",
+      "endpoint": "/tasks/1",
+      "method": "PUT",
+      "headers": {
+        "Content-Type": "application/json",
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {
+        "title": "Updated Task Title",
+        "description": "Updated description"
+      },
+      "expected_status": 200,
+      "rationale": "Happy path update task with valid token, valid ID, and valid fields should return 200."
+    },
+    {
+      "id": "TC-4B3561A8",
+      "endpoint": "/tasks/1",
+      "method": "PUT",
+      "headers": {
+        "Content-Type": "application/json",
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {
+        "title": "Updated Title Only"
+      },
+      "expected_status": 200,
+      "rationale": "Partial update with only title field should succeed if other fields are optional."
+    },
+    {
+      "id": "TC-AC32C978",
+      "endpoint": "/tasks/1",
+      "method": "PUT",
+      "headers": {
+        "Content-Type": "application/json",
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {},
+      "expected_status": 422,
+      "rationale": "Update task with empty payload should fail if at least one required field is expected."
+    },
+    {
+      "id": "TC-9F4792E0",
+      "endpoint": "/tasks/99999",
+      "method": "PUT",
+      "headers": {
+        "Content-Type": "application/json",
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {
+        "title": "Updated Task"
+      },
+      "expected_status": 404,
+      "rationale": "Updating a non-existent task ID should return 404 not found."
+    },
+    {
+      "id": "TC-5CF49A50",
+      "endpoint": "/tasks/1",
+      "method": "PUT",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "title": "Updated Task"
+      },
+      "expected_status": 401,
+      "rationale": "Updating a task without authorization header should be rejected as unauthorized."
+    },
+    {
+      "id": "TC-7E1B1EF0",
+      "endpoint": "/tasks/1",
+      "method": "PUT",
+      "headers": {
+        "Content-Type": "application/json",
+        "authorization": "Bearer invalidtoken"
+      },
+      "payload": {
+        "title": "Updated Task"
+      },
+      "expected_status": 401,
+      "rationale": "Updating a task with an invalid token should be rejected as unauthorized."
+    },
+    {
+      "id": "TC-119BA281",
+      "endpoint": "/tasks/abc",
+      "method": "PUT",
+      "headers": {
+        "Content-Type": "application/json",
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {
+        "title": "Updated Task"
+      },
+      "expected_status": 422,
+      "rationale": "Providing a non-integer string as task_id in PUT should trigger validation error 422."
+    },
+    {
+      "id": "TC-F78D4E6E",
+      "endpoint": "/tasks/1",
+      "method": "PUT",
+      "headers": {
+        "Content-Type": "application/json",
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {
+        "title": 12345
+      },
+      "expected_status": 422,
+      "rationale": "Providing a numeric value for title in update should fail validation with 422."
+    },
+    {
+      "id": "TC-64E7BF60",
+      "endpoint": "/tasks/1",
+      "method": "DELETE",
+      "headers": {
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {},
+      "expected_status": 200,
+      "rationale": "Happy path delete task with valid token and existing task ID should return 200."
+    },
+    {
+      "id": "TC-C1AAB40F",
+      "endpoint": "/tasks/99999",
+      "method": "DELETE",
+      "headers": {
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {},
+      "expected_status": 404,
+      "rationale": "Deleting a non-existent task ID should return 404 not found."
+    },
+    {
+      "id": "TC-66C3F493",
+      "endpoint": "/tasks/1",
+      "method": "DELETE",
+      "headers": {},
+      "payload": {},
+      "expected_status": 401,
+      "rationale": "Deleting a task without authorization header should be rejected as unauthorized."
+    },
+    {
+      "id": "TC-ED44F327",
+      "endpoint": "/tasks/1",
+      "method": "DELETE",
+      "headers": {
+        "authorization": "Bearer invalidtoken"
+      },
+      "payload": {},
+      "expected_status": 401,
+      "rationale": "Deleting a task with an invalid token should be rejected as unauthorized."
+    },
+    {
+      "id": "TC-FF970BBA",
+      "endpoint": "/tasks/abc",
+      "method": "DELETE",
+      "headers": {
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {},
+      "expected_status": 422,
+      "rationale": "Providing a non-integer string as task_id in DELETE should trigger validation error 422."
+    },
+    {
+      "id": "TC-CC1775B7",
+      "endpoint": "/tasks/0",
+      "method": "DELETE",
+      "headers": {
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {},
+      "expected_status": 404,
+      "rationale": "Task ID of 0 is a boundary edge case and likely does not exist, expecting 404."
+    },
+    {
+      "id": "TC-F03E39EA",
+      "endpoint": "/tasks/-1",
+      "method": "GET",
+      "headers": {
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {},
+      "expected_status": 404,
+      "rationale": "Negative task ID is an invalid edge case and should return 404 or 422."
+    },
+    {
+      "id": "TC-72DE900F",
+      "endpoint": "/tasks/-1",
+      "method": "DELETE",
+      "headers": {
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {},
+      "expected_status": 404,
+      "rationale": "Deleting with a negative task ID is an edge case that should return 404 or 422."
+    },
+    {
+      "id": "TC-491DCD9C",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {
+        "title": "Task",
+        "description": "desc",
+        "completed": true
+      },
+      "expected_status": 200,
+      "rationale": "Creating a task with optional boolean completed field set to true should succeed."
+    },
+    {
+      "id": "TC-72323198",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {
+        "title": "Task",
+        "completed": "notabool"
+      },
+      "expected_status": 422,
+      "rationale": "Providing a string instead of boolean for completed field should fail validation."
+    },
+    {
+      "id": "TC-048338D3",
+      "endpoint": "/tasks/1",
+      "method": "PUT",
+      "headers": {
+        "Content-Type": "application/json",
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {
+        "title": "",
+        "description": "Some description"
+      },
+      "expected_status": 422,
+      "rationale": "Updating a task with an empty title string should fail validation."
+    },
+    {
+      "id": "TC-NEW-001",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "username": null,
+        "password": "testpass123"
+      },
+      "expected_status": 422,
+      "rationale": "Null value for username should fail validation with 422 as the field expects a string type"
+    },
+    {
+      "id": "TC-NEW-002",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "username": "testuser",
+        "password": null
+      },
+      "expected_status": 422,
+      "rationale": "Null value for password should fail validation with 422 as the field expects a string type"
+    },
+    {
+      "id": "TC-NEW-003",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "text/plain"
+      },
+      "payload": null,
+      "expected_status": 422,
+      "rationale": "Sending login request with wrong Content-Type should be rejected since the endpoint expects application/json"
+    },
+    {
+      "id": "TC-NEW-004",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": null,
+      "expected_status": 422,
+      "rationale": "Malformed JSON body should return a validation or parse error rather than 200"
+    },
+    {
+      "id": "TC-NEW-005",
+      "endpoint": "/tasks",
+      "method": "GET",
+      "headers": {
+        "authorization": "invalidtoken_no_bearer_prefix"
+      },
+      "payload": {},
+      "expected_status": 401,
+      "rationale": "Authorization header without the Bearer prefix is malformed and should be rejected as unauthorized"
+    },
+    {
+      "id": "TC-NEW-006",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {
+        "title": null
+      },
+      "expected_status": 422,
+      "rationale": "Null value for the title field should fail validation since title is expected to be a string"
+    },
+    {
+      "id": "TC-NEW-007",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {
+        "title": "Task",
+        "description": 12345
+      },
+      "expected_status": 422,
+      "rationale": "Non-string type for description field should fail validation with 422"
+    },
+    {
+      "id": "TC-NEW-008",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {
+        "title": "Task",
+        "completed": false
+      },
+      "expected_status": 200,
+      "rationale": "Creating a task with completed explicitly set to false should succeed and confirms the false boolean value is handled correctly alongside the true case in TC-491DCD9C"
+    },
+    {
+      "id": "TC-NEW-009",
+      "endpoint": "/tasks/1",
+      "method": "PUT",
+      "headers": {
+        "Content-Type": "application/json",
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {
+        "title": null
+      },
+      "expected_status": 422,
+      "rationale": "Null value for title in a PUT update request should fail validation with 422"
+    },
+    {
+      "id": "TC-NEW-010",
+      "endpoint": "/tasks/1",
+      "method": "PUT",
+      "headers": {
+        "Content-Type": "application/json",
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {
+        "completed": true
+      },
+      "expected_status": 200,
+      "rationale": "Updating only the completed boolean field should succeed if all TaskUpdate fields are optional, confirming partial update behavior for boolean fields"
+    },
+    {
+      "id": "TC-NEW-011",
+      "endpoint": "/tasks/1",
+      "method": "DELETE",
+      "headers": {
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {},
+      "expected_status": 404,
+      "rationale": "Deleting the same task a second time (idempotency test) should return 404 since the resource no longer exists after the first deletion"
+    },
+    {
+      "id": "TC-NEW-012",
+      "endpoint": "/tasks/9999999999",
+      "method": "GET",
+      "headers": {
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {},
+      "expected_status": 404,
+      "rationale": "Very large integer task_id tests upper boundary behavior and should return 404 for a non-existent resource without causing server errors"
+    },
+    {
+      "id": "TC-NEW-013",
+      "endpoint": "/tasks/9999999999",
+      "method": "PUT",
+      "headers": {
+        "Content-Type": "application/json",
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {
+        "title": "Boundary Title"
+      },
+      "expected_status": 404,
+      "rationale": "Very large integer task_id on PUT should return 404 without causing server overflow or 500 errors"
+    },
+    {
+      "id": "TC-NEW-014",
+      "endpoint": "/tasks/9999999999",
+      "method": "DELETE",
+      "headers": {
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {},
+      "expected_status": 404,
+      "rationale": "Very large integer task_id on DELETE should return 404 without causing server overflow or 500 errors"
+    },
+    {
+      "id": "TC-NEW-015",
+      "endpoint": "/tasks/1.5",
+      "method": "GET",
+      "headers": {
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {},
+      "expected_status": 422,
+      "rationale": "Float/decimal value for task_id path parameter should fail validation since task_id expects an integer type"
+    },
+    {
+      "id": "TC-NEW-016",
+      "endpoint": "/health",
+      "method": "POST",
+      "headers": {},
+      "payload": {},
+      "expected_status": 405,
+      "rationale": "The /health endpoint only supports GET; sending a POST request should return 405 Method Not Allowed to confirm proper HTTP method enforcement"
+    },
+    {
+      "id": "TC-NEW-017",
+      "endpoint": "/tasks",
+      "method": "GET",
+      "headers": {
+        "authorization": "Bearer validtoken123"
+      },
+      "payload": {},
+      "expected_status": 200,
+      "rationale": "When no tasks exist for the authenticated user the response should still be 200 with an empty array rather than 404, validating the empty collection response behavior"
+    },
+    {
+      "id": "TC-NEW-018",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "username": "a",
+        "password": "b"
+      },
+      "expected_status": 401,
+      "rationale": "Single character username and password that do not match any valid credentials tests minimum length boundary and invalid credential rejection simultaneously"
+    },
+    {
+      "id": "TC-NEW-019",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "username": "testuser",
+        "password": "testpass123",
+        "extra_field": "should_be_ignored"
+      },
+      "expected_status": 200,
+      "rationale": "Extra unknown fields in the login payload should either be ignored and return 200 or be rejected; this verifies the API's handling of additional properties"
+    },
+    {
+      "id": "TC-NEW-020",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "authorization": "invalidtoken_no_bearer_prefix"
+      },
+      "payload": {
+        "title": "Test Task"
+      },
+      "expected_status": 401,
+      "rationale": "Malformed authorization header without Bearer prefix on POST /tasks should be rejected as unauthorized, covering the malformed token edge case for write operations"
+    }
+  ],
+  "results": [
+    {
+      "test_id": "TC-6392EFB7",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "status_received": 401,
+      "status_expected": 200,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-0F7114C7",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "status_received": 422,
+      "status_expected": 422,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-30303811",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "status_received": 422,
+      "status_expected": 422,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-0B5887E8",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "status_received": 422,
+      "status_expected": 422,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-1EB5FAA1",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "status_received": 401,
+      "status_expected": 422,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-B68E31A4",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "status_received": 401,
+      "status_expected": 401,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-C12F47CA",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "status_received": 422,
+      "status_expected": 422,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-A5CC96DB",
+      "endpoint": "/health",
+      "method": "GET",
+      "status_received": 200,
+      "status_expected": 200,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-E51318E9",
+      "endpoint": "/tasks",
+      "method": "GET",
+      "status_received": 401,
+      "status_expected": 200,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-4FAC51A1",
+      "endpoint": "/tasks",
+      "method": "GET",
+      "status_received": 401,
+      "status_expected": 401,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-0C5D2501",
+      "endpoint": "/tasks",
+      "method": "GET",
+      "status_received": 401,
+      "status_expected": 401,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-6E6394F9",
+      "endpoint": "/tasks",
+      "method": "GET",
+      "status_received": 401,
+      "status_expected": 401,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-BDEE2744",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "status_received": 401,
+      "status_expected": 200,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-360A7131",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "status_received": 401,
+      "status_expected": 200,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-8E2DF05C",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "status_received": 401,
+      "status_expected": 422,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-410D3AFF",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "status_received": 401,
+      "status_expected": 422,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-5CE7DC0F",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "status_received": 401,
+      "status_expected": 401,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-F4B89345",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "status_received": 401,
+      "status_expected": 401,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-DC8C9CC1",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "status_received": 401,
+      "status_expected": 422,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-FAE327B8",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "status_received": 401,
+      "status_expected": 200,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-54FA75ED",
+      "endpoint": "/tasks/1",
+      "method": "GET",
+      "status_received": 401,
+      "status_expected": 200,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-DB8D6F19",
+      "endpoint": "/tasks/99999",
+      "method": "GET",
+      "status_received": 401,
+      "status_expected": 404,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-39227205",
+      "endpoint": "/tasks/abc",
+      "method": "GET",
+      "status_received": 401,
+      "status_expected": 422,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-D9062C59",
+      "endpoint": "/tasks/0",
+      "method": "GET",
+      "status_received": 401,
+      "status_expected": 404,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-C697F009",
+      "endpoint": "/tasks/1",
+      "method": "GET",
+      "status_received": 401,
+      "status_expected": 401,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-F6B93E57",
+      "endpoint": "/tasks/1",
+      "method": "GET",
+      "status_received": 401,
+      "status_expected": 401,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-AAAFB218",
+      "endpoint": "/tasks/1",
+      "method": "PUT",
+      "status_received": 401,
+      "status_expected": 200,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-4B3561A8",
+      "endpoint": "/tasks/1",
+      "method": "PUT",
+      "status_received": 401,
+      "status_expected": 200,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-AC32C978",
+      "endpoint": "/tasks/1",
+      "method": "PUT",
+      "status_received": 401,
+      "status_expected": 422,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-9F4792E0",
+      "endpoint": "/tasks/99999",
+      "method": "PUT",
+      "status_received": 401,
+      "status_expected": 404,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-5CF49A50",
+      "endpoint": "/tasks/1",
+      "method": "PUT",
+      "status_received": 401,
+      "status_expected": 401,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-7E1B1EF0",
+      "endpoint": "/tasks/1",
+      "method": "PUT",
+      "status_received": 401,
+      "status_expected": 401,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-119BA281",
+      "endpoint": "/tasks/abc",
+      "method": "PUT",
+      "status_received": 401,
+      "status_expected": 422,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-F78D4E6E",
+      "endpoint": "/tasks/1",
+      "method": "PUT",
+      "status_received": 401,
+      "status_expected": 422,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-64E7BF60",
+      "endpoint": "/tasks/1",
+      "method": "DELETE",
+      "status_received": 401,
+      "status_expected": 200,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-C1AAB40F",
+      "endpoint": "/tasks/99999",
+      "method": "DELETE",
+      "status_received": 401,
+      "status_expected": 404,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-66C3F493",
+      "endpoint": "/tasks/1",
+      "method": "DELETE",
+      "status_received": 401,
+      "status_expected": 401,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-ED44F327",
+      "endpoint": "/tasks/1",
+      "method": "DELETE",
+      "status_received": 401,
+      "status_expected": 401,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-FF970BBA",
+      "endpoint": "/tasks/abc",
+      "method": "DELETE",
+      "status_received": 401,
+      "status_expected": 422,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-CC1775B7",
+      "endpoint": "/tasks/0",
+      "method": "DELETE",
+      "status_received": 401,
+      "status_expected": 404,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-F03E39EA",
+      "endpoint": "/tasks/-1",
+      "method": "GET",
+      "status_received": 401,
+      "status_expected": 404,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-72DE900F",
+      "endpoint": "/tasks/-1",
+      "method": "DELETE",
+      "status_received": 401,
+      "status_expected": 404,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-491DCD9C",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "status_received": 401,
+      "status_expected": 200,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-72323198",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "status_received": 401,
+      "status_expected": 422,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-048338D3",
+      "endpoint": "/tasks/1",
+      "method": "PUT",
+      "status_received": 401,
+      "status_expected": 422,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-NEW-001",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "status_received": 422,
+      "status_expected": 422,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-NEW-002",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "status_received": 422,
+      "status_expected": 422,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-NEW-003",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "status_received": 422,
+      "status_expected": 422,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-NEW-004",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "status_received": 422,
+      "status_expected": 422,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-NEW-005",
+      "endpoint": "/tasks",
+      "method": "GET",
+      "status_received": 401,
+      "status_expected": 401,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-NEW-006",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "status_received": 401,
+      "status_expected": 422,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-NEW-007",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "status_received": 401,
+      "status_expected": 422,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-NEW-008",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "status_received": 401,
+      "status_expected": 200,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-NEW-009",
+      "endpoint": "/tasks/1",
+      "method": "PUT",
+      "status_received": 401,
+      "status_expected": 422,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-NEW-010",
+      "endpoint": "/tasks/1",
+      "method": "PUT",
+      "status_received": 401,
+      "status_expected": 200,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-NEW-011",
+      "endpoint": "/tasks/1",
+      "method": "DELETE",
+      "status_received": 401,
+      "status_expected": 404,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-NEW-012",
+      "endpoint": "/tasks/9999999999",
+      "method": "GET",
+      "status_received": 401,
+      "status_expected": 404,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-NEW-013",
+      "endpoint": "/tasks/9999999999",
+      "method": "PUT",
+      "status_received": 401,
+      "status_expected": 404,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-NEW-014",
+      "endpoint": "/tasks/9999999999",
+      "method": "DELETE",
+      "status_received": 401,
+      "status_expected": 404,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-NEW-015",
+      "endpoint": "/tasks/1.5",
+      "method": "GET",
+      "status_received": 401,
+      "status_expected": 422,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-NEW-016",
+      "endpoint": "/health",
+      "method": "POST",
+      "status_received": 405,
+      "status_expected": 405,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-NEW-017",
+      "endpoint": "/tasks",
+      "method": "GET",
+      "status_received": 401,
+      "status_expected": 200,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-NEW-018",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "status_received": 401,
+      "status_expected": 401,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-NEW-019",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "status_received": 401,
+      "status_expected": 200,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-NEW-020",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "status_received": 401,
+      "status_expected": 401,
+      "passed": true,
+      "error": null
+    }
+  ],
+  "evaluations": [
+    {
+      "test_id": "TC-6392EFB7",
+      "endpoint": "/auth/login",
+      "bug_detected": true,
+      "verdict": "Valid credentials rejected with 401",
+      "resoning": "The happy path login with valid credentials returned 401 instead of the expected 200. This indicates either the test user does not exist in the system or the authentication logic is broken."
+    },
+    {
+      "test_id": "TC-0F7114C7",
+      "endpoint": "/auth/login",
+      "bug_detected": false,
+      "verdict": "Missing username field correctly returns 422",
+      "resoning": "The API correctly validates that the username field is required and returns a proper 422 with a descriptive error message."
+    },
+    {
+      "test_id": "TC-30303811",
+      "endpoint": "/auth/login",
+      "bug_detected": false,
+      "verdict": "Missing password field correctly returns 422",
+      "resoning": "The API correctly validates that the password field is required and returns a proper 422 with a descriptive error message."
+    },
+    {
+      "test_id": "TC-0B5887E8",
+      "endpoint": "/auth/login",
+      "bug_detected": false,
+      "verdict": "Empty payload correctly returns 422 with both field errors",
+      "resoning": "The API correctly identifies both missing fields and returns detailed validation errors for each in the response."
+    },
+    {
+      "test_id": "TC-1EB5FAA1",
+      "endpoint": "/auth/login",
+      "bug_detected": true,
+      "verdict": "Empty string credentials should be rejected at validation level, not auth level",
+      "resoning": "Empty strings for username and password should fail input validation with a 422 rather than being processed as credentials and returning 401. This may indicate missing input validation for empty string values."
+    },
+    {
+      "test_id": "TC-B68E31A4",
+      "endpoint": "/auth/login",
+      "bug_detected": false,
+      "verdict": "Invalid credentials correctly return 401",
+      "resoning": "The API correctly rejects wrong credentials with a 401 Unauthorized response and an appropriate error message."
+    },
+    {
+      "test_id": "TC-C12F47CA",
+      "endpoint": "/auth/login",
+      "bug_detected": false,
+      "verdict": "Numeric username and password correctly rejected with 422",
+      "resoning": "The API correctly enforces string type validation for both username and password fields and returns detailed error information."
+    },
+    {
+      "test_id": "TC-A5CC96DB",
+      "endpoint": "/health",
+      "bug_detected": false,
+      "verdict": "Health endpoint returns 200 as expected",
+      "resoning": "The health check endpoint is publicly accessible and returns the expected status and body without requiring authentication."
+    },
+    {
+      "test_id": "TC-E51318E9",
+      "endpoint": "/tasks",
+      "bug_detected": true,
+      "verdict": "Valid bearer token rejected with 401",
+      "resoning": "A request with what should be a valid authorization token returned 401 instead of 200, suggesting the token is not being recognized or the token validation logic is failing."
+    },
+    {
+      "test_id": "TC-4FAC51A1",
+      "endpoint": "/tasks",
+      "bug_detected": false,
+      "verdict": "Missing authorization header correctly returns 401",
+      "resoning": "The API correctly enforces authentication on the tasks endpoint and rejects requests without an authorization header."
+    },
+    {
+      "test_id": "TC-0C5D2501",
+      "endpoint": "/tasks",
+      "bug_detected": false,
+      "verdict": "Invalid token correctly rejected with 401",
+      "resoning": "The API returned 401 as expected for an invalid token. Authentication guard is working correctly."
+    },
+    {
+      "test_id": "TC-6E6394F9",
+      "endpoint": "/tasks",
+      "bug_detected": false,
+      "verdict": "Empty authorization header correctly rejected with 401",
+      "resoning": "The API returned 401 as expected for an empty authorization header. Behavior is correct."
+    },
+    {
+      "test_id": "TC-BDEE2744",
+      "endpoint": "/tasks",
+      "bug_detected": true,
+      "verdict": "Valid token rejected with 401 on task creation",
+      "resoning": "A valid token was supplied but the API returned 401 Unauthorized instead of 200. This suggests the token 'validtoken123' is not being accepted, indicating a possible auth misconfiguration or the token is not actually valid in the test environment."
+    },
+    {
+      "test_id": "TC-360A7131",
+      "endpoint": "/tasks",
+      "bug_detected": true,
+      "verdict": "Valid token rejected with 401 on task creation with title only",
+      "resoning": "Same issue as TC-BDEE2744, the valid token is being rejected. The API should process the request and return 200 or a validation response, not 401."
+    },
+    {
+      "test_id": "TC-8E2DF05C",
+      "endpoint": "/tasks",
+      "bug_detected": true,
+      "verdict": "Auth check incorrectly takes priority over payload validation",
+      "resoning": "Even though an empty payload should yield 422, the API returned 401, indicating the token is being rejected before validation. If 'validtoken123' were valid, the expected 422 should be returned."
+    },
+    {
+      "test_id": "TC-410D3AFF",
+      "endpoint": "/tasks",
+      "bug_detected": true,
+      "verdict": "Valid token rejected; empty title validation never reached",
+      "resoning": "The API returned 401 instead of the expected 422 for an empty title. The auth failure with a supposedly valid token is the root bug here."
+    },
+    {
+      "test_id": "TC-5CE7DC0F",
+      "endpoint": "/tasks",
+      "bug_detected": false,
+      "verdict": "Missing authorization header correctly rejected with 401",
+      "resoning": "No authorization header was provided and the API correctly returned 401. This is the expected behavior."
+    },
+    {
+      "test_id": "TC-F4B89345",
+      "endpoint": "/tasks",
+      "bug_detected": false,
+      "verdict": "Invalid token correctly rejected with 401 on POST",
+      "resoning": "An invalid token was supplied and the API correctly returned 401. Authentication guard is working for invalid tokens."
+    },
+    {
+      "test_id": "TC-DC8C9CC1",
+      "endpoint": "/tasks",
+      "bug_detected": true,
+      "verdict": "Valid token rejected; numeric title type validation never reached",
+      "resoning": "Expected 422 for a numeric title field, but received 401 due to the same valid-token rejection bug seen in other test cases."
+    },
+    {
+      "test_id": "TC-FAE327B8",
+      "endpoint": "/tasks",
+      "bug_detected": true,
+      "verdict": "Valid token rejected with 401 on task creation with long title",
+      "resoning": "The API returned 401 instead of 200 for a request with a valid token and a long title. This is consistent with the broader bug where 'validtoken123' is not being recognized as valid."
+    },
+    {
+      "test_id": "TC-54FA75ED",
+      "endpoint": "/tasks/1",
+      "bug_detected": true,
+      "verdict": "Valid token rejected with 401 Unauthorized",
+      "resoning": "A valid bearer token should authenticate successfully and return 200 with task data. The API is incorrectly rejecting a valid token, indicating an authentication bug."
+    },
+    {
+      "test_id": "TC-DB8D6F19",
+      "endpoint": "/tasks/99999",
+      "bug_detected": true,
+      "verdict": "Auth check should pass before returning 404 for non-existent resource",
+      "resoning": "Even though the resource does not exist, the valid token should be authenticated first and then a 404 returned. Getting 401 with a valid token suggests the auth system is broken."
+    },
+    {
+      "test_id": "TC-39227205",
+      "endpoint": "/tasks/abc",
+      "bug_detected": true,
+      "verdict": "Input validation should trigger 422 before or alongside auth, but valid token rejected",
+      "resoning": "The API returns 401 even with a valid token, and the expected 422 for invalid path parameter type is never reached, indicating the auth layer is incorrectly blocking valid tokens."
+    },
+    {
+      "test_id": "TC-D9062C59",
+      "endpoint": "/tasks/0",
+      "bug_detected": true,
+      "verdict": "Valid token rejected with 401 on boundary ID 0",
+      "resoning": "A valid token should pass authentication and then return 404 for a non-existent task ID 0. Returning 401 indicates the auth mechanism is failing for valid tokens."
+    },
+    {
+      "test_id": "TC-C697F009",
+      "endpoint": "/tasks/1",
+      "bug_detected": false,
+      "verdict": "Missing auth header correctly returns 401",
+      "resoning": "Request without authorization header is correctly rejected with 401 Unauthorized as expected."
+    },
+    {
+      "test_id": "TC-F6B93E57",
+      "endpoint": "/tasks/1",
+      "bug_detected": false,
+      "verdict": "Invalid token correctly returns 401",
+      "resoning": "Request with an invalid bearer token is correctly rejected with 401 Unauthorized as expected."
+    },
+    {
+      "test_id": "TC-AAAFB218",
+      "endpoint": "/tasks/1",
+      "bug_detected": true,
+      "verdict": "Valid token rejected on PUT update request with 401",
+      "resoning": "A PUT request with a valid token and valid payload should return 200. The 401 response indicates the API is incorrectly rejecting a valid token across all authenticated endpoints."
+    },
+    {
+      "test_id": "TC-4B3561A8",
+      "endpoint": "/tasks/1",
+      "bug_detected": true,
+      "verdict": "Valid token rejected on partial PUT update with 401",
+      "resoning": "A partial update with a valid token should succeed and return 200. Receiving 401 confirms the API is failing to recognize valid tokens consistently."
+    },
+    {
+      "test_id": "TC-AC32C978",
+      "endpoint": "/tasks/1",
+      "bug_detected": true,
+      "verdict": "Empty payload PUT should return 422 after auth, not 401 with valid token",
+      "resoning": "With a valid token, authentication should succeed and then the empty payload should trigger a 422 validation error. Getting 401 means the valid token is being rejected incorrectly."
+    },
+    {
+      "test_id": "TC-9F4792E0",
+      "endpoint": "/tasks/99999",
+      "bug_detected": true,
+      "verdict": "Valid token rejected on PUT to non-existent task, expected 404",
+      "resoning": "With a valid token, the request should authenticate and then return 404 for the non-existent task ID 99999. The 401 response confirms a systemic bug with valid token authentication."
+    },
+    {
+      "test_id": "TC-5CF49A50",
+      "endpoint": "/tasks/1",
+      "bug_detected": false,
+      "verdict": "Correct rejection of unauthenticated PUT request",
+      "resoning": "API correctly returns 401 when no authorization header is provided. Behavior matches expectation."
+    },
+    {
+      "test_id": "TC-7E1B1EF0",
+      "endpoint": "/tasks/1",
+      "bug_detected": false,
+      "verdict": "Correct rejection of invalid token on PUT request",
+      "resoning": "API correctly returns 401 for an invalid bearer token. Behavior matches expectation."
+    },
+    {
+      "test_id": "TC-119BA281",
+      "endpoint": "/tasks/abc",
+      "bug_detected": true,
+      "verdict": "Auth check takes priority over path parameter validation, masking a potential bug",
+      "resoning": "Expected 422 for invalid path parameter but got 401, suggesting the token 'validtoken123' is not recognized as valid. If the token is supposed to be valid, the API should validate the path param and return 422 before or alongside auth, indicating either auth logic is incorrect or the test token is not accepted."
+    },
+    {
+      "test_id": "TC-F78D4E6E",
+      "endpoint": "/tasks/1",
+      "bug_detected": true,
+      "verdict": "Valid token rejected, API not processing authenticated requests correctly",
+      "resoning": "The token 'validtoken123' appears to not be accepted as valid by the API, causing all authenticated requests to fail with 401. This suggests the API is rejecting what should be a valid token, which is a bug."
+    },
+    {
+      "test_id": "TC-64E7BF60",
+      "endpoint": "/tasks/1",
+      "bug_detected": true,
+      "verdict": "Valid token rejected on DELETE, authenticated happy path fails",
+      "resoning": "API returns 401 instead of 200 for a DELETE request with a supposedly valid token. This indicates the API does not recognize 'validtoken123' as a valid token, breaking authenticated functionality."
+    },
+    {
+      "test_id": "TC-C1AAB40F",
+      "endpoint": "/tasks/99999",
+      "bug_detected": true,
+      "verdict": "Valid token rejected, cannot reach 404 logic for non-existent task",
+      "resoning": "API returns 401 instead of 404, meaning authentication fails before resource lookup. The token 'validtoken123' is not being accepted, preventing any authorized operation."
+    },
+    {
+      "test_id": "TC-66C3F493",
+      "endpoint": "/tasks/1",
+      "bug_detected": false,
+      "verdict": "Correct rejection of DELETE request with no authorization header",
+      "resoning": "API correctly returns 401 when no authorization header is present. Behavior matches expectation."
+    },
+    {
+      "test_id": "TC-ED44F327",
+      "endpoint": "/tasks/1",
+      "bug_detected": false,
+      "verdict": "Correct rejection of DELETE request with invalid token",
+      "resoning": "API correctly returns 401 for an invalid bearer token on DELETE. Behavior matches expectation."
+    },
+    {
+      "test_id": "TC-FF970BBA",
+      "endpoint": "/tasks/abc",
+      "bug_detected": true,
+      "verdict": "Auth failure masks path validation, valid token not recognized",
+      "resoning": "Expected 422 for non-integer task_id but got 401, indicating the token 'validtoken123' is not accepted. The API cannot reach validation logic because authentication itself is failing for supposedly valid tokens."
+    },
+    {
+      "test_id": "TC-CC1775B7",
+      "endpoint": "/tasks/0",
+      "bug_detected": true,
+      "verdict": "Valid token rejected, boundary edge case test blocked by auth failure",
+      "resoning": "API returns 401 instead of 404 for task ID 0, again indicating that 'validtoken123' is not treated as a valid token. This is a systemic auth bug affecting all tests using this token."
+    },
+    {
+      "test_id": "TC-F03E39EA",
+      "endpoint": "/tasks/-1",
+      "bug_detected": true,
+      "verdict": "Valid token rejected; auth middleware may not recognize the token format",
+      "resoning": "The test sends a supposedly valid Bearer token but receives 401 Unauthorized, suggesting the API is not accepting the token. This could indicate a bug in auth validation or the token is not truly valid in this environment, but since it is marked as validtoken123 and other similar tests fail the same way, it points to a systemic auth bug."
+    },
+    {
+      "test_id": "TC-72DE900F",
+      "endpoint": "/tasks/-1",
+      "bug_detected": true,
+      "verdict": "Valid token rejected on DELETE with negative ID; auth not processing valid token",
+      "resoning": "Same pattern as TC-F03E39EA: a supposedly valid Bearer token is rejected with 401. The API should authenticate first and then return 404 or 422 for the invalid ID."
+    },
+    {
+      "test_id": "TC-491DCD9C",
+      "endpoint": "/tasks",
+      "bug_detected": true,
+      "verdict": "Valid token rejected on POST /tasks; auth middleware failing for valid credentials",
+      "resoning": "A valid Bearer token is sent but the API returns 401, indicating authentication is broken for this endpoint or the token format is not being accepted correctly."
+    },
+    {
+      "test_id": "TC-72323198",
+      "endpoint": "/tasks",
+      "bug_detected": true,
+      "verdict": "Auth fails before validation; 422 not returned for invalid completed field",
+      "resoning": "Expected 422 for type mismatch on completed field, but got 401, meaning auth is rejecting the valid token before validation even runs. This is a compounded bug: auth failure and inability to verify validation behavior."
+    },
+    {
+      "test_id": "TC-048338D3",
+      "endpoint": "/tasks/1",
+      "bug_detected": true,
+      "verdict": "Valid token rejected on PUT /tasks/1; cannot verify empty title validation",
+      "resoning": "Again the valid Bearer token is rejected with 401 instead of processing the request and returning 422 for the empty title. The auth system is consistently failing for valid tokens."
+    },
+    {
+      "test_id": "TC-NEW-001",
+      "endpoint": "/auth/login",
+      "bug_detected": false,
+      "verdict": "Null username correctly rejected with 422 and proper validation detail",
+      "resoning": "The API correctly returns 422 with a clear string_type error for the null username field, matching the expected behavior."
+    },
+    {
+      "test_id": "TC-NEW-002",
+      "endpoint": "/auth/login",
+      "bug_detected": false,
+      "verdict": "Null password correctly rejected with 422 and proper validation detail",
+      "resoning": "The API correctly returns 422 with a clear string_type error for the null password field, matching the expected behavior."
+    },
+    {
+      "test_id": "TC-NEW-003",
+      "endpoint": "/auth/login",
+      "bug_detected": false,
+      "verdict": "Wrong Content-Type correctly rejected with 422",
+      "resoning": "The API correctly rejects the request with an incorrect Content-Type header, returning 422 with a missing body field error as expected."
+    },
+    {
+      "test_id": "TC-NEW-004",
+      "endpoint": "/auth/login",
+      "bug_detected": false,
+      "verdict": "Null body correctly rejected with 422 validation error",
+      "resoning": "The API correctly returns 422 when no body is provided, indicating proper request validation is in place."
+    },
+    {
+      "test_id": "TC-NEW-005",
+      "endpoint": "/tasks",
+      "bug_detected": false,
+      "verdict": "Malformed Authorization header without Bearer prefix correctly rejected with 401",
+      "resoning": "The API correctly rejects a token that lacks the Bearer prefix, returning 401 Unauthorized as expected."
+    },
+    {
+      "test_id": "TC-NEW-006",
+      "endpoint": "/tasks",
+      "bug_detected": true,
+      "verdict": "Auth rejected valid token; expected 422 for null title",
+      "resoning": "The token 'Bearer validtoken123' should be valid and the server should process the request to return 422 for null title. Returning 401 suggests the authentication middleware is rejecting a supposedly valid token, which is a bug."
+    },
+    {
+      "test_id": "TC-NEW-007",
+      "endpoint": "/tasks",
+      "bug_detected": true,
+      "verdict": "Auth rejected valid token; expected 422 for invalid description type",
+      "resoning": "Same pattern as TC-NEW-006 where a valid token is being rejected with 401 instead of processing the request and returning 422 for invalid field type."
+    },
+    {
+      "test_id": "TC-NEW-008",
+      "endpoint": "/tasks",
+      "bug_detected": true,
+      "verdict": "Auth rejected valid token; expected 200 for valid task creation",
+      "resoning": "A valid POST request with proper authorization token is being rejected with 401 instead of creating the task and returning 200, indicating an authentication bug."
+    },
+    {
+      "test_id": "TC-NEW-009",
+      "endpoint": "/tasks/1",
+      "bug_detected": true,
+      "verdict": "Auth rejected valid token on PUT; expected 422 for null title",
+      "resoning": "Valid token is again rejected with 401 on a PUT request; the server should have authenticated the user and then returned 422 for the null title value."
+    },
+    {
+      "test_id": "TC-NEW-010",
+      "endpoint": "/tasks/1",
+      "bug_detected": true,
+      "verdict": "Auth rejected valid token on partial PUT update; expected 200",
+      "resoning": "A valid partial update request with a correct authorization token is being rejected with 401, consistent with the recurring authentication bug seen across all test cases."
+    },
+    {
+      "test_id": "TC-NEW-011",
+      "endpoint": "/tasks/1",
+      "bug_detected": true,
+      "verdict": "Auth rejected valid token on DELETE; expected 404 for already-deleted task",
+      "resoning": "Valid token is rejected with 401 on DELETE, meaning the idempotency behavior cannot even be tested due to the authentication failure bug."
+    },
+    {
+      "test_id": "TC-NEW-012",
+      "endpoint": "/tasks/9999999999",
+      "bug_detected": true,
+      "verdict": "Auth rejected valid token on GET with large task_id; expected 404",
+      "resoning": "The server returns 401 instead of 404 for a non-existent large task_id, indicating the authentication middleware blocks the request before it can return the correct not-found response."
+    },
+    {
+      "test_id": "TC-NEW-013",
+      "endpoint": "/tasks/9999999999",
+      "bug_detected": true,
+      "verdict": "Auth rejected valid token on PUT with large task_id; expected 404",
+      "resoning": "Consistent with other test cases, the valid token is rejected with 401 before the server can validate the task_id and return the expected 404."
+    },
+    {
+      "test_id": "TC-NEW-014",
+      "endpoint": "/tasks/9999999999",
+      "bug_detected": true,
+      "verdict": "Auth rejected valid token on DELETE with large task_id; expected 404",
+      "resoning": "Same authentication bug pattern; the valid token is rejected with 401 rather than allowing the request to proceed and return 404 for the non-existent resource."
+    },
+    {
+      "test_id": "TC-NEW-015",
+      "endpoint": "/tasks/1.5",
+      "bug_detected": true,
+      "verdict": "Auth rejected valid token on GET with float task_id; expected 422",
+      "resoning": "The server returns 401 instead of 422 for a float path parameter, consistent with the systemic authentication bug affecting all test cases using 'Bearer validtoken123'."
+    },
+    {
+      "test_id": "TC-NEW-016",
+      "endpoint": "/health",
+      "bug_detected": false,
+      "verdict": "Correct 405 returned for unsupported POST on /health",
+      "resoning": "The API correctly enforces HTTP method restrictions on the /health endpoint. Response status and body are as expected."
+    },
+    {
+      "test_id": "TC-NEW-017",
+      "endpoint": "/tasks",
+      "bug_detected": true,
+      "verdict": "Valid Bearer token rejected as unauthorized on GET /tasks",
+      "resoning": "The token 'validtoken123' was sent with correct Bearer format but the API returned 401, suggesting the authentication mechanism may not be recognizing valid tokens or the token format is stricter than documented."
+    },
+    {
+      "test_id": "TC-NEW-018",
+      "endpoint": "/auth/login",
+      "bug_detected": false,
+      "verdict": "Invalid single-char credentials correctly rejected with 401",
+      "resoning": "The API properly returns 401 for credentials that do not match any valid account. Behavior is consistent with expected invalid credential rejection."
+    },
+    {
+      "test_id": "TC-NEW-019",
+      "endpoint": "/auth/login",
+      "bug_detected": true,
+      "verdict": "Valid credentials rejected when extra field is present in payload",
+      "resoning": "The credentials testuser/testpass123 were expected to be valid, but the API returned 401, suggesting the extra field may have caused payload rejection or the credentials are not actually registered in the test environment, making this a potential bug in extra field handling."
+    },
+    {
+      "test_id": "TC-NEW-020",
+      "endpoint": "/tasks",
+      "bug_detected": false,
+      "verdict": "Malformed authorization header without Bearer prefix correctly rejected",
+      "resoning": "The API properly rejects an authorization header missing the Bearer prefix with a 401 response. This confirms correct enforcement of the expected token format."
+    }
+  ],
+  "bugs": [
+    {
+      "test_id": "TC-6392EFB7",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "verdict": "Valid credentials rejected with 401",
+      "resoning": "The happy path login with valid credentials returned 401 instead of the expected 200. This indicates either the test user does not exist in the system or the authentication logic is broken."
+    },
+    {
+      "test_id": "TC-1EB5FAA1",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "verdict": "Empty string credentials should be rejected at validation level, not auth level",
+      "resoning": "Empty strings for username and password should fail input validation with a 422 rather than being processed as credentials and returning 401. This may indicate missing input validation for empty string values."
+    },
+    {
+      "test_id": "TC-E51318E9",
+      "endpoint": "/tasks",
+      "method": "GET",
+      "verdict": "Valid bearer token rejected with 401",
+      "resoning": "A request with what should be a valid authorization token returned 401 instead of 200, suggesting the token is not being recognized or the token validation logic is failing."
+    },
+    {
+      "test_id": "TC-BDEE2744",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "verdict": "Valid token rejected with 401 on task creation",
+      "resoning": "A valid token was supplied but the API returned 401 Unauthorized instead of 200. This suggests the token 'validtoken123' is not being accepted, indicating a possible auth misconfiguration or the token is not actually valid in the test environment."
+    },
+    {
+      "test_id": "TC-360A7131",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "verdict": "Valid token rejected with 401 on task creation with title only",
+      "resoning": "Same issue as TC-BDEE2744, the valid token is being rejected. The API should process the request and return 200 or a validation response, not 401."
+    },
+    {
+      "test_id": "TC-8E2DF05C",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "verdict": "Auth check incorrectly takes priority over payload validation",
+      "resoning": "Even though an empty payload should yield 422, the API returned 401, indicating the token is being rejected before validation. If 'validtoken123' were valid, the expected 422 should be returned."
+    },
+    {
+      "test_id": "TC-410D3AFF",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "verdict": "Valid token rejected; empty title validation never reached",
+      "resoning": "The API returned 401 instead of the expected 422 for an empty title. The auth failure with a supposedly valid token is the root bug here."
+    },
+    {
+      "test_id": "TC-DC8C9CC1",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "verdict": "Valid token rejected; numeric title type validation never reached",
+      "resoning": "Expected 422 for a numeric title field, but received 401 due to the same valid-token rejection bug seen in other test cases."
+    },
+    {
+      "test_id": "TC-FAE327B8",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "verdict": "Valid token rejected with 401 on task creation with long title",
+      "resoning": "The API returned 401 instead of 200 for a request with a valid token and a long title. This is consistent with the broader bug where 'validtoken123' is not being recognized as valid."
+    },
+    {
+      "test_id": "TC-54FA75ED",
+      "endpoint": "/tasks/1",
+      "method": "GET",
+      "verdict": "Valid token rejected with 401 Unauthorized",
+      "resoning": "A valid bearer token should authenticate successfully and return 200 with task data. The API is incorrectly rejecting a valid token, indicating an authentication bug."
+    },
+    {
+      "test_id": "TC-DB8D6F19",
+      "endpoint": "/tasks/99999",
+      "method": "GET",
+      "verdict": "Auth check should pass before returning 404 for non-existent resource",
+      "resoning": "Even though the resource does not exist, the valid token should be authenticated first and then a 404 returned. Getting 401 with a valid token suggests the auth system is broken."
+    },
+    {
+      "test_id": "TC-39227205",
+      "endpoint": "/tasks/abc",
+      "method": "GET",
+      "verdict": "Input validation should trigger 422 before or alongside auth, but valid token rejected",
+      "resoning": "The API returns 401 even with a valid token, and the expected 422 for invalid path parameter type is never reached, indicating the auth layer is incorrectly blocking valid tokens."
+    },
+    {
+      "test_id": "TC-D9062C59",
+      "endpoint": "/tasks/0",
+      "method": "GET",
+      "verdict": "Valid token rejected with 401 on boundary ID 0",
+      "resoning": "A valid token should pass authentication and then return 404 for a non-existent task ID 0. Returning 401 indicates the auth mechanism is failing for valid tokens."
+    },
+    {
+      "test_id": "TC-AAAFB218",
+      "endpoint": "/tasks/1",
+      "method": "PUT",
+      "verdict": "Valid token rejected on PUT update request with 401",
+      "resoning": "A PUT request with a valid token and valid payload should return 200. The 401 response indicates the API is incorrectly rejecting a valid token across all authenticated endpoints."
+    },
+    {
+      "test_id": "TC-4B3561A8",
+      "endpoint": "/tasks/1",
+      "method": "PUT",
+      "verdict": "Valid token rejected on partial PUT update with 401",
+      "resoning": "A partial update with a valid token should succeed and return 200. Receiving 401 confirms the API is failing to recognize valid tokens consistently."
+    },
+    {
+      "test_id": "TC-AC32C978",
+      "endpoint": "/tasks/1",
+      "method": "PUT",
+      "verdict": "Empty payload PUT should return 422 after auth, not 401 with valid token",
+      "resoning": "With a valid token, authentication should succeed and then the empty payload should trigger a 422 validation error. Getting 401 means the valid token is being rejected incorrectly."
+    },
+    {
+      "test_id": "TC-9F4792E0",
+      "endpoint": "/tasks/99999",
+      "method": "PUT",
+      "verdict": "Valid token rejected on PUT to non-existent task, expected 404",
+      "resoning": "With a valid token, the request should authenticate and then return 404 for the non-existent task ID 99999. The 401 response confirms a systemic bug with valid token authentication."
+    },
+    {
+      "test_id": "TC-119BA281",
+      "endpoint": "/tasks/abc",
+      "method": "PUT",
+      "verdict": "Auth check takes priority over path parameter validation, masking a potential bug",
+      "resoning": "Expected 422 for invalid path parameter but got 401, suggesting the token 'validtoken123' is not recognized as valid. If the token is supposed to be valid, the API should validate the path param and return 422 before or alongside auth, indicating either auth logic is incorrect or the test token is not accepted."
+    },
+    {
+      "test_id": "TC-F78D4E6E",
+      "endpoint": "/tasks/1",
+      "method": "PUT",
+      "verdict": "Valid token rejected, API not processing authenticated requests correctly",
+      "resoning": "The token 'validtoken123' appears to not be accepted as valid by the API, causing all authenticated requests to fail with 401. This suggests the API is rejecting what should be a valid token, which is a bug."
+    },
+    {
+      "test_id": "TC-64E7BF60",
+      "endpoint": "/tasks/1",
+      "method": "DELETE",
+      "verdict": "Valid token rejected on DELETE, authenticated happy path fails",
+      "resoning": "API returns 401 instead of 200 for a DELETE request with a supposedly valid token. This indicates the API does not recognize 'validtoken123' as a valid token, breaking authenticated functionality."
+    },
+    {
+      "test_id": "TC-C1AAB40F",
+      "endpoint": "/tasks/99999",
+      "method": "DELETE",
+      "verdict": "Valid token rejected, cannot reach 404 logic for non-existent task",
+      "resoning": "API returns 401 instead of 404, meaning authentication fails before resource lookup. The token 'validtoken123' is not being accepted, preventing any authorized operation."
+    },
+    {
+      "test_id": "TC-FF970BBA",
+      "endpoint": "/tasks/abc",
+      "method": "DELETE",
+      "verdict": "Auth failure masks path validation, valid token not recognized",
+      "resoning": "Expected 422 for non-integer task_id but got 401, indicating the token 'validtoken123' is not accepted. The API cannot reach validation logic because authentication itself is failing for supposedly valid tokens."
+    },
+    {
+      "test_id": "TC-CC1775B7",
+      "endpoint": "/tasks/0",
+      "method": "DELETE",
+      "verdict": "Valid token rejected, boundary edge case test blocked by auth failure",
+      "resoning": "API returns 401 instead of 404 for task ID 0, again indicating that 'validtoken123' is not treated as a valid token. This is a systemic auth bug affecting all tests using this token."
+    },
+    {
+      "test_id": "TC-F03E39EA",
+      "endpoint": "/tasks/-1",
+      "method": "GET",
+      "verdict": "Valid token rejected; auth middleware may not recognize the token format",
+      "resoning": "The test sends a supposedly valid Bearer token but receives 401 Unauthorized, suggesting the API is not accepting the token. This could indicate a bug in auth validation or the token is not truly valid in this environment, but since it is marked as validtoken123 and other similar tests fail the same way, it points to a systemic auth bug."
+    },
+    {
+      "test_id": "TC-72DE900F",
+      "endpoint": "/tasks/-1",
+      "method": "DELETE",
+      "verdict": "Valid token rejected on DELETE with negative ID; auth not processing valid token",
+      "resoning": "Same pattern as TC-F03E39EA: a supposedly valid Bearer token is rejected with 401. The API should authenticate first and then return 404 or 422 for the invalid ID."
+    },
+    {
+      "test_id": "TC-491DCD9C",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "verdict": "Valid token rejected on POST /tasks; auth middleware failing for valid credentials",
+      "resoning": "A valid Bearer token is sent but the API returns 401, indicating authentication is broken for this endpoint or the token format is not being accepted correctly."
+    },
+    {
+      "test_id": "TC-72323198",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "verdict": "Auth fails before validation; 422 not returned for invalid completed field",
+      "resoning": "Expected 422 for type mismatch on completed field, but got 401, meaning auth is rejecting the valid token before validation even runs. This is a compounded bug: auth failure and inability to verify validation behavior."
+    },
+    {
+      "test_id": "TC-048338D3",
+      "endpoint": "/tasks/1",
+      "method": "PUT",
+      "verdict": "Valid token rejected on PUT /tasks/1; cannot verify empty title validation",
+      "resoning": "Again the valid Bearer token is rejected with 401 instead of processing the request and returning 422 for the empty title. The auth system is consistently failing for valid tokens."
+    },
+    {
+      "test_id": "TC-NEW-006",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "verdict": "Auth rejected valid token; expected 422 for null title",
+      "resoning": "The token 'Bearer validtoken123' should be valid and the server should process the request to return 422 for null title. Returning 401 suggests the authentication middleware is rejecting a supposedly valid token, which is a bug."
+    },
+    {
+      "test_id": "TC-NEW-007",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "verdict": "Auth rejected valid token; expected 422 for invalid description type",
+      "resoning": "Same pattern as TC-NEW-006 where a valid token is being rejected with 401 instead of processing the request and returning 422 for invalid field type."
+    },
+    {
+      "test_id": "TC-NEW-008",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "verdict": "Auth rejected valid token; expected 200 for valid task creation",
+      "resoning": "A valid POST request with proper authorization token is being rejected with 401 instead of creating the task and returning 200, indicating an authentication bug."
+    },
+    {
+      "test_id": "TC-NEW-009",
+      "endpoint": "/tasks/1",
+      "method": "PUT",
+      "verdict": "Auth rejected valid token on PUT; expected 422 for null title",
+      "resoning": "Valid token is again rejected with 401 on a PUT request; the server should have authenticated the user and then returned 422 for the null title value."
+    },
+    {
+      "test_id": "TC-NEW-010",
+      "endpoint": "/tasks/1",
+      "method": "PUT",
+      "verdict": "Auth rejected valid token on partial PUT update; expected 200",
+      "resoning": "A valid partial update request with a correct authorization token is being rejected with 401, consistent with the recurring authentication bug seen across all test cases."
+    },
+    {
+      "test_id": "TC-NEW-011",
+      "endpoint": "/tasks/1",
+      "method": "DELETE",
+      "verdict": "Auth rejected valid token on DELETE; expected 404 for already-deleted task",
+      "resoning": "Valid token is rejected with 401 on DELETE, meaning the idempotency behavior cannot even be tested due to the authentication failure bug."
+    },
+    {
+      "test_id": "TC-NEW-012",
+      "endpoint": "/tasks/9999999999",
+      "method": "GET",
+      "verdict": "Auth rejected valid token on GET with large task_id; expected 404",
+      "resoning": "The server returns 401 instead of 404 for a non-existent large task_id, indicating the authentication middleware blocks the request before it can return the correct not-found response."
+    },
+    {
+      "test_id": "TC-NEW-013",
+      "endpoint": "/tasks/9999999999",
+      "method": "PUT",
+      "verdict": "Auth rejected valid token on PUT with large task_id; expected 404",
+      "resoning": "Consistent with other test cases, the valid token is rejected with 401 before the server can validate the task_id and return the expected 404."
+    },
+    {
+      "test_id": "TC-NEW-014",
+      "endpoint": "/tasks/9999999999",
+      "method": "DELETE",
+      "verdict": "Auth rejected valid token on DELETE with large task_id; expected 404",
+      "resoning": "Same authentication bug pattern; the valid token is rejected with 401 rather than allowing the request to proceed and return 404 for the non-existent resource."
+    },
+    {
+      "test_id": "TC-NEW-015",
+      "endpoint": "/tasks/1.5",
+      "method": "GET",
+      "verdict": "Auth rejected valid token on GET with float task_id; expected 422",
+      "resoning": "The server returns 401 instead of 422 for a float path parameter, consistent with the systemic authentication bug affecting all test cases using 'Bearer validtoken123'."
+    },
+    {
+      "test_id": "TC-NEW-017",
+      "endpoint": "/tasks",
+      "method": "GET",
+      "verdict": "Valid Bearer token rejected as unauthorized on GET /tasks",
+      "resoning": "The token 'validtoken123' was sent with correct Bearer format but the API returned 401, suggesting the authentication mechanism may not be recognizing valid tokens or the token format is stricter than documented."
+    },
+    {
+      "test_id": "TC-NEW-019",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "verdict": "Valid credentials rejected when extra field is present in payload",
+      "resoning": "The credentials testuser/testpass123 were expected to be valid, but the API returned 401, suggesting the extra field may have caused payload rejection or the credentials are not actually registered in the test environment, making this a potential bug in extra field handling."
+    }
+  ]
+}

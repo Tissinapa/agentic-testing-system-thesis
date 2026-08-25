@@ -1,6 +1,8 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 from typing import Optional, Literal, Union
 from typing_extensions import TypedDict
+import json
+
 
 
 
@@ -10,9 +12,18 @@ class ApiTestCase(BaseModel):
     endpoint: str       # api endpoint
     method: Literal["GET","POST","PUT","DELETE","PATCH"]
     headers: dict = {}
-    payload: Optional[dict] = None
+    payload: Optional[Union[dict,list]] = None
     expected_status: int 
     rationale: str      # why this test was generated
+    @field_validator('payload', mode='before')
+    @classmethod
+    def parse_payload(cls, v ):
+        if isinstance(v, str):
+            try:
+                return json.loads(v)
+            except Exception:
+                return None
+        return v
     
 
 
@@ -40,11 +51,11 @@ class EvaluationResult(BaseModel):
 class AgentConfig(BaseModel):
     base_url: str
     spec_url: str
-    
     target: Literal["java","python"] = "python"
     mode: Literal["black","white"] = "black"
     max_iterations: int = 3    #This can be changed later
     token_budget: int = 10000   #Change this later
+    auth_token: Optional[str] = None
     requirements: Optional[str] = None
     source_code: Optional[str] = None
         

@@ -38,3 +38,9 @@ uv run schemathesis run http://localhost:8080/v3/api-docs \
   -H "Authorization: Bearer validation-token-123" \
   --report junit \
   --report-dir results/schemathesis/java
+
+
+AGENT
+
+python -m agent.run --target python --base-url http://localhost:8000 --spec-url http://localhost:8000/openapi.json --max-iterations 2 --token-budget 5000
+python -m agent.run --target python --base-url http://localhost:8000 --spec-url http://localhost:8000/openapi.json --max-iterations 1 --token-budget 15000 --auth-token "Taman-ei-p1t1a1s-0lla-na1n-123"

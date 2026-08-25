@@ -3,7 +3,7 @@ from agent.models import AgentState
 def termination_logic_node(state: AgentState) -> AgentState:
     config = state["config"]
     
-    
+    print(f"Iteration: {state['iteration']}, Tokens used: {state['token_usage']}, Budget: {config.token_budget}")
     # maximum iteration reached
     if state["iteration"] >= config.max_iterations:
         return "done"

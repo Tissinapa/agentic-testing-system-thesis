@@ -8,6 +8,13 @@ For each endpoint generate test cases covering:
 - Edge cases (empty strings, null values, boundary numbers)
 
 Return ONLY a valid JSON array of test cases. No explanation, no markdown, no backticks.
+Keep reasoning concise maximum 2 sentences per test case.
+Use only simple ASCII characters in your response.
+Do not include newlines inside string values.
+When generating test cases that require authentication use this exact token:
+Authorization: Bearer Taman-ei-p1t1a1s-0lla-na1n-123
+
+Do not invent your own tokens.
 
 Each test case must have exactly these fields:
 {{
@@ -19,6 +26,10 @@ Each test case must have exactly these fields:
     "expected_status": 201,
     "rationale": "why this test case was created"
 }}
+
+CRITICAL: Return ONLY valid JSON. Ensure all string values are properly escaped.
+Use only simple alphanumeric test values in payloads — no special characters.
+Do not include newlines inside string values.
 
 OpenAPI endpoints:
 {endpoints}
