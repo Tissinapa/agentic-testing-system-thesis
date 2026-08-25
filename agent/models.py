@@ -11,7 +11,7 @@ class ApiTestCase(BaseModel):
     method: Literal["GET","POST","PUT","DELETE","PATCH"]
     headers: dict = {}
     payload: Optional[dict] = None
-    expected_status: int
+    expected_status: int 
     rationale: str      # why this test was generated
     
 

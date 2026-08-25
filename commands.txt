@@ -1,0 +1,9 @@
+CMD terminal commands AND Bash commands
+
+run FastAPI CMD
+uvicorn app.main:app --reload --port 8000
+
+
+CMD run robot framework tests Python and java
+uv run robot --outputdir results/robot tests/robot/python_api.robot
+
