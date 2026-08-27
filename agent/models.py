@@ -55,7 +55,7 @@ class AgentConfig(BaseModel):
     mode: Literal["black","white"] = "black"
     max_iterations: int = 3    #This can be changed later
     token_budget: int = 10000   #Change this later
-    auth_token: Optional[str] = None
+    #auth_token: Optional[str] = None
     requirements: Optional[str] = None
     source_code: Optional[str] = None
         

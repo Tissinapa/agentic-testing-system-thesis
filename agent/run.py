@@ -58,10 +58,10 @@ def parse_args():
         help="Path to source code file for white-box mode"            
     )
     parser.add_argument(
-        "--auth-token",
+        "--requirements",
         type=str,
         default=None,
-        help="Authentication token"
+        help="Requirements file"
     )
     
     return parser.parse_args()
@@ -86,7 +86,7 @@ async def run(args):
         mode= args.mode,
         max_iterations= args.max_iterations,
         token_budget= args.token_budget,
-        auth_token= args.auth_token
+        requirements=args.requirements
     )
     initial_state: AgentState={
         "config": config,

@@ -4,13 +4,13 @@ run FastAPI CMD
 uvicorn app.main:app --reload --port 8000
 
 
-CMD run robot framework tests Python and java
+CMD run ROBOT FRAMEWORK tests Python and java
 
-uv run robot --outputdir results/robot tests/robot/python_api.robot
-uv run robot --outputdir results/robot tests/robot/java_api.robot
+uv run robot --outputdir results/robot tests-api/robot/python_api.robot
+uv run robot --outputdir results/robot tests-api/robot/java_api.robot
 
-CMD run pytest
-pytest tests/pytest/test_python_api.py -v
+CMD run PYTEST for target app testing
+pytest tests-api/pytest/test_python_api.py -v
 
 Bash run Schemathesis
 PYTHON
@@ -43,4 +43,4 @@ uv run schemathesis run http://localhost:8080/v3/api-docs \
 AGENT
 
 python -m agent.run --target python --base-url http://localhost:8000 --spec-url http://localhost:8000/openapi.json --max-iterations 2 --token-budget 5000
-python -m agent.run --target python --base-url http://localhost:8000 --spec-url http://localhost:8000/openapi.json --max-iterations 1 --token-budget 15000 --auth-token "Taman-ei-p1t1a1s-0lla-na1n-123"
+python -m agent.run --target python --base-url http://localhost:8000 --spec-url http://localhost:8000/openapi.json --max-iterations 1 --token-budget 15000 --requirements docs/requirements_python.md
