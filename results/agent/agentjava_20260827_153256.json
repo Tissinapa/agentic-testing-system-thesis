@@ -1,0 +1,199 @@
+{
+  "meta": {
+    "target": "java",
+    "timestamp": "2026-08-27T15:32:56.208960",
+    "base_url": "http://localhost:8080",
+    "spec_url": "http://localhost:8080/v3/api-docs",
+    "iterations": 1,
+    "token_usage": 10925,
+    "termination_reason": null
+  },
+  "summary": {
+    "test_cases_generated": 5,
+    "tests_executed": 5,
+    "bugs_detected": 4,
+    "false_positives": 0,
+    "endpoints_covered": 3
+  },
+  "test_cases": [
+    {
+      "id": "TC-NEW-001",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "username": "invalid_user",
+        "password": "wrong_password"
+      },
+      "expected_status": 401,
+      "rationale": "Verify login fails with invalid credentials and returns 401 Unauthorized"
+    },
+    {
+      "id": "TC-NEW-002",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer valid_token"
+      },
+      "payload": {
+        "title": "",
+        "description": null
+      },
+      "expected_status": 400,
+      "rationale": "Verify POST /tasks rejects empty title and null description with 400 Bad Request"
+    },
+    {
+      "id": "TC-NEW-003",
+      "endpoint": "/tasks/{id}",
+      "method": "GET",
+      "headers": {
+        "Authorization": "Bearer valid_token"
+      },
+      "payload": {},
+      "expected_status": 404,
+      "rationale": "Verify GET /tasks/{id} returns 404 when task ID 999999 does not exist"
+    },
+    {
+      "id": "TC-NEW-004",
+      "endpoint": "/tasks/{id}",
+      "method": "DELETE",
+      "headers": {},
+      "payload": {},
+      "expected_status": 401,
+      "rationale": "Verify DELETE /tasks/{id} returns 401 when no Authorization header is provided"
+    },
+    {
+      "id": "TC-NEW-005",
+      "endpoint": "/tasks/{id}",
+      "method": "PUT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer valid_token"
+      },
+      "payload": {
+        "title": null,
+        "description": null,
+        "status": "INVALID_STATUS"
+      },
+      "expected_status": 400,
+      "rationale": "Verify PUT /tasks/{id} returns 400 when payload contains null fields and invalid status value"
+    }
+  ],
+  "results": [
+    {
+      "test_id": "TC-NEW-001",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "status_received": 200,
+      "status_expected": 401,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-NEW-002",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "status_received": 401,
+      "status_expected": 400,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-NEW-003",
+      "endpoint": "/tasks/{id}",
+      "method": "GET",
+      "status_received": 401,
+      "status_expected": 404,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-NEW-004",
+      "endpoint": "/tasks/{id}",
+      "method": "DELETE",
+      "status_received": 401,
+      "status_expected": 401,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-NEW-005",
+      "endpoint": "/tasks/{id}",
+      "method": "PUT",
+      "status_received": 401,
+      "status_expected": 400,
+      "passed": false,
+      "error": null
+    }
+  ],
+  "evaluations": [
+    {
+      "test_id": "TC-NEW-001",
+      "endpoint": "/auth/login",
+      "bug_detected": true,
+      "verdict": "API returns 200 with empty token for invalid credentials instead of 401",
+      "resoning": "The server accepted invalid credentials and returned HTTP 200 with an empty accessToken, which is a critical authentication bug and potential security vulnerability. Expected behavior is a 401 Unauthorized response."
+    },
+    {
+      "test_id": "TC-NEW-002",
+      "endpoint": "/tasks",
+      "bug_detected": true,
+      "verdict": "API returns 401 instead of 400 for invalid task payload",
+      "resoning": "The test used a supposedly valid token but received 401, suggesting the token was not accepted. This may indicate a bug in token validation or test setup, but the expected response for bad input was 400 and that was not returned."
+    },
+    {
+      "test_id": "TC-NEW-003",
+      "endpoint": "/tasks/{id}",
+      "bug_detected": true,
+      "verdict": "API returns 401 instead of 404 for non-existent task ID",
+      "resoning": "A valid token was provided but the server still returned 401, indicating possible token validation failure before resource lookup. The expected 404 for a missing resource was not returned, pointing to either an auth bug or incorrect request setup."
+    },
+    {
+      "test_id": "TC-NEW-004",
+      "endpoint": "/tasks/{id}",
+      "bug_detected": false,
+      "verdict": "API correctly returns 401 when no Authorization header is provided",
+      "resoning": "The server correctly rejected the unauthenticated DELETE request with a 401 Unauthorized response, matching the expected status code. No bug detected."
+    },
+    {
+      "test_id": "TC-NEW-005",
+      "endpoint": "/tasks/{id}",
+      "bug_detected": true,
+      "verdict": "API returns 401 instead of 400 for invalid PUT payload with valid token",
+      "resoning": "A valid Authorization token was sent but the server returned 401, suggesting token validation is failing even for valid tokens. Input validation producing a 400 was never reached, indicating an auth or token processing bug."
+    }
+  ],
+  "bugs": [
+    {
+      "test_id": "TC-NEW-001",
+      "endpoint": "/auth/login",
+      "method": "POST",
+      "verdict": "API returns 200 with empty token for invalid credentials instead of 401",
+      "resoning": "The server accepted invalid credentials and returned HTTP 200 with an empty accessToken, which is a critical authentication bug and potential security vulnerability. Expected behavior is a 401 Unauthorized response."
+    },
+    {
+      "test_id": "TC-NEW-002",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "verdict": "API returns 401 instead of 400 for invalid task payload",
+      "resoning": "The test used a supposedly valid token but received 401, suggesting the token was not accepted. This may indicate a bug in token validation or test setup, but the expected response for bad input was 400 and that was not returned."
+    },
+    {
+      "test_id": "TC-NEW-003",
+      "endpoint": "/tasks/{id}",
+      "method": "GET",
+      "verdict": "API returns 401 instead of 404 for non-existent task ID",
+      "resoning": "A valid token was provided but the server still returned 401, indicating possible token validation failure before resource lookup. The expected 404 for a missing resource was not returned, pointing to either an auth bug or incorrect request setup."
+    },
+    {
+      "test_id": "TC-NEW-005",
+      "endpoint": "/tasks/{id}",
+      "method": "PUT",
+      "verdict": "API returns 401 instead of 400 for invalid PUT payload with valid token",
+      "resoning": "A valid Authorization token was sent but the server returned 401, suggesting token validation is failing even for valid tokens. Input validation producing a 400 was never reached, indicating an auth or token processing bug."
+    }
+  ]
+}

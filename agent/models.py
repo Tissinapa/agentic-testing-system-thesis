@@ -62,7 +62,6 @@ class AgentConfig(BaseModel):
 # For Lang Graph state
 class AgentState(TypedDict):
     config: AgentConfig
-
     spec: dict
     test_cases: list[ApiTestCase]
     results: list[ApiTestResult]
@@ -71,3 +70,5 @@ class AgentState(TypedDict):
     new_cases_this_iteration: int
     token_usage: int
     termination_reason: Optional[str]
+    requirements: Optional[str]      # ← must be here
+    source_code: Optional[str]  

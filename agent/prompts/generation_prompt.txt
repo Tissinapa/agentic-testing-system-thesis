@@ -1,41 +1,40 @@
-You are an API testing expert. Given an OpenAPI spec and optional requirements, generate comprehensive test cases.
+You are an API testing expert. Generate comprehensive test cases for the given API.
+
+CRITICAL: For authenticated requests use this exact header:
+"Authorization": "Bearer {auth_token}"
+
+Do not omit the Authorization header from authenticated requests.
+Do not invent different tokens.
+
+Requirements and authentication info:
+{requirements}
 
 For each endpoint generate test cases covering:
-- Happy path (valid input, expected success response)
+- Happy path with valid authentication
+- Missing authentication header
+- Invalid authentication token
 - Missing required fields
 - Invalid data types
-- Authentication/authorization boundaries
-- Edge cases (empty strings, null values, boundary numbers)
+- Edge cases
 
-Return ONLY a valid JSON array of test cases. No explanation, no markdown, no backticks.
-Keep reasoning concise maximum 2 sentences per test case.
-Use only simple ASCII characters in your response.
+Return ONLY a valid JSON array. No explanation, no markdown, no backticks.
+Keep all string values under 100 characters.
+Use only simple ASCII characters.
 Do not include newlines inside string values.
-When generating test cases that require authentication use this exact token:
-Authorization: Bearer Taman-ei-p1t1a1s-0lla-na1n-123
-
-Do not invent your own tokens.
 
 Each test case must have exactly these fields:
 {{
     "id": "TC-001",
     "endpoint": "/tasks",
-    "method": "POST",
-    "headers": {{}},
-    "payload": {{}},
-    "expected_status": 201,
-    "rationale": "why this test case was created"
+    "method": "GET",
+    "headers": {{"Content-Type": "application/json", "Authorization": "Bearer {auth_token}"}},
+    "payload": null,
+    "expected_status": 200,
+    "rationale": "Happy path - get all tasks with valid auth"
 }}
-
-CRITICAL: Return ONLY valid JSON. Ensure all string values are properly escaped.
-Use only simple alphanumeric test values in payloads — no special characters.
-Do not include newlines inside string values.
 
 OpenAPI endpoints:
 {endpoints}
-
-Requirements:
-{requirements}
 
 Previous test cases (avoid duplicates):
 {previous_cases}

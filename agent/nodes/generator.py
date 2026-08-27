@@ -1,5 +1,6 @@
 import json
 import uuid
+import re
 from langchain_anthropic import ChatAnthropic
 from agent.models import AgentState, ApiTestCase
 from pathlib import Path
@@ -10,12 +11,37 @@ PROMPT_PATH = Path(__file__).parent.parent / "prompts" / "generation_prompt.txt"
 
 def _build_prompt(state: AgentState) -> str:
     template = PROMPT_PATH.read_text()
+    requirements = state.get("requirements")
+    print(f"DEBUG in generator: requirements = '{str(requirements)[:100]}'")
+    
+    # Handle None safely
+    requirements_text = requirements or "No additional requirements."
+    
+    auth_token = "NO_TOKEN_PROVIDED"
+    if requirements:
+        import re
+        patterns = [
+            r'Token value:\s*(\S+)',
+            r'token value:\s*(\S+)',
+            r'- Token value:\s*(\S+)',
+        ]
+        for pattern in patterns:
+            match = re.search(pattern, requirements, re.IGNORECASE)
+            if match:
+                token = match.group(1)
+                if not token.startswith("<") and len(token) > 3:
+                    auth_token = token
+                    break
+
+    print(f"DEBUG: extracted auth_token = '{auth_token}'")
+    
     return template.format(
         endpoints=json.dumps(state["spec"]["endpoints"], indent=2),
-        requirements=state.get("requirements") or "No additional requirements.",
+        requirements=requirements_text,
         previous_cases=json.dumps(
             [tc.model_dump() for tc in state["test_cases"]], indent=2
         ),
+        auth_token=auth_token,
     )
 
 def _extract_json(raw: str) -> str:

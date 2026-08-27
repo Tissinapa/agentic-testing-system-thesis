@@ -9,6 +9,9 @@ Check for:
 - Duplicate or redundant test cases
 
 Return ONLY a valid JSON object. No explanation, no markdown, no backticks.
+Return maximum 5 additional test cases only.
+Keep all string values under 100 characters.
+Use only simple ASCII characters.
 
 {{
     "coverage_gaps": ["list of endpoints or scenarios not covered"],

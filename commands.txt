@@ -1,5 +1,13 @@
 CMD terminal commands AND Bash commands
 
+Python target
+cd /a/fastapi-target-thesis
+docker compose up
+
+Java target
+cd /a/springboot-targe-thesis
+docker compose up
+
 run FastAPI CMD
 uvicorn app.main:app --reload --port 8000
 
@@ -43,4 +51,27 @@ uv run schemathesis run http://localhost:8080/v3/api-docs \
 AGENT
 
 python -m agent.run --target python --base-url http://localhost:8000 --spec-url http://localhost:8000/openapi.json --max-iterations 2 --token-budget 5000
-python -m agent.run --target python --base-url http://localhost:8000 --spec-url http://localhost:8000/openapi.json --max-iterations 1 --token-budget 15000 --requirements docs/requirements_python.md
+python -m agent.run --target python --base-url http://localhost:8000 --spec-url http://localhost:8000/openapi.json --max-iterations 1 --token-budget 30000 --requirements docs/requirements_python.md
+
+python -c "
+import json
+with open('results/agent/agentpython_20260827_150810.json') as f:
+    data = json.load(f)
+print('Summary:', data['summary'])
+print()
+print('Bugs detected:')
+for b in data['bugs']:
+    print(f\"  {b['method']} {b['endpoint']} — {b['verdict']}\")
+"
+
+
+python -c "
+import json
+with open('results/agent/agentjava_20260827_151729.json') as f:
+    data = json.load(f)
+print('Summary:', data['summary'])
+print()
+print('Bugs detected:')
+for b in data['bugs']:
+    print(f\"  {b['method']} {b['endpoint']} — {b['verdict']}\")
+"
