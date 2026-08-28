@@ -1,20 +1,20 @@
 import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
 from agent.nodes.reflection import reflection_node
-from agent.models import AgentConfig, ApiTestCase
+from agent.models import AgentConfig, ApiTestCase, EvaluationResult
+
 
 mock_llm_response = """{
-    "coverage_gaps": ["DELETE /tasks/{id} has no test case"],
-    "issues_found": ["No authentication boundary test"],
+    "analysis": "GET endpoint missing 404 handling",
     "additional_test_cases": [
         {
-            "id": "TC-NEW-001",
+            "id": "TC-R001",
             "endpoint": "/tasks/1",
-            "method": "DELETE",
+            "method": "GET",
             "headers": {},
             "payload": null,
-            "expected_status": 204,
-            "rationale": "Missing DELETE endpoint coverage"
+            "expected_status": 404,
+            "rationale": "Follow-up on missing 404 bug"
         }
     ]
 }"""
@@ -45,7 +45,16 @@ async def test_reflection_adds_missing_cases():
         },
         "test_cases": [existing_case],
         "results": [],
-        "evaluations": [],
+        "evaluations": [
+            EvaluationResult(
+                test_case=existing_case,
+                status_received=200,
+                passed=False,
+                bug_detected=True,
+                verdict="Returns 200 instead of 404",
+                reasoning="Non-existent resource returns 200"
+            )
+        ],
         "iteration": 0,
         "new_cases_this_iteration": 1,
         "token_usage": 100,
@@ -68,5 +77,5 @@ async def test_reflection_adds_missing_cases():
     # Should have original + 1 new case from reflection
     assert len(result["test_cases"]) == 2
     assert result["test_cases"][1].endpoint == "/tasks/1"
-    assert result["test_cases"][1].method == "DELETE"
+    assert result["test_cases"][1].method == "GET"
     assert result["token_usage"] == 250  # 100 existing + 50 + 100 new

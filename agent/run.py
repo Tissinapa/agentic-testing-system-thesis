@@ -74,7 +74,7 @@ def load_file(path: str) -> str | None:
 async def run(args):
     requirements = load_file(args.requirements)
     source_code = load_file(args.source_code)
-    print(f"DEBUG: requirements loaded = '{str(requirements)[:100]}'")
+    #print(f"DEBUG: requirements loaded = '{str(requirements)[:100]}'")
     config = AgentConfig(
         base_url = args.base_url,
         spec_url= args.spec_url,

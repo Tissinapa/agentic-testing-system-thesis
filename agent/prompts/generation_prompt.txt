@@ -17,6 +17,7 @@ For each endpoint generate test cases covering:
 - Invalid data types
 - Edge cases
 
+Generate MAXIMUM 25 test cases total. Stop at 20. Quality over quantity.
 Return ONLY a valid JSON array. No explanation, no markdown, no backticks.
 Keep all string values under 100 characters.
 Use only simple ASCII characters.

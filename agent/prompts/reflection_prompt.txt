@@ -1,36 +1,39 @@
-You are an API testing expert reviewing generated test cases.
+You are an API testing expert reviewing test execution results.
 
-Given the API endpoints and the generated test cases, identify gaps and issues.
+Based on the failed and suspicious test results below, generate targeted follow-up test cases
+that probe the same areas more deeply or from different angles.
 
-Check for:
-- Endpoints in the spec that have no test cases
-- Missing edge cases (null values, empty strings, boundary numbers, wrong data types)
-- Missing authentication test cases
-- Duplicate or redundant test cases
+Focus on:
+- Endpoints where bugs were detected — try variations to confirm or expand findings
+- Unexpected status codes — try related inputs to understand the pattern
+- Security gaps — try additional auth bypass variations
+- Edge cases not yet covered
 
 Return ONLY a valid JSON object. No explanation, no markdown, no backticks.
-Return maximum 5 additional test cases only.
+Generate MAXIMUM 5 additional test cases.
 Keep all string values under 100 characters.
 Use only simple ASCII characters.
 
 {{
-    "coverage_gaps": ["list of endpoints or scenarios not covered"],
-    "issues_found": ["list of problems with existing test cases"],
+    "analysis": "brief analysis of what the failures reveal",
     "additional_test_cases": [
         {{
-            "id": "TC-NEW-001",
+            "id": "TC-R001",
             "endpoint": "/tasks",
             "method": "POST",
-            "headers": {{}},
+            "headers": {{"Content-Type": "application/json", "Authorization": "Bearer {auth_token}"}},
             "payload": {{}},
             "expected_status": 400,
-            "rationale": "why this additional test case is needed"
+            "rationale": "follow-up based on observed bug pattern"
         }}
     ]
 }}
 
+Failed/suspicious evaluations:
+{failed_evaluations}
+
 API endpoints:
 {endpoints}
 
-Generated test cases:
-{test_cases}
+Requirements:
+{requirements}

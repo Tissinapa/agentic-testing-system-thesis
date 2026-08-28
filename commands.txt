@@ -52,7 +52,10 @@ AGENT
 
 python -m agent.run --target python --base-url http://localhost:8000 --spec-url http://localhost:8000/openapi.json --max-iterations 2 --token-budget 5000
 python -m agent.run --target python --base-url http://localhost:8000 --spec-url http://localhost:8000/openapi.json --max-iterations 1 --token-budget 30000 --requirements docs/requirements_python.md
+python -m agent.run --target java --base-url http://localhost:8080 --spec-url http://localhost:8080/v3/api-docs --max-iterations 1 --token-budget 30000 --requirements docs/requirements_java.md
 
+
+Test result skripts
 python -c "
 import json
 with open('results/agent/agentpython_20260827_150810.json') as f:

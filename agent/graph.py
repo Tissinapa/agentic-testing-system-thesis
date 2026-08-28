@@ -20,18 +20,18 @@ def build_graph() -> StateGraph:
     # all agent nodes
     graph.add_node("parser",parser_node)
     graph.add_node("generator",generator_node)
-    graph.add_node("reflection", reflection_node)
     graph.add_node("executor",executor_node)
-    graph.add_node("evaluation",evaluator_node)
+    graph.add_node("evaluator",evaluator_node)
+    graph.add_node("reflection", reflection_node)
     graph.add_node("increment", increment_iteration)
     
     graph.set_entry_point("parser")
     
-    graph.add_edge("parser","generator")
-    graph.add_edge("generator","reflection")
-    graph.add_edge("reflection","executor")
-    graph.add_edge("executor","evaluation")
-    graph.add_edge("evaluation","increment")
+    graph.add_edge("parser", "generator")
+    graph.add_edge("generator", "executor")
+    graph.add_edge("executor", "evaluator")
+    graph.add_edge("evaluator", "reflection")
+    graph.add_edge("reflection", "increment")
     
     graph.add_conditional_edges(
         "increment", termination_logic_node, {

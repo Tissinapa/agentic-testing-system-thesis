@@ -12,7 +12,7 @@ PROMPT_PATH = Path(__file__).parent.parent / "prompts" / "generation_prompt.txt"
 def _build_prompt(state: AgentState) -> str:
     template = PROMPT_PATH.read_text()
     requirements = state.get("requirements")
-    print(f"DEBUG in generator: requirements = '{str(requirements)[:100]}'")
+    #print(f"DEBUG in generator: requirements = '{str(requirements)[:100]}'")
     
     # Handle None safely
     requirements_text = requirements or "No additional requirements."
@@ -33,7 +33,7 @@ def _build_prompt(state: AgentState) -> str:
                     auth_token = token
                     break
 
-    print(f"DEBUG: extracted auth_token = '{auth_token}'")
+    #print(f"DEBUG: extracted auth_token = '{auth_token}'")
     
     return template.format(
         endpoints=json.dumps(state["spec"]["endpoints"], indent=2),

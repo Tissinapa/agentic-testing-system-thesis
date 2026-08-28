@@ -62,8 +62,7 @@ def _parse_evaluations(raw: str, results: list[ApiTestResult]) -> list[Evaluatio
 async def _evaluate_batch(
     llm, batch: list[ApiTestResult],
     results: list[ApiTestResult],
-    requirements: str
-) -> tuple[list[EvaluationResult], int]:
+    requirements: str ) -> tuple[list[EvaluationResult], int]:
     response = await llm.ainvoke(_build_prompt(batch, requirements))
     tokens = (
         response.usage_metadata.get("input_tokens", 0) +

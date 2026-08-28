@@ -1,4 +1,5 @@
 import json
+import re
 from langchain_anthropic import ChatAnthropic
 from agent.models import AgentState, ApiTestCase
 from pathlib import Path
@@ -7,11 +8,37 @@ PROMPT_PATH = Path(__file__).parent.parent / "prompts" / "reflection_prompt.txt"
 
 def _build_prompt(state: AgentState) -> str:
     template = PROMPT_PATH.read_text()
+    requirements = state.get("requirements") or "No additional requirements."
+    
+    # Extract auth token
+    
+    auth_token = "NO_TOKEN_PROVIDED"
+    patterns = [r'Token value:\s*(\S+)', r'token value:\s*(\S+)']
+    for pattern in patterns:
+        match = re.search(pattern, requirements, re.IGNORECASE)
+        if match:
+            token = match.group(1)
+            if not token.startswith("<") and len(token) > 3:
+                auth_token = token
+                break
+
+    failed_evaluations = [
+        {
+            "test_case": e.test_case.model_dump(),
+            "status_received": e.status_received,
+            "bug_detected": e.bug_detected,
+            "verdict": e.verdict,
+            "reasoning": e.reasoning,
+        }
+        for e in state["evaluations"]
+        if e.bug_detected or not e.passed
+    ]
+
     return template.format(
         endpoints=json.dumps(state["spec"]["endpoints"], indent=2),
-        test_cases=json.dumps(
-            [tc.model_dump() for tc in state["test_cases"]], indent=2
-        ),
+        failed_evaluations=json.dumps(failed_evaluations, indent=2),
+        requirements=requirements,
+        auth_token=auth_token,
     )
 
 # Extract json array from llm response
@@ -48,11 +75,17 @@ async def reflection_node(state: AgentState) -> AgentState:
     if state["token_usage"] >= state["config"].token_budget:
         print(f"Token budget exhausted before reflection ({state['token_usage']}/{state['config'].token_budget})")
         return state
-
+    # Skip if no evaluations yet
+    if not state.get("evaluations"):
+        print("No evaluations to reflect on — skipping reflection")
+        return state
+    
     llm = ChatAnthropic(model="claude-sonnet-4-6", max_tokens=2000)
     response = await llm.ainvoke(_build_prompt(state))
     additional = _parse_additional_cases(response.content)
 
+    print(f"Reflection added {len(additional)} follow-up test cases")
+    
     return {
         **state,
         "test_cases": state["test_cases"] + additional,
