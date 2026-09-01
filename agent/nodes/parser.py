@@ -2,6 +2,13 @@ import httpx
 from agent.models import AgentState
 
 async def parser_node(state: AgentState) -> AgentState:
+    
+    # Skip spec fetching in white-box mode
+    if state["config"].mode == "white":
+        return {
+            **state,
+            "spec": {"endpoints": [], "base_url": state["config"].base_url}
+        }
     spec_url = state['config'].spec_url
 
     async with httpx.AsyncClient() as client:

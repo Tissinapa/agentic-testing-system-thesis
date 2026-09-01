@@ -27,7 +27,7 @@ def parse_args():
     )
     parser.add_argument(
         "--mode",
-        choices=["black", "white","hyprid"],
+        choices=["black", "white","hybrid"],
         default="black",
         help="black: API testing only | white: source code analysis only | hybrid: both"
             
@@ -35,8 +35,8 @@ def parse_args():
     parser.add_argument(
         "--max-iterations",
         type=int,
-        default=3,
-        help="Maximum amount of agent loop iterations (default: 3)"
+        default=1,
+        help="Maximum amount of agent loop iterations (default: 1)"
     )
     parser.add_argument(
         "--token-budget",

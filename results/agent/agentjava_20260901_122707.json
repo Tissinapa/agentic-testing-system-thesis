@@ -1,0 +1,164 @@
+{
+  "meta": {
+    "target": "java",
+    "timestamp": "2026-09-01T12:27:07.537214",
+    "base_url": "http://localhost:8080",
+    "spec_url": "http://localhost:8080/v3/api-docs",
+    "iterations": 1,
+    "token_usage": 2570,
+    "termination_reason": null
+  },
+  "summary": {
+    "test_cases_generated": 0,
+    "tests_executed": 0,
+    "bugs_detected": 10,
+    "false_positives": 0,
+    "endpoints_covered": 0
+  },
+  "test_cases": [],
+  "results": [],
+  "evaluations": [
+    {
+      "test_id": "WB-001",
+      "endpoint": "TaskController",
+      "bug_detected": true,
+      "verdict": "Missing authentication enforcement on endpoints",
+      "resoning": "The @SecurityRequirement annotation is only a Swagger/OpenAPI documentation annotation and does not enforce authentication. No actual Spring Security filter or guard is applied to restrict unauthenticated access to /tasks endpoints."
+    },
+    {
+      "test_id": "WB-002",
+      "endpoint": "Requirements / auth config",
+      "bug_detected": true,
+      "verdict": "Hardcoded credentials exposed in requirements and possibly codebase",
+      "resoning": "The requirements specify hardcoded credentials (admin/passu123salis) and a static token (validation-token-123). Hardcoded credentials are a critical security risk and violate secure coding standards."
+    },
+    {
+      "test_id": "WB-003",
+      "endpoint": "TaskController.createTask",
+      "bug_detected": true,
+      "verdict": "createTask returns 200 instead of required 201",
+      "resoning": "The POST /tasks endpoint returns ResponseEntity.ok() which is HTTP 200. The requirements state that creating a task should return HTTP 201 Created."
+    },
+    {
+      "test_id": "WB-004",
+      "endpoint": "TaskController.getTask",
+      "bug_detected": true,
+      "verdict": "getTask returns 200 with empty body instead of 404 for non-existent task",
+      "resoning": "When a task is not found, the endpoint returns HTTP 200 with an empty TaskResponse object. Requirements state a non-existent task should return 404 Not Found."
+    },
+    {
+      "test_id": "WB-005",
+      "endpoint": "TaskController.deleteTask",
+      "bug_detected": true,
+      "verdict": "deleteTask returns 200 with body instead of required 204",
+      "resoning": "The DELETE /tasks/{id} endpoint returns HTTP 200 with a response body. Requirements specify the delete operation should return HTTP 204 No Content."
+    },
+    {
+      "test_id": "WB-006",
+      "endpoint": "TaskController.createTask",
+      "bug_detected": true,
+      "verdict": "Missing input validation on createTask",
+      "resoning": "No validation is performed on the TaskCreateRequest. The requirements state task title is required and cannot be empty, but null or blank titles are accepted and persisted."
+    },
+    {
+      "test_id": "WB-007",
+      "endpoint": "TaskController.updateTask",
+      "bug_detected": true,
+      "verdict": "Missing input validation on updateTask",
+      "resoning": "No validation is performed on TaskUpdateRequest fields. Empty strings could overwrite valid title or description values without any constraint checks."
+    },
+    {
+      "test_id": "WB-008",
+      "endpoint": "TaskController.getTasks",
+      "bug_detected": true,
+      "verdict": "getTasks returns 200 with empty list instead of proper response for unauthenticated access",
+      "resoning": "The getTasks method returns a plain List without ResponseEntity, making it impossible to return proper HTTP error codes such as 401 for unauthenticated requests."
+    },
+    {
+      "test_id": "WB-009",
+      "endpoint": "TaskController",
+      "bug_detected": true,
+      "verdict": "Direct repository access in controller bypasses service layer",
+      "resoning": "The controller directly injects and uses TaskRepository, violating layered architecture principles and making business logic harder to maintain, test, and extend."
+    },
+    {
+      "test_id": "WB-010",
+      "endpoint": "TaskController.deleteTask",
+      "bug_detected": true,
+      "verdict": "deleteTask response body returning deleted task data is unnecessary",
+      "resoning": "Returning the deleted task in the response body of a DELETE request is not RESTful convention and the requirements specify 204 No Content, meaning no body should be returned."
+    }
+  ],
+  "bugs": [
+    {
+      "test_id": "WB-001",
+      "endpoint": "TaskController",
+      "method": "GET",
+      "verdict": "Missing authentication enforcement on endpoints",
+      "resoning": "The @SecurityRequirement annotation is only a Swagger/OpenAPI documentation annotation and does not enforce authentication. No actual Spring Security filter or guard is applied to restrict unauthenticated access to /tasks endpoints."
+    },
+    {
+      "test_id": "WB-002",
+      "endpoint": "Requirements / auth config",
+      "method": "GET",
+      "verdict": "Hardcoded credentials exposed in requirements and possibly codebase",
+      "resoning": "The requirements specify hardcoded credentials (admin/passu123salis) and a static token (validation-token-123). Hardcoded credentials are a critical security risk and violate secure coding standards."
+    },
+    {
+      "test_id": "WB-003",
+      "endpoint": "TaskController.createTask",
+      "method": "GET",
+      "verdict": "createTask returns 200 instead of required 201",
+      "resoning": "The POST /tasks endpoint returns ResponseEntity.ok() which is HTTP 200. The requirements state that creating a task should return HTTP 201 Created."
+    },
+    {
+      "test_id": "WB-004",
+      "endpoint": "TaskController.getTask",
+      "method": "GET",
+      "verdict": "getTask returns 200 with empty body instead of 404 for non-existent task",
+      "resoning": "When a task is not found, the endpoint returns HTTP 200 with an empty TaskResponse object. Requirements state a non-existent task should return 404 Not Found."
+    },
+    {
+      "test_id": "WB-005",
+      "endpoint": "TaskController.deleteTask",
+      "method": "GET",
+      "verdict": "deleteTask returns 200 with body instead of required 204",
+      "resoning": "The DELETE /tasks/{id} endpoint returns HTTP 200 with a response body. Requirements specify the delete operation should return HTTP 204 No Content."
+    },
+    {
+      "test_id": "WB-006",
+      "endpoint": "TaskController.createTask",
+      "method": "GET",
+      "verdict": "Missing input validation on createTask",
+      "resoning": "No validation is performed on the TaskCreateRequest. The requirements state task title is required and cannot be empty, but null or blank titles are accepted and persisted."
+    },
+    {
+      "test_id": "WB-007",
+      "endpoint": "TaskController.updateTask",
+      "method": "GET",
+      "verdict": "Missing input validation on updateTask",
+      "resoning": "No validation is performed on TaskUpdateRequest fields. Empty strings could overwrite valid title or description values without any constraint checks."
+    },
+    {
+      "test_id": "WB-008",
+      "endpoint": "TaskController.getTasks",
+      "method": "GET",
+      "verdict": "getTasks returns 200 with empty list instead of proper response for unauthenticated access",
+      "resoning": "The getTasks method returns a plain List without ResponseEntity, making it impossible to return proper HTTP error codes such as 401 for unauthenticated requests."
+    },
+    {
+      "test_id": "WB-009",
+      "endpoint": "TaskController",
+      "method": "GET",
+      "verdict": "Direct repository access in controller bypasses service layer",
+      "resoning": "The controller directly injects and uses TaskRepository, violating layered architecture principles and making business logic harder to maintain, test, and extend."
+    },
+    {
+      "test_id": "WB-010",
+      "endpoint": "TaskController.deleteTask",
+      "method": "GET",
+      "verdict": "deleteTask response body returning deleted task data is unnecessary",
+      "resoning": "Returning the deleted task in the response body of a DELETE request is not RESTful convention and the requirements specify 204 No Content, meaning no body should be returned."
+    }
+  ]
+}

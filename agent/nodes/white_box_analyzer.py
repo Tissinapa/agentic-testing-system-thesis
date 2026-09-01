@@ -18,20 +18,39 @@ def _count_tokens(response) -> int:
         response.usage_metadata.get("output_tokens",0)
     )
 
-def _extract_json(raw: str ) -> str:
-    # Extract json array from llm response
+def _extract_json(raw: str) -> str:
     raw = raw.strip()
     if "```json" in raw:
         raw = raw.split("```json")[1].split("```")[0].strip()
     elif "```" in raw:
         raw = raw.split("```")[1].split("```")[0].strip()
-    start, end = raw.find("["), raw.rfind("]")
-    return raw[start:end+1] if start != -1 and end != -1 else raw
+    
+    # Try object first then array
+    obj_start, obj_end = raw.find("{"), raw.rfind("}")
+    arr_start, arr_end = raw.find("["), raw.rfind("]")
+    
+    if obj_start != -1 and obj_end != -1:
+        if arr_start != -1 and arr_start < obj_start:
+            return raw[arr_start:arr_end+1]
+        return raw[obj_start:obj_end+1]
+    elif arr_start != -1 and arr_end != -1:
+        return raw[arr_start:arr_end+1]
+    return raw
+
 def _parse_findings(raw: str) -> list[EvaluationResult]:
     findings = []
     try:
+        extracted = _extract_json(raw)
         data=json.loads(_extract_json(raw))
-        for i , finding in enumerate(data.get("findings", [])):
+        # Handle both array and object responses
+        if isinstance(data, list):
+            findings_data = data
+        elif isinstance(data, dict):
+            findings_data = data.get("findings", [])
+        else:
+            print(f"Warning: unexpected JSON structure")
+            return []
+        for i , finding in enumerate(findings_data):
             try:
                 tc = ApiTestCase(
                     id=f"WB-{str(i+1).zfill(3)}",

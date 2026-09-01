@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "target": "python",
+    "timestamp": "2026-09-01T12:14:04.017197",
+    "base_url": "http://localhost:8000",
+    "spec_url": "http://localhost:8000/openapi.json",
+    "iterations": 1,
+    "token_usage": 2333,
+    "termination_reason": null
+  },
+  "summary": {
+    "test_cases_generated": 0,
+    "tests_executed": 0,
+    "bugs_detected": 9,
+    "false_positives": 0,
+    "endpoints_covered": 0
+  },
+  "test_cases": [],
+  "results": [],
+  "evaluations": [
+    {
+      "test_id": "WB-001",
+      "endpoint": "app/auth.py (implied by requirements)",
+      "bug_detected": true,
+      "verdict": "Hardcoded secret token in requirements",
+      "resoning": "The token value 'Taman-ei-p1t1a1s-0lla-na1n-123' and credentials admin/admin123 are hardcoded static secrets with no expiry or rotation mechanism."
+    },
+    {
+      "test_id": "WB-002",
+      "endpoint": "create_task",
+      "bug_detected": true,
+      "verdict": "create_task returns 200 instead of 201",
+      "resoning": "The POST endpoint for creating a task uses status_code=200. Requirements explicitly state that creating a task must return HTTP 201 Created."
+    },
+    {
+      "test_id": "WB-003",
+      "endpoint": "get_task",
+      "bug_detected": true,
+      "verdict": "get_task returns 200 with dummy object instead of 404",
+      "resoning": "When a task is not found, a fake TaskResponse with id=0 is returned with HTTP 200. Requirements state a non-existent task must return 404."
+    },
+    {
+      "test_id": "WB-004",
+      "endpoint": "delete_task",
+      "bug_detected": true,
+      "verdict": "delete_task returns 200 instead of 204",
+      "resoning": "The DELETE endpoint uses status_code=200 and returns a response body. Requirements state deleting a task must return HTTP 204 No Content."
+    },
+    {
+      "test_id": "WB-005",
+      "endpoint": "get_tasks",
+      "bug_detected": true,
+      "verdict": "get_tasks returns all tasks without pagination or filtering",
+      "resoning": "Fetching all tasks with db.query(Task).all() can return unbounded data, causing performance issues or memory exhaustion at scale."
+    },
+    {
+      "test_id": "WB-006",
+      "endpoint": "delete_task",
+      "bug_detected": true,
+      "verdict": "delete_task builds TaskResponse before deletion but returns after",
+      "resoning": "TaskResponse is constructed manually before deletion but is returned after db.commit(). Unnecessary since 204 should return no body per requirements."
+    },
+    {
+      "test_id": "WB-007",
+      "endpoint": "create_task, update_task, delete_task",
+      "bug_detected": true,
+      "verdict": "Missing database error handling in write operations",
+      "resoning": "db.commit() calls have no try/except handling. A database error would result in an unhandled exception and no db.rollback(), leaving the session in a bad state."
+    },
+    {
+      "test_id": "WB-008",
+      "endpoint": "update_task",
+      "bug_detected": true,
+      "verdict": "Incorrect error message in update_task",
+      "resoning": "The error detail says 'Tasks was not found' (grammatically incorrect). Minor but reflects low code quality."
+    },
+    {
+      "test_id": "WB-009",
+      "endpoint": "get_task, update_task, delete_task",
+      "bug_detected": true,
+      "verdict": "No ownership check on task operations",
+      "resoning": "Any authenticated user can read, update, or delete any task by ID. There is no user-to-task ownership validation."
+    }
+  ],
+  "bugs": [
+    {
+      "test_id": "WB-001",
+      "endpoint": "app/auth.py (implied by requirements)",
+      "method": "GET",
+      "verdict": "Hardcoded secret token in requirements",
+      "resoning": "The token value 'Taman-ei-p1t1a1s-0lla-na1n-123' and credentials admin/admin123 are hardcoded static secrets with no expiry or rotation mechanism."
+    },
+    {
+      "test_id": "WB-002",
+      "endpoint": "create_task",
+      "method": "GET",
+      "verdict": "create_task returns 200 instead of 201",
+      "resoning": "The POST endpoint for creating a task uses status_code=200. Requirements explicitly state that creating a task must return HTTP 201 Created."
+    },
+    {
+      "test_id": "WB-003",
+      "endpoint": "get_task",
+      "method": "GET",
+      "verdict": "get_task returns 200 with dummy object instead of 404",
+      "resoning": "When a task is not found, a fake TaskResponse with id=0 is returned with HTTP 200. Requirements state a non-existent task must return 404."
+    },
+    {
+      "test_id": "WB-004",
+      "endpoint": "delete_task",
+      "method": "GET",
+      "verdict": "delete_task returns 200 instead of 204",
+      "resoning": "The DELETE endpoint uses status_code=200 and returns a response body. Requirements state deleting a task must return HTTP 204 No Content."
+    },
+    {
+      "test_id": "WB-005",
+      "endpoint": "get_tasks",
+      "method": "GET",
+      "verdict": "get_tasks returns all tasks without pagination or filtering",
+      "resoning": "Fetching all tasks with db.query(Task).all() can return unbounded data, causing performance issues or memory exhaustion at scale."
+    },
+    {
+      "test_id": "WB-006",
+      "endpoint": "delete_task",
+      "method": "GET",
+      "verdict": "delete_task builds TaskResponse before deletion but returns after",
+      "resoning": "TaskResponse is constructed manually before deletion but is returned after db.commit(). Unnecessary since 204 should return no body per requirements."
+    },
+    {
+      "test_id": "WB-007",
+      "endpoint": "create_task, update_task, delete_task",
+      "method": "GET",
+      "verdict": "Missing database error handling in write operations",
+      "resoning": "db.commit() calls have no try/except handling. A database error would result in an unhandled exception and no db.rollback(), leaving the session in a bad state."
+    },
+    {
+      "test_id": "WB-008",
+      "endpoint": "update_task",
+      "method": "GET",
+      "verdict": "Incorrect error message in update_task",
+      "resoning": "The error detail says 'Tasks was not found' (grammatically incorrect). Minor but reflects low code quality."
+    },
+    {
+      "test_id": "WB-009",
+      "endpoint": "get_task, update_task, delete_task",
+      "method": "GET",
+      "verdict": "No ownership check on task operations",
+      "resoning": "Any authenticated user can read, update, or delete any task by ID. There is no user-to-task ownership validation."
+    }
+  ]
+}
