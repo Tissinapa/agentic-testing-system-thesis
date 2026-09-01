@@ -20,6 +20,11 @@ uv run robot --outputdir results/robot tests-api/robot/java_api.robot
 CMD run PYTEST for target app testing
 pytest tests-api/pytest/test_python_api.py -v
 
+Run pytests if win error 5 access denied
+pytest tests/ -v --basetemp=./tmp
+if no winerrors then
+pytest tests/ -v
+
 Bash run Schemathesis
 PYTHON
 uv run schemathesis run http://localhost:8000/openapi.json \

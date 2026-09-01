@@ -73,7 +73,8 @@ async def test_graph_compiles_and_runs():
         patch("agent.graph.generator_node", mock_generator), \
         patch("agent.graph.executor_node", mock_executor), \
         patch("agent.graph.evaluator_node", mock_evaluator), \
-        patch("agent.graph.reflection_node", mock_reflection):
+        patch("agent.graph.reflection_node", mock_reflection), \
+        patch("agent.graph.white_box_analyzer_node", mock_reflection):
 
         graph = build_graph()
         result = await graph.ainvoke(initial_state)

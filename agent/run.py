@@ -27,9 +27,9 @@ def parse_args():
     )
     parser.add_argument(
         "--mode",
-        choices=["black", "white"],
+        choices=["black", "white","hyprid"],
         default="black",
-        help="Testinmg mode: black-box or white-box (default: black)"
+        help="black: API testing only | white: source code analysis only | hybrid: both"
             
     )
     parser.add_argument(
