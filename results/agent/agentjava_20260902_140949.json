@@ -1,0 +1,151 @@
+{
+  "meta": {
+    "target": "java",
+    "mode": "white",
+    "timestamp": "2026-09-02T14:09:49.316571",
+    "base_url": "http://localhost:8080",
+    "spec_url": "http://localhost:8080/v3/api-docs",
+    "iterations": 1,
+    "token_usage": 2387,
+    "termination_reason": null
+  },
+  "summary": {
+    "test_cases_generated": 0,
+    "tests_executed": 0,
+    "bugs_detected": 9,
+    "false_positives": 0,
+    "endpoints_covered": 0
+  },
+  "test_cases": [],
+  "results": [],
+  "evaluations": [
+    {
+      "test_id": "WB-001",
+      "endpoint": "TaskController",
+      "bug_detected": true,
+      "verdict": "Missing authentication enforcement on endpoints",
+      "resoning": "@SecurityRequirement is only a Swagger/OpenAPI documentation annotation and does not enforce authentication. No actual Spring Security guard (e.g., @PreAuthorize or security filter) is applied to the endpoints."
+    },
+    {
+      "test_id": "WB-002",
+      "endpoint": "createTask",
+      "bug_detected": true,
+      "verdict": "Missing input validation on task title",
+      "resoning": "Requirements state that task title is required and cannot be empty. No @Valid, @NotBlank, or manual null/empty check is performed on the request body or title field."
+    },
+    {
+      "test_id": "WB-003",
+      "endpoint": "createTask",
+      "bug_detected": true,
+      "verdict": "createTask returns 200 instead of 201",
+      "resoning": "Requirements specify that creating a task should return HTTP 201 Created. The method uses ResponseEntity.ok() which returns HTTP 200 OK."
+    },
+    {
+      "test_id": "WB-004",
+      "endpoint": "getTask",
+      "bug_detected": true,
+      "verdict": "getTask returns 200 with empty body instead of 404",
+      "resoning": "Requirements state that getting a non-existent task should return 404. Instead, the code returns HTTP 200 with an empty TaskResponse object, masking the not-found condition."
+    },
+    {
+      "test_id": "WB-005",
+      "endpoint": "deleteTask",
+      "bug_detected": true,
+      "verdict": "deleteTask returns 200 with body instead of 204",
+      "resoning": "Requirements specify that deleting a task should return HTTP 204 No Content. The method returns HTTP 200 with the deleted task body."
+    },
+    {
+      "test_id": "WB-006",
+      "endpoint": "getTasks",
+      "bug_detected": true,
+      "verdict": "getTasks returns 200 with no ResponseEntity wrapper",
+      "resoning": "The method returns a raw List without wrapping in ResponseEntity, limiting control over HTTP status codes and headers. Inconsistent with other methods in the controller."
+    },
+    {
+      "test_id": "WB-007",
+      "endpoint": "updateTask",
+      "bug_detected": true,
+      "verdict": "No input validation on updateTask request body",
+      "resoning": "The updateTask method accepts a TaskUpdateRequest with no validation. Malformed or unexpected input could cause silent data corruption."
+    },
+    {
+      "test_id": "WB-008",
+      "endpoint": "TaskController",
+      "bug_detected": true,
+      "verdict": "Direct repository access from controller",
+      "resoning": "The controller directly depends on TaskRepository, bypassing a service layer. This couples business logic to the web layer and hinders testability and separation of concerns."
+    },
+    {
+      "test_id": "WB-009",
+      "endpoint": "requirements",
+      "bug_detected": true,
+      "verdict": "Sensitive credentials visible in requirements but referenced in codebase context",
+      "resoning": "Hardcoded credentials (username=admin, password=passu123salis, token=validation-token-123) are defined in requirements. If implemented as literals in code, this is a critical security risk."
+    }
+  ],
+  "bugs": [
+    {
+      "test_id": "WB-001",
+      "endpoint": "TaskController",
+      "method": "GET",
+      "verdict": "Missing authentication enforcement on endpoints",
+      "resoning": "@SecurityRequirement is only a Swagger/OpenAPI documentation annotation and does not enforce authentication. No actual Spring Security guard (e.g., @PreAuthorize or security filter) is applied to the endpoints."
+    },
+    {
+      "test_id": "WB-002",
+      "endpoint": "createTask",
+      "method": "GET",
+      "verdict": "Missing input validation on task title",
+      "resoning": "Requirements state that task title is required and cannot be empty. No @Valid, @NotBlank, or manual null/empty check is performed on the request body or title field."
+    },
+    {
+      "test_id": "WB-003",
+      "endpoint": "createTask",
+      "method": "GET",
+      "verdict": "createTask returns 200 instead of 201",
+      "resoning": "Requirements specify that creating a task should return HTTP 201 Created. The method uses ResponseEntity.ok() which returns HTTP 200 OK."
+    },
+    {
+      "test_id": "WB-004",
+      "endpoint": "getTask",
+      "method": "GET",
+      "verdict": "getTask returns 200 with empty body instead of 404",
+      "resoning": "Requirements state that getting a non-existent task should return 404. Instead, the code returns HTTP 200 with an empty TaskResponse object, masking the not-found condition."
+    },
+    {
+      "test_id": "WB-005",
+      "endpoint": "deleteTask",
+      "method": "GET",
+      "verdict": "deleteTask returns 200 with body instead of 204",
+      "resoning": "Requirements specify that deleting a task should return HTTP 204 No Content. The method returns HTTP 200 with the deleted task body."
+    },
+    {
+      "test_id": "WB-006",
+      "endpoint": "getTasks",
+      "method": "GET",
+      "verdict": "getTasks returns 200 with no ResponseEntity wrapper",
+      "resoning": "The method returns a raw List without wrapping in ResponseEntity, limiting control over HTTP status codes and headers. Inconsistent with other methods in the controller."
+    },
+    {
+      "test_id": "WB-007",
+      "endpoint": "updateTask",
+      "method": "GET",
+      "verdict": "No input validation on updateTask request body",
+      "resoning": "The updateTask method accepts a TaskUpdateRequest with no validation. Malformed or unexpected input could cause silent data corruption."
+    },
+    {
+      "test_id": "WB-008",
+      "endpoint": "TaskController",
+      "method": "GET",
+      "verdict": "Direct repository access from controller",
+      "resoning": "The controller directly depends on TaskRepository, bypassing a service layer. This couples business logic to the web layer and hinders testability and separation of concerns."
+    },
+    {
+      "test_id": "WB-009",
+      "endpoint": "requirements",
+      "method": "GET",
+      "verdict": "Sensitive credentials visible in requirements but referenced in codebase context",
+      "resoning": "Hardcoded credentials (username=admin, password=passu123salis, token=validation-token-123) are defined in requirements. If implemented as literals in code, this is a critical security risk."
+    }
+  ]
+}

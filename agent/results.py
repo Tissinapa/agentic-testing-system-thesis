@@ -9,6 +9,7 @@ def export_results(state: AgentState, target: str) -> dict:
     output = {
         "meta": {
             "target": target,
+            "mode": state["config"].mode,
             "timestamp": datetime.now().isoformat(),
             "base_url": state["config"].base_url,
             "spec_url": state["config"].spec_url,

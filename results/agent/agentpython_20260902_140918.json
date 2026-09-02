@@ -1,0 +1,165 @@
+{
+  "meta": {
+    "target": "python",
+    "mode": "white",
+    "timestamp": "2026-09-02T14:09:18.608453",
+    "base_url": "http://localhost:8000",
+    "spec_url": "http://localhost:8000/openapi.json",
+    "iterations": 1,
+    "token_usage": 2431,
+    "termination_reason": null
+  },
+  "summary": {
+    "test_cases_generated": 0,
+    "tests_executed": 0,
+    "bugs_detected": 10,
+    "false_positives": 0,
+    "endpoints_covered": 0
+  },
+  "test_cases": [],
+  "results": [],
+  "evaluations": [
+    {
+      "test_id": "WB-001",
+      "endpoint": "requirements / app/auth.py (implied)",
+      "bug_detected": true,
+      "verdict": "Hardcoded secret token in requirements",
+      "resoning": "The token value 'Taman-ei-p1t1a1s-0lla-na1n-123' and credentials admin/admin123 are hardcoded. If present in source, this is a critical credential exposure."
+    },
+    {
+      "test_id": "WB-002",
+      "endpoint": "create_task",
+      "bug_detected": true,
+      "verdict": "POST /tasks returns 200 instead of required 201",
+      "resoning": "The create_task endpoint has status_code=200. Requirements explicitly state that creating a task must return HTTP 201 Created."
+    },
+    {
+      "test_id": "WB-003",
+      "endpoint": "get_task",
+      "bug_detected": true,
+      "verdict": "GET non-existent task returns 200 with dummy data instead of 404",
+      "resoning": "When a task is not found, the endpoint returns a fake TaskResponse object with id=0 and empty fields. Requirements state a 404 should be returned."
+    },
+    {
+      "test_id": "WB-004",
+      "endpoint": "delete_task",
+      "bug_detected": true,
+      "verdict": "DELETE /tasks returns 200 with body instead of required 204",
+      "resoning": "The delete_task endpoint returns status_code=200 with a TaskResponse body. Requirements state delete should return 204 No Content."
+    },
+    {
+      "test_id": "WB-005",
+      "endpoint": "create_task",
+      "bug_detected": true,
+      "verdict": "Missing database error handling in create_task",
+      "resoning": "The create_task function has no try/except around db.add, db.commit, or db.refresh. A DB error will cause an unhandled 500 with no rollback."
+    },
+    {
+      "test_id": "WB-006",
+      "endpoint": "update_task",
+      "bug_detected": true,
+      "verdict": "Missing database error handling in update_task",
+      "resoning": "The update_task function has no try/except around db.commit or db.refresh. A DB error will cause an unhandled 500 with no rollback."
+    },
+    {
+      "test_id": "WB-007",
+      "endpoint": "delete_task",
+      "bug_detected": true,
+      "verdict": "Missing database error handling in delete_task",
+      "resoning": "The delete_task function has no try/except around db.delete or db.commit. A DB error will cause an unhandled 500 with no rollback."
+    },
+    {
+      "test_id": "WB-008",
+      "endpoint": "delete_task",
+      "bug_detected": true,
+      "verdict": "Unnecessary manual construction of TaskResponse in delete_task",
+      "resoning": "delete_task manually builds a TaskResponse before deleting. This adds boilerplate and is also incorrect since 204 should return no body."
+    },
+    {
+      "test_id": "WB-009",
+      "endpoint": "get_tasks",
+      "bug_detected": true,
+      "verdict": "get_tasks returns all tasks with no pagination or limit",
+      "resoning": "Fetching all tasks with db.query(Task).all() with no limit can cause performance and memory issues as the dataset grows."
+    },
+    {
+      "test_id": "WB-010",
+      "endpoint": "get_tasks",
+      "bug_detected": true,
+      "verdict": "get_tasks does not filter tasks by owner or user context",
+      "resoning": "All authenticated users can retrieve all tasks. There is no user-scoping, which may expose other users data."
+    }
+  ],
+  "bugs": [
+    {
+      "test_id": "WB-001",
+      "endpoint": "requirements / app/auth.py (implied)",
+      "method": "GET",
+      "verdict": "Hardcoded secret token in requirements",
+      "resoning": "The token value 'Taman-ei-p1t1a1s-0lla-na1n-123' and credentials admin/admin123 are hardcoded. If present in source, this is a critical credential exposure."
+    },
+    {
+      "test_id": "WB-002",
+      "endpoint": "create_task",
+      "method": "GET",
+      "verdict": "POST /tasks returns 200 instead of required 201",
+      "resoning": "The create_task endpoint has status_code=200. Requirements explicitly state that creating a task must return HTTP 201 Created."
+    },
+    {
+      "test_id": "WB-003",
+      "endpoint": "get_task",
+      "method": "GET",
+      "verdict": "GET non-existent task returns 200 with dummy data instead of 404",
+      "resoning": "When a task is not found, the endpoint returns a fake TaskResponse object with id=0 and empty fields. Requirements state a 404 should be returned."
+    },
+    {
+      "test_id": "WB-004",
+      "endpoint": "delete_task",
+      "method": "GET",
+      "verdict": "DELETE /tasks returns 200 with body instead of required 204",
+      "resoning": "The delete_task endpoint returns status_code=200 with a TaskResponse body. Requirements state delete should return 204 No Content."
+    },
+    {
+      "test_id": "WB-005",
+      "endpoint": "create_task",
+      "method": "GET",
+      "verdict": "Missing database error handling in create_task",
+      "resoning": "The create_task function has no try/except around db.add, db.commit, or db.refresh. A DB error will cause an unhandled 500 with no rollback."
+    },
+    {
+      "test_id": "WB-006",
+      "endpoint": "update_task",
+      "method": "GET",
+      "verdict": "Missing database error handling in update_task",
+      "resoning": "The update_task function has no try/except around db.commit or db.refresh. A DB error will cause an unhandled 500 with no rollback."
+    },
+    {
+      "test_id": "WB-007",
+      "endpoint": "delete_task",
+      "method": "GET",
+      "verdict": "Missing database error handling in delete_task",
+      "resoning": "The delete_task function has no try/except around db.delete or db.commit. A DB error will cause an unhandled 500 with no rollback."
+    },
+    {
+      "test_id": "WB-008",
+      "endpoint": "delete_task",
+      "method": "GET",
+      "verdict": "Unnecessary manual construction of TaskResponse in delete_task",
+      "resoning": "delete_task manually builds a TaskResponse before deleting. This adds boilerplate and is also incorrect since 204 should return no body."
+    },
+    {
+      "test_id": "WB-009",
+      "endpoint": "get_tasks",
+      "method": "GET",
+      "verdict": "get_tasks returns all tasks with no pagination or limit",
+      "resoning": "Fetching all tasks with db.query(Task).all() with no limit can cause performance and memory issues as the dataset grows."
+    },
+    {
+      "test_id": "WB-010",
+      "endpoint": "get_tasks",
+      "method": "GET",
+      "verdict": "get_tasks does not filter tasks by owner or user context",
+      "resoning": "All authenticated users can retrieve all tasks. There is no user-scoping, which may expose other users data."
+    }
+  ]
+}

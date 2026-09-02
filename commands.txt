@@ -14,8 +14,8 @@ uvicorn app.main:app --reload --port 8000
 
 CMD run ROBOT FRAMEWORK tests Python and java
 
-uv run robot --outputdir results/robot tests-api/robot/python_api.robot
-uv run robot --outputdir results/robot tests-api/robot/java_api.robot
+uv run robot --outputdir results/robot/pythonAPI tests-api/robot/python_api.robot
+uv run robot --outputdir results/robot/javaAPI tests-api/robot/java_api.robot
 
 CMD run PYTEST for target app testing
 pytest tests-api/pytest/test_python_api.py -v
@@ -83,3 +83,28 @@ print('Bugs detected:')
 for b in data['bugs']:
     print(f\"  {b['method']} {b['endpoint']} — {b['verdict']}\")
 "
+
+
+
+# Black-box Python
+python -m agent.run --target python --base-url http://localhost:8000 --spec-url http://localhost:8000/openapi.json --mode black --requirements docs/requirements_python.md --token-budget 40000
+
+# Black-box Java
+python -m agent.run --target java --base-url http://localhost:8080 --spec-url http://localhost:8080/v3/api-docs --mode black --requirements docs/requirements_java.md --token-budget 40000
+
+# White-box Python
+python -m agent.run --target python --base-url http://localhost:8000 --spec-url http://localhost:8000/openapi.json --mode white --requirements docs/requirements_python.md --source-code A:\fastapi-target-thesis\app\routers\tasks.py --token-budget 10000
+
+# White-box Java
+python -m agent.run --target java --base-url http://localhost:8080 --spec-url http://localhost:8080/v3/api-docs --mode white --requirements docs/requirements_java.md --source-code A:\springboot-targe-thesis\src\main\java\com\example\springboottargethesis\controller\TaskController.java --token-budget 10000
+
+# Hybrid Python
+python -m agent.run --target python --base-url http://localhost:8000 --spec-url http://localhost:8000/openapi.json --mode hybrid --requirements docs/requirements_python.md --source-code A:\fastapi-target-thesis\app\routers\tasks.py --token-budget 40000
+
+# Hybrid Java
+python -m agent.run --target java --base-url http://localhost:8080 --spec-url http://localhost:8080/v3/api-docs --mode hybrid --requirements docs/requirements_java.md --source-code A:\springboot-targe-thesis\src\main\java\com\example\springboottargethesis\controller\TaskController.java --token-budget 40000
+
+
+run results
+python metrics/collection.py
+python metrics/compare.py

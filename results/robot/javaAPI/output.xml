@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.4.2 (Python 3.14.4 on win32)" generated="2026-09-02T10:13:30.489211" rpa="false" schemaversion="5">
+<suite id="s1" name="Java Api" source="A:\agentic-testing-thesis\tests-api\robot\java_api.robot">
+<kw name="Create Authenticated Session Java" owner="common" type="SETUP">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-09-02T10:13:30.751258" level="INFO">Creating Session using : alias=java_api, url=http://localhost:8080, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>java_api</arg>
+<arg>${JAVA_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-09-02T10:13:30.751122" elapsed="0.000500"/>
+</kw>
+<status status="PASS" start="2026-09-02T10:13:30.750749" elapsed="0.000949"/>
+</kw>
+<test id="s1-t1" name="Login With Valid Credentials Returns 200" line="11">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-09-02T10:13:30.752496" level="INFO">${body} = {'username': 'admin', 'password': 'passu123salis'}</msg>
+<var>${body}</var>
+<arg>username=admin</arg>
+<arg>password=passu123salis</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-09-02T10:13:30.752062" elapsed="0.000462"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-09-02T10:13:30.911372" level="INFO">POST Request : url=http://localhost:8080/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '50', 'Content-Type': 'application/json'} 
+ body=b'{"username": "admin", "password": "passu123salis"}' 
+ </msg>
+<msg time="2026-09-02T10:13:30.911481" level="INFO">POST Response : url=http://localhost:8080/auth/login 
+ status=200, reason= 
+ headers={'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Date': 'Wed, 02 Sep 2026 07:13:30 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body={"accessToken":"validation-token-123","tokenType":"bearer"} 
+ </msg>
+<msg time="2026-09-02T10:13:30.911610" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>java_api</arg>
+<arg>/auth/login</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-09-02T10:13:30.752703" elapsed="0.158929"/>
+</kw>
+<kw name="Should Not Be Empty" owner="BuiltIn">
+<msg time="2026-09-02T10:13:30.912451" level="INFO">Length is 20.</msg>
+<arg>${response.json()["accessToken"]}</arg>
+<doc>Verifies that the given item is not empty.</doc>
+<status status="PASS" start="2026-09-02T10:13:30.911853" elapsed="0.000634"/>
+</kw>
+<status status="PASS" start="2026-09-02T10:13:30.751748" elapsed="0.160878"/>
+</test>
+<test id="s1-t2" name="Login With Invalid Credentials Return 401" line="16">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-09-02T10:13:30.913372" level="INFO">${body} = {'username': 'wrong', 'password': 'wrong123'}</msg>
+<var>${body}</var>
+<arg>username=wrong</arg>
+<arg>password=wrong123</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-09-02T10:13:30.913153" elapsed="0.000237"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-09-02T10:13:30.917483" level="INFO">POST Request : url=http://localhost:8080/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '45', 'Content-Type': 'application/json'} 
+ body=b'{"username": "wrong", "password": "wrong123"}' 
+ </msg>
+<msg time="2026-09-02T10:13:30.917536" level="INFO">POST Response : url=http://localhost:8080/auth/login 
+ status=200, reason= 
+ headers={'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Date': 'Wed, 02 Sep 2026 07:13:30 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body={"accessToken":"","tokenType":"bearer"} 
+ </msg>
+<msg time="2026-09-02T10:13:30.917648" level="FAIL">Url: http://localhost:8080/auth/login Expected status: 200 != 401</msg>
+<var>${response}</var>
+<arg>java_api</arg>
+<arg>/auth/login</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=401</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="FAIL" start="2026-09-02T10:13:30.913509" elapsed="0.006841">Url: http://localhost:8080/auth/login Expected status: 200 != 401</status>
+</kw>
+<status status="FAIL" start="2026-09-02T10:13:30.912902" elapsed="0.007676">Url: http://localhost:8080/auth/login Expected status: 200 != 401</status>
+</test>
+<test id="s1-t3" name="Login With Empty Credentials Return 400" line="20">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-09-02T10:13:30.921495" level="INFO">${body} = {'username': '', 'password': ''}</msg>
+<var>${body}</var>
+<arg>username=</arg>
+<arg>password=</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-09-02T10:13:30.921232" elapsed="0.000282"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-09-02T10:13:30.968820" level="INFO">POST Request : url=http://localhost:8080/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '32', 'Content-Type': 'application/json'} 
+ body=b'{"username": "", "password": ""}' 
+ </msg>
+<msg time="2026-09-02T10:13:30.968874" level="INFO">POST Response : url=http://localhost:8080/auth/login 
+ status=200, reason= 
+ headers={'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Date': 'Wed, 02 Sep 2026 07:13:30 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body={"accessToken":"","tokenType":"bearer"} 
+ </msg>
+<msg time="2026-09-02T10:13:30.968955" level="FAIL">Url: http://localhost:8080/auth/login Expected status: 200 != 400</msg>
+<var>${response}</var>
+<arg>java_api</arg>
+<arg>/auth/login</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=400</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="FAIL" start="2026-09-02T10:13:30.921646" elapsed="0.048044">Url: http://localhost:8080/auth/login Expected status: 200 != 400</status>
+</kw>
+<status status="FAIL" start="2026-09-02T10:13:30.920963" elapsed="0.048963">Url: http://localhost:8080/auth/login Expected status: 200 != 400</status>
+</test>
+<test id="s1-t4" name="Get Tasks Without Auth Should Return 401" line="24">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-09-02T10:13:30.970686" level="INFO">Creating Session using : alias=no_auth, url=http://localhost:8080, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>no_auth</arg>
+<arg>${BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-09-02T10:13:30.970567" elapsed="0.000234"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-09-02T10:13:31.138488" level="INFO">GET Request : url=http://localhost:8080/tasks 
+ path_url=/tasks 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-09-02T10:13:31.138552" level="INFO">GET Response : url=http://localhost:8080/tasks 
+ status=200, reason= 
+ headers={'Content-Type': 'application/json', 'Content-Length': '4726', 'Date': 'Wed, 02 Sep 2026 07:13:31 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body=[{"completed":false,"createdAt":"2026-08-27T13:01:05.641341","description":null,"id":2,"priority":1,"title":"Task with only title"},{"completed":false,"createdAt":"2026-08-27T13:01:05.641287","description":"Task description","id":3,"priority":1,"title":""},{"completed":false,"createdAt":"2026-08-27T13:01:05.637569","description":"Task description","id":4,"priority":1,"title":"New Task"},{"completed":false,"createdAt":"2026-08-27T13:01:05.64135","description":"Task description","id":5,"priority":1,"title":"   "},{"completed":false,"createdAt":"2026-08-27T13:01:05.64143","description":"Task description","id":6,"priority":1,"title":"12345"},{"completed":false,"createdAt":"2026-08-27T13:01:05.636882","description":"","id":7,"priority":1,"title":"A"},{"completed":false,"createdAt":"2026-08-27T13:01:05.642253","description":null,"id":8,"priority":1,"title":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"},{"completed":false,"createdAt":"2026-08-27T13:01:05.641866","description":"desc","id":9,"priority":1,"title":"Valid Task"},{"completed":false,"createdAt":"2026-08-28T08:14:14.908907","description":null,"id":10,"priority":1,"title":"Test task"},{"completed":false,"createdAt":"2026-08-28T08:14:14.908887","description":null,"id":11,"priority":1,"title":"A very long title that tests the boundary of input length handling in the API system"},{"completed":false,"createdAt":"2026-08-28T08:14:14.909109","description":null,"id":12,"priority":1,"title":"12345"},{"completed":false,"createdAt":"2026-08-28T08:14:14.909247","description":"Milk and eggs","id":13,"priority":1,"title":"Buy groceries"},{"completed":false,"createdAt":"2026-08-28T08:14:14.908887","description":null,"id":14,"priority":1,"title":"Minimal task"},{"completed":false,"createdAt":"2026-08-28T08:14:14.910676","description":null,"id":15,"priority":1,"title":"Task 1"},{"completed":false,"createdAt":"2026-08-28T08:14:14.912802","description":null,"id":16,"priority":1,"title":""},{"completed":false,"createdAt":"2026-08-28T08:14:14.913035","description":null,"id":17,"priority":1,"title":"   "},{"completed":false,"createdAt":"2026-08-28T08:56:21.660426","description":"Task description","id":18,"priority":1,"title":""},{"completed":false,"createdAt":"2026-08-28T08:56:21.665078","description":"Task description","id":19,"priority":1,"title":"New Task"},{"completed":false,"createdAt":"2026-08-28T08:56:21.661814","description":null,"id":20,"priority":1,"title":"A"},{"completed":false,"createdAt":"2026-08-28T08:56:21.67567","description":"desc with chars","id":21,"priority":1,"title":"Task with special chars !@#$"},{"completed":false,"createdAt":"2026-08-28T08:56:21.683232","description":"desc","id":22,"priority":1,"title":"Valid Title"},{"completed":false,"createdAt":"2026-08-28T08:56:21.676142","description":"Task description","id":23,"priority":1,"title":"12345"},{"completed":false,"createdAt":"2026-08-28T08:56:21.67945","description":null,"id":24,"priority":1,"title":"Task No Content Type"},{"completed":false,"createdAt":"2026-08-28T09:07:32.551754","description":"Test task description","id":25,"priority":1,"title":""},{"completed":false,"createdAt":"2026-08-28T09:07:32.551754","description":"Test task description","id":26,"priority":1,"title":"New Task"},{"completed":false,"createdAt":"2026-08-28T09:29:36.581301","description":"","id":27,"priority":1,"title":"A"},{"completed":false,"createdAt":"2026-08-28T09:29:36.585302","description":"desc","id":28,"priority":1,"title":"   "},{"completed":false,"createdAt":"2026-08-28T09:29:36.589337","description":"Task description","id":29,"priority":1,"title":"New Task"},{"completed":false,"createdAt":"2026-08-28T09:29:36.587932","description":"desc","id":30,"priority":1,"title":"Task with special chars !@#$%"},{"completed":false,"createdAt":"2026-08-28T09:29:36.594352","description":"Task description","id":31,"priority":1,"title":""},{"completed":false,"createdAt":"2026-08-28T09:29:36.598801","description":"Task description","id":32,"priority":1,"title":"12345"},{"completed":false,"createdAt":"2026-08-28T09:29:36.593064","description":"desc","id":33,"priority":1,"title":"New Task"},{"completed":false,"createdAt":"2026-08-28T10:32:27.182451","description":"Some description","id":34,"priority":1,"title":""},{"completed":false,"createdAt":"2026-08-28T10:32:27.182469","description":"Milk, eggs, bread","id":35,"priority":1,"title":"Buy groceries"},{"completed":false,"createdAt":"2026-09-01T09:45:16.305144","description":"Some description","id":36,"priority":1,"title":""},{"completed":false,"createdAt":"2026-09-01T09:45:16.30519","description":"Milk, eggs, bread","id":37,"priority":1,"title":"Buy groceries"}] 
+ </msg>
+<msg time="2026-09-02T10:13:31.138677" level="FAIL">Url: http://localhost:8080/tasks Expected status: 200 != 401</msg>
+<var>${response}</var>
+<arg>no_auth</arg>
+<arg>/tasks</arg>
+<arg>expected_status=401</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="FAIL" start="2026-09-02T10:13:30.970939" elapsed="0.168446">Url: http://localhost:8080/tasks Expected status: 200 != 401</status>
+</kw>
+<status status="FAIL" start="2026-09-02T10:13:30.970295" elapsed="0.169338">Url: http://localhost:8080/tasks Expected status: 200 != 401</status>
+</test>
+<test id="s1-t5" name="Get Tasks With Auth returns 200" line="29">
+<kw name="Get Java Headers" owner="common">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-09-02T10:13:31.140874" level="INFO">&amp;{headers} = { Authorization=Bearer validation-token-123 | Content-Type=application/json }</msg>
+<var>&amp;{headers}</var>
+<arg>Authorization=${JAVA_TOKEN}</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-09-02T10:13:31.140570" elapsed="0.000324"/>
+</kw>
+<return>
+<value>${headers}</value>
+<status status="PASS" start="2026-09-02T10:13:31.140938" elapsed="0.000033"/>
+</return>
+<msg time="2026-09-02T10:13:31.141066" level="INFO">${headers} = {'Authorization': 'Bearer validation-token-123', 'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<status status="PASS" start="2026-09-02T10:13:31.140371" elapsed="0.000711"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-09-02T10:13:31.155623" level="INFO">GET Request : url=http://localhost:8080/tasks 
+ path_url=/tasks 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer validation-token-123', 'Content-Type': 'application/json'} 
+ body=None 
+ </msg>
+<msg time="2026-09-02T10:13:31.155691" level="INFO">GET Response : url=http://localhost:8080/tasks 
+ status=200, reason= 
+ headers={'Content-Type': 'application/json', 'Content-Length': '4726', 'Date': 'Wed, 02 Sep 2026 07:13:31 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body=[{"completed":false,"createdAt":"2026-08-27T13:01:05.641341","description":null,"id":2,"priority":1,"title":"Task with only title"},{"completed":false,"createdAt":"2026-08-27T13:01:05.641287","description":"Task description","id":3,"priority":1,"title":""},{"completed":false,"createdAt":"2026-08-27T13:01:05.637569","description":"Task description","id":4,"priority":1,"title":"New Task"},{"completed":false,"createdAt":"2026-08-27T13:01:05.64135","description":"Task description","id":5,"priority":1,"title":"   "},{"completed":false,"createdAt":"2026-08-27T13:01:05.64143","description":"Task description","id":6,"priority":1,"title":"12345"},{"completed":false,"createdAt":"2026-08-27T13:01:05.636882","description":"","id":7,"priority":1,"title":"A"},{"completed":false,"createdAt":"2026-08-27T13:01:05.642253","description":null,"id":8,"priority":1,"title":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"},{"completed":false,"createdAt":"2026-08-27T13:01:05.641866","description":"desc","id":9,"priority":1,"title":"Valid Task"},{"completed":false,"createdAt":"2026-08-28T08:14:14.908907","description":null,"id":10,"priority":1,"title":"Test task"},{"completed":false,"createdAt":"2026-08-28T08:14:14.908887","description":null,"id":11,"priority":1,"title":"A very long title that tests the boundary of input length handling in the API system"},{"completed":false,"createdAt":"2026-08-28T08:14:14.909109","description":null,"id":12,"priority":1,"title":"12345"},{"completed":false,"createdAt":"2026-08-28T08:14:14.909247","description":"Milk and eggs","id":13,"priority":1,"title":"Buy groceries"},{"completed":false,"createdAt":"2026-08-28T08:14:14.908887","description":null,"id":14,"priority":1,"title":"Minimal task"},{"completed":false,"createdAt":"2026-08-28T08:14:14.910676","description":null,"id":15,"priority":1,"title":"Task 1"},{"completed":false,"createdAt":"2026-08-28T08:14:14.912802","description":null,"id":16,"priority":1,"title":""},{"completed":false,"createdAt":"2026-08-28T08:14:14.913035","description":null,"id":17,"priority":1,"title":"   "},{"completed":false,"createdAt":"2026-08-28T08:56:21.660426","description":"Task description","id":18,"priority":1,"title":""},{"completed":false,"createdAt":"2026-08-28T08:56:21.665078","description":"Task description","id":19,"priority":1,"title":"New Task"},{"completed":false,"createdAt":"2026-08-28T08:56:21.661814","description":null,"id":20,"priority":1,"title":"A"},{"completed":false,"createdAt":"2026-08-28T08:56:21.67567","description":"desc with chars","id":21,"priority":1,"title":"Task with special chars !@#$"},{"completed":false,"createdAt":"2026-08-28T08:56:21.683232","description":"desc","id":22,"priority":1,"title":"Valid Title"},{"completed":false,"createdAt":"2026-08-28T08:56:21.676142","description":"Task description","id":23,"priority":1,"title":"12345"},{"completed":false,"createdAt":"2026-08-28T08:56:21.67945","description":null,"id":24,"priority":1,"title":"Task No Content Type"},{"completed":false,"createdAt":"2026-08-28T09:07:32.551754","description":"Test task description","id":25,"priority":1,"title":""},{"completed":false,"createdAt":"2026-08-28T09:07:32.551754","description":"Test task description","id":26,"priority":1,"title":"New Task"},{"completed":false,"createdAt":"2026-08-28T09:29:36.581301","description":"","id":27,"priority":1,"title":"A"},{"completed":false,"createdAt":"2026-08-28T09:29:36.585302","description":"desc","id":28,"priority":1,"title":"   "},{"completed":false,"createdAt":"2026-08-28T09:29:36.589337","description":"Task description","id":29,"priority":1,"title":"New Task"},{"completed":false,"createdAt":"2026-08-28T09:29:36.587932","description":"desc","id":30,"priority":1,"title":"Task with special chars !@#$%"},{"completed":false,"createdAt":"2026-08-28T09:29:36.594352","description":"Task description","id":31,"priority":1,"title":""},{"completed":false,"createdAt":"2026-08-28T09:29:36.598801","description":"Task description","id":32,"priority":1,"title":"12345"},{"completed":false,"createdAt":"2026-08-28T09:29:36.593064","description":"desc","id":33,"priority":1,"title":"New Task"},{"completed":false,"createdAt":"2026-08-28T10:32:27.182451","description":"Some description","id":34,"priority":1,"title":""},{"completed":false,"createdAt":"2026-08-28T10:32:27.182469","description":"Milk, eggs, bread","id":35,"priority":1,"title":"Buy groceries"},{"completed":false,"createdAt":"2026-09-01T09:45:16.305144","description":"Some description","id":36,"priority":1,"title":""},{"completed":false,"createdAt":"2026-09-01T09:45:16.30519","description":"Milk, eggs, bread","id":37,"priority":1,"title":"Buy groceries"}] 
+ </msg>
+<msg time="2026-09-02T10:13:31.155809" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>java_api</arg>
+<arg>/tasks</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-09-02T10:13:31.141220" elapsed="0.014609"/>
+</kw>
+<status status="PASS" start="2026-09-02T10:13:31.140030" elapsed="0.016000"/>
+</test>
+<test id="s1-t6" name="Create Task Returns 201" line="34">
+<kw name="Get Java Headers" owner="common">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-09-02T10:13:31.157071" level="INFO">&amp;{headers} = { Authorization=Bearer validation-token-123 | Content-Type=application/json }</msg>
+<var>&amp;{headers}</var>
+<arg>Authorization=${JAVA_TOKEN}</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-09-02T10:13:31.156777" elapsed="0.000314"/>
+</kw>
+<return>
+<value>${headers}</value>
+<status status="PASS" start="2026-09-02T10:13:31.157132" elapsed="0.000032"/>
+</return>
+<msg time="2026-09-02T10:13:31.157269" level="INFO">${headers} = {'Authorization': 'Bearer validation-token-123', 'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<status status="PASS" start="2026-09-02T10:13:31.156605" elapsed="0.000680"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-09-02T10:13:31.157957" level="INFO">${body} = {'title': 'Testing Task', 'priority': 1}</msg>
+<var>${body}</var>
+<arg>title=Testing Task</arg>
+<arg>priority=${1}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-09-02T10:13:31.157443" elapsed="0.000534"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-09-02T10:13:31.237779" level="INFO">POST Request : url=http://localhost:8080/tasks 
+ path_url=/tasks 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer validation-token-123', 'Content-Type': 'application/json', 'Content-Length': '40'} 
+ body=b'{"title": "Testing Task", "priority": 1}' 
+ </msg>
+<msg time="2026-09-02T10:13:31.237837" level="INFO">POST Response : url=http://localhost:8080/tasks 
+ status=200, reason= 
+ headers={'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Date': 'Wed, 02 Sep 2026 07:13:31 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body={"completed":false,"createdAt":"2026-09-02T07:13:31.204604817","description":null,"id":38,"priority":1,"title":"Testing Task"} 
+ </msg>
+<msg time="2026-09-02T10:13:31.237920" level="FAIL">Url: http://localhost:8080/tasks Expected status: 200 != 201</msg>
+<var>${resposne}</var>
+<arg>java_api</arg>
+<arg>/tasks</arg>
+<arg>json=${body}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=201</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="FAIL" start="2026-09-02T10:13:31.158124" elapsed="0.080477">Url: http://localhost:8080/tasks Expected status: 200 != 201</status>
+</kw>
+<status status="FAIL" start="2026-09-02T10:13:31.156302" elapsed="0.082524">Url: http://localhost:8080/tasks Expected status: 200 != 201</status>
+</test>
+<test id="s1-t7" name="Create Task With Null Title Should Return 400" line="39">
+<kw name="Get Java Headers" owner="common">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-09-02T10:13:31.240074" level="INFO">&amp;{headers} = { Authorization=Bearer validation-token-123 | Content-Type=application/json }</msg>
+<var>&amp;{headers}</var>
+<arg>Authorization=${JAVA_TOKEN}</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-09-02T10:13:31.239746" elapsed="0.000347"/>
+</kw>
+<return>
+<value>${headers}</value>
+<status status="PASS" start="2026-09-02T10:13:31.240132" elapsed="0.000023"/>
+</return>
+<msg time="2026-09-02T10:13:31.240238" level="INFO">${headers} = {'Authorization': 'Bearer validation-token-123', 'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<status status="PASS" start="2026-09-02T10:13:31.239527" elapsed="0.000726"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-09-02T10:13:31.240703" level="INFO">${body} = {'priority': 1}</msg>
+<var>${body}</var>
+<arg>priority=${1}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-09-02T10:13:31.240374" elapsed="0.000346"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-09-02T10:13:31.374837" level="INFO">POST Request : url=http://localhost:8080/tasks 
+ path_url=/tasks 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer validation-token-123', 'Content-Type': 'application/json', 'Content-Length': '15'} 
+ body=b'{"priority": 1}' 
+ </msg>
+<msg time="2026-09-02T10:13:31.374902" level="INFO">POST Response : url=http://localhost:8080/tasks 
+ status=500, reason= 
+ headers={'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Date': 'Wed, 02 Sep 2026 07:13:31 GMT', 'Connection': 'close'} 
+ body={"timestamp":"2026-09-02T07:13:31.368Z","status":500,"error":"Internal Server Error","path":"/tasks"} 
+ </msg>
+<msg time="2026-09-02T10:13:31.375004" level="INFO">${resposne} = &lt;Response [500]&gt;</msg>
+<var>${resposne}</var>
+<arg>java_api</arg>
+<arg>/tasks</arg>
+<arg>json=${body}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=500</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-09-02T10:13:31.240850" elapsed="0.134172"/>
+</kw>
+<status status="PASS" start="2026-09-02T10:13:31.239169" elapsed="0.136016"/>
+</test>
+<test id="s1-t8" name="Get Nonexists Task Returns 404" line="45">
+<kw name="Get Java Headers" owner="common">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-09-02T10:13:31.376462" level="INFO">&amp;{headers} = { Authorization=Bearer validation-token-123 | Content-Type=application/json }</msg>
+<var>&amp;{headers}</var>
+<arg>Authorization=${JAVA_TOKEN}</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-09-02T10:13:31.376170" elapsed="0.000312"/>
+</kw>
+<return>
+<value>${headers}</value>
+<status status="PASS" start="2026-09-02T10:13:31.376521" elapsed="0.000028"/>
+</return>
+<msg time="2026-09-02T10:13:31.376651" level="INFO">${headers} = {'Authorization': 'Bearer validation-token-123', 'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<status status="PASS" start="2026-09-02T10:13:31.375972" elapsed="0.000696"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-09-02T10:13:31.394722" level="INFO">GET Request : url=http://localhost:8080/tasks/9999 
+ path_url=/tasks/9999 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer validation-token-123', 'Content-Type': 'application/json'} 
+ body=None 
+ </msg>
+<msg time="2026-09-02T10:13:31.394787" level="INFO">GET Response : url=http://localhost:8080/tasks/9999 
+ status=200, reason= 
+ headers={'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Date': 'Wed, 02 Sep 2026 07:13:31 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body={"completed":null,"createdAt":null,"description":null,"id":null,"priority":null,"title":null} 
+ </msg>
+<msg time="2026-09-02T10:13:31.394882" level="FAIL">Url: http://localhost:8080/tasks/9999 Expected status: 200 != 404</msg>
+<var>${respone}</var>
+<arg>java_api</arg>
+<arg>/tasks/9999</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=404</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="FAIL" start="2026-09-02T10:13:31.376798" elapsed="0.018783">Url: http://localhost:8080/tasks/9999 Expected status: 200 != 404</status>
+</kw>
+<status status="FAIL" start="2026-09-02T10:13:31.375490" elapsed="0.020338">Url: http://localhost:8080/tasks/9999 Expected status: 200 != 404</status>
+</test>
+<test id="s1-t9" name="Delete Task Returns 204" line="50">
+<kw name="Get Java Headers" owner="common">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-09-02T10:13:31.397177" level="INFO">&amp;{headers} = { Authorization=Bearer validation-token-123 | Content-Type=application/json }</msg>
+<var>&amp;{headers}</var>
+<arg>Authorization=${JAVA_TOKEN}</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-09-02T10:13:31.396790" elapsed="0.000408"/>
+</kw>
+<return>
+<value>${headers}</value>
+<status status="PASS" start="2026-09-02T10:13:31.397243" elapsed="0.000038"/>
+</return>
+<msg time="2026-09-02T10:13:31.397379" level="INFO">${headers} = {'Authorization': 'Bearer validation-token-123', 'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<status status="PASS" start="2026-09-02T10:13:31.396574" elapsed="0.000862"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-09-02T10:13:31.398268" level="INFO">${body} = {'title': 'Task To Delete', 'priority': 1}</msg>
+<var>${body}</var>
+<arg>title=Task To Delete</arg>
+<arg>priority=${1}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-09-02T10:13:31.397713" elapsed="0.000586"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-09-02T10:13:31.447540" level="INFO">POST Request : url=http://localhost:8080/tasks 
+ path_url=/tasks 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer validation-token-123', 'Content-Type': 'application/json', 'Content-Length': '42'} 
+ body=b'{"title": "Task To Delete", "priority": 1}' 
+ </msg>
+<msg time="2026-09-02T10:13:31.447658" level="INFO">POST Response : url=http://localhost:8080/tasks 
+ status=200, reason= 
+ headers={'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Date': 'Wed, 02 Sep 2026 07:13:31 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body={"completed":false,"createdAt":"2026-09-02T07:13:31.439901833","description":null,"id":39,"priority":1,"title":"Task To Delete"} 
+ </msg>
+<msg time="2026-09-02T10:13:31.447761" level="INFO">${create} = &lt;Response [200]&gt;</msg>
+<var>${create}</var>
+<arg>java_api</arg>
+<arg>/tasks</arg>
+<arg>json=${body}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-09-02T10:13:31.398507" elapsed="0.049273"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-09-02T10:13:31.448545" level="INFO">${task_id} = 39</msg>
+<var>${task_id}</var>
+<arg>${create.json()['id']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-09-02T10:13:31.447998" elapsed="0.000567"/>
+</kw>
+<kw name="DELETE On Session" owner="RequestsLibrary">
+<msg time="2026-09-02T10:13:31.471724" level="INFO">DELETE Request : url=http://localhost:8080/tasks/39 
+ path_url=/tasks/39 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer validation-token-123', 'Content-Type': 'application/json', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg time="2026-09-02T10:13:31.471786" level="INFO">DELETE Response : url=http://localhost:8080/tasks/39 
+ status=200, reason= 
+ headers={'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Date': 'Wed, 02 Sep 2026 07:13:31 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body={"completed":false,"createdAt":"2026-09-02T07:13:31.439902","description":null,"id":39,"priority":1,"title":"Task To Delete"} 
+ </msg>
+<msg time="2026-09-02T10:13:31.471874" level="FAIL">Url: http://localhost:8080/tasks/39 Expected status: 200 != 204</msg>
+<var>${response}</var>
+<arg>java_api</arg>
+<arg>/tasks/${task_id}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=204</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<status status="FAIL" start="2026-09-02T10:13:31.448719" elapsed="0.023880">Url: http://localhost:8080/tasks/39 Expected status: 200 != 204</status>
+</kw>
+<status status="FAIL" start="2026-09-02T10:13:31.396191" elapsed="0.076709">Url: http://localhost:8080/tasks/39 Expected status: 200 != 204</status>
+</test>
+<status status="FAIL" start="2026-09-02T10:13:30.490775" elapsed="0.982730"/>
+</suite>
+<statistics>
+<total>
+<stat pass="3" fail="6" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Java Api" id="s1" pass="3" fail="6" skip="0">Java Api</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

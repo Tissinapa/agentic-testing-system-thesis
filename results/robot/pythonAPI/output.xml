@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.4.2 (Python 3.14.4 on win32)" generated="2026-09-02T10:11:21.452094" rpa="false" schemaversion="5">
+<suite id="s1" name="Python Api" source="A:\agentic-testing-thesis\tests-api\robot\python_api.robot">
+<kw name="Create Authenticated Session Python" owner="common" type="SETUP">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-09-02T10:11:21.674714" level="INFO">Creating Session using : alias=python_api, url=http://localhost:8000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>python_api</arg>
+<arg>${PYTHON_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-09-02T10:11:21.674561" elapsed="0.000558"/>
+</kw>
+<status status="PASS" start="2026-09-02T10:11:21.674191" elapsed="0.001012"/>
+</kw>
+<test id="s1-t1" name="Login With Valid Credentials Returns 200" line="12">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-09-02T10:11:21.676051" level="INFO">${body} = {'username': 'admin', 'password': 'admin123'}</msg>
+<var>${body}</var>
+<arg>username=admin</arg>
+<arg>password=admin123</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-09-02T10:11:21.675595" elapsed="0.000484"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-09-02T10:11:21.698451" level="INFO">POST Request : url=http://localhost:8000/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '45', 'Content-Type': 'application/json'} 
+ body=b'{"username": "admin", "password": "admin123"}' 
+ </msg>
+<msg time="2026-09-02T10:11:21.698634" level="INFO">POST Response : url=http://localhost:8000/auth/login 
+ status=200, reason=OK 
+ headers={'date': 'Wed, 02 Sep 2026 07:11:21 GMT', 'server': 'uvicorn', 'content-length': '71', 'content-type': 'application/json'} 
+ body={"access_token":"Taman-ei-p1t1a1s-0lla-na1n-123","token_type":"bearer"} 
+ </msg>
+<msg time="2026-09-02T10:11:21.698875" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>python_api</arg>
+<arg>/auth/login</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-09-02T10:11:21.676242" elapsed="0.022672"/>
+</kw>
+<kw name="Should Not Be Empty" owner="BuiltIn">
+<msg time="2026-09-02T10:11:21.700519" level="INFO">Length is 30.</msg>
+<arg>${response.json()["access_token"]}</arg>
+<doc>Verifies that the given item is not empty.</doc>
+<status status="PASS" start="2026-09-02T10:11:21.699340" elapsed="0.001225"/>
+</kw>
+<status status="PASS" start="2026-09-02T10:11:21.675255" elapsed="0.025483"/>
+</test>
+<test id="s1-t2" name="Login With Invalid Credentials Return 401" line="17">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-09-02T10:11:21.701927" level="INFO">${body} = {'username': 'wrong', 'password': 'wrong123'}</msg>
+<var>${body}</var>
+<arg>username=wrong</arg>
+<arg>password=wrong123</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-09-02T10:11:21.701573" elapsed="0.000376"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-09-02T10:11:21.750237" level="INFO">POST Request : url=http://localhost:8000/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '45', 'Content-Type': 'application/json'} 
+ body=b'{"username": "wrong", "password": "wrong123"}' 
+ </msg>
+<msg time="2026-09-02T10:11:21.750321" level="INFO">POST Response : url=http://localhost:8000/auth/login 
+ status=401, reason=Unauthorized 
+ headers={'date': 'Wed, 02 Sep 2026 07:11:21 GMT', 'server': 'uvicorn', 'content-length': '32', 'content-type': 'application/json'} 
+ body={"detail":"Invalid credentials"} 
+ </msg>
+<msg time="2026-09-02T10:11:21.750438" level="INFO">${response} = &lt;Response [401]&gt;</msg>
+<var>${response}</var>
+<arg>python_api</arg>
+<arg>/auth/login</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=401</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-09-02T10:11:21.702114" elapsed="0.048349"/>
+</kw>
+<status status="PASS" start="2026-09-02T10:11:21.701186" elapsed="0.049528"/>
+</test>
+<test id="s1-t3" name="Login With Empty Credentials Return 401" line="21">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-09-02T10:11:21.752037" level="INFO">${body} = {'username': '', 'password': ''}</msg>
+<var>${body}</var>
+<arg>username=</arg>
+<arg>password=</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-09-02T10:11:21.751704" elapsed="0.000361"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-09-02T10:11:21.797887" level="INFO">POST Request : url=http://localhost:8000/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '32', 'Content-Type': 'application/json'} 
+ body=b'{"username": "", "password": ""}' 
+ </msg>
+<msg time="2026-09-02T10:11:21.798062" level="INFO">POST Response : url=http://localhost:8000/auth/login 
+ status=401, reason=Unauthorized 
+ headers={'date': 'Wed, 02 Sep 2026 07:11:21 GMT', 'server': 'uvicorn', 'content-length': '32', 'content-type': 'application/json'} 
+ body={"detail":"Invalid credentials"} 
+ </msg>
+<msg time="2026-09-02T10:11:21.798225" level="INFO">${response} = &lt;Response [401]&gt;</msg>
+<var>${response}</var>
+<arg>python_api</arg>
+<arg>/auth/login</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=401</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-09-02T10:11:21.752248" elapsed="0.046010"/>
+</kw>
+<status status="PASS" start="2026-09-02T10:11:21.751225" elapsed="0.047319"/>
+</test>
+<test id="s1-t4" name="Get Tasks Without Auth Should Return 401" line="26">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-09-02T10:11:21.799496" level="INFO">Creating Session using : alias=no_auth, url=http://localhost:8000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>no_auth</arg>
+<arg>${BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-09-02T10:11:21.799275" elapsed="0.000425"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-09-02T10:11:21.818934" level="INFO">GET Request : url=http://localhost:8000/tasks 
+ path_url=/tasks 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-09-02T10:11:21.819058" level="INFO">GET Response : url=http://localhost:8000/tasks 
+ status=401, reason=Unauthorized 
+ headers={'date': 'Wed, 02 Sep 2026 07:11:21 GMT', 'server': 'uvicorn', 'content-length': '25', 'content-type': 'application/json'} 
+ body={"detail":"Unauthorized"} 
+ </msg>
+<msg time="2026-09-02T10:11:21.819253" level="INFO">${response} = &lt;Response [401]&gt;</msg>
+<var>${response}</var>
+<arg>no_auth</arg>
+<arg>/tasks</arg>
+<arg>expected_status=401</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-09-02T10:11:21.799886" elapsed="0.019396"/>
+</kw>
+<status status="PASS" start="2026-09-02T10:11:21.798906" elapsed="0.020689"/>
+</test>
+<test id="s1-t5" name="Get Tasks With Auth returns 200" line="31">
+<kw name="Get Python Headers" owner="common">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-09-02T10:11:21.821618" level="INFO">&amp;{headers} = { Authorization=Bearer Taman-ei-p1t1a1s-0lla-na1n-123 | Content-Type=application/json }</msg>
+<var>&amp;{headers}</var>
+<arg>Authorization=${VALID_TOKEN}</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-09-02T10:11:21.820938" elapsed="0.000716"/>
+</kw>
+<return>
+<value>${headers}</value>
+<status status="PASS" start="2026-09-02T10:11:21.821736" elapsed="0.000070"/>
+</return>
+<msg time="2026-09-02T10:11:21.821987" level="INFO">${headers} = {'Authorization': 'Bearer Taman-ei-p1t1a1s-0lla-na1n-123', 'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<status status="PASS" start="2026-09-02T10:11:21.820587" elapsed="0.001468"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-09-02T10:11:21.844890" level="INFO">GET Request : url=http://localhost:8000/tasks 
+ path_url=/tasks 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer Taman-ei-p1t1a1s-0lla-na1n-123', 'Content-Type': 'application/json'} 
+ body=None 
+ </msg>
+<msg time="2026-09-02T10:11:21.845085" level="INFO">GET Response : url=http://localhost:8000/tasks 
+ status=200, reason=OK 
+ headers={'date': 'Wed, 02 Sep 2026 07:11:21 GMT', 'server': 'uvicorn', 'content-length': '2385', 'content-type': 'application/json'} 
+ body=[{"id":2,"title":"Test Task","description":"A sample task description","priority":1,"completed":false,"created_at":"2026-08-27T12:01:17"},{"id":3,"title":"a","description":null,"priority":1,"completed":false,"created_at":"2026-08-27T12:01:17"},{"id":4,"title":"Task","description":null,"priority":1,"completed":false,"created_at":"2026-08-27T12:06:48"},{"id":5,"title":"Task Without Description","description":null,"priority":1,"completed":false,"created_at":"2026-08-27T12:06:48"},{"id":7,"title":"My First Task","description":"This is a test task","priority":1,"completed":false,"created_at":"2026-08-27T12:06:48"},{"id":8,"title":"","description":null,"priority":1,"completed":false,"created_at":"2026-08-28T09:12:21"},{"id":9,"title":"Buy groceries","description":"Milk and eggs","priority":1,"completed":false,"created_at":"2026-08-28T09:12:21"},{"id":10,"title":"Buy groceries","description":"Milk and eggs","priority":1,"completed":false,"created_at":"2026-08-28T10:14:51"},{"id":11,"title":"","description":null,"priority":1,"completed":false,"created_at":"2026-08-28T10:14:51"},{"id":12,"title":"Buy groceries","description":"Milk and eggs","priority":1,"completed":false,"created_at":"2026-08-28T10:26:53"},{"id":13,"title":"","description":null,"priority":1,"completed":false,"created_at":"2026-08-28T10:26:53"},{"id":14,"title":"Buy groceries","description":"Milk and eggs","priority":1,"completed":false,"created_at":"2026-09-01T09:34:01"},{"id":15,"title":"","description":null,"priority":1,"completed":false,"created_at":"2026-09-01T09:34:01"},{"id":16,"title":"Task","description":null,"priority":1,"completed":false,"created_at":"2026-09-01T09:35:36"},{"id":17,"title":"","description":null,"priority":1,"completed":false,"created_at":"2026-09-01T09:35:36"},{"id":18,"title":"   ","description":null,"priority":1,"completed":false,"created_at":"2026-09-01T09:35:36"},{"id":19,"title":"Zero priority task","description":null,"priority":0,"completed":false,"created_at":"2026-09-01T09:35:36"},{"id":20,"title":"Minimal task","description":null,"priority":1,"completed":false,"created_at":"2026-09-01T09:35:36"},{"id":21,"title":"Buy groceries","description":"Milk and eggs","priority":1,"completed":false,"created_at":"2026-09-01T09:35:36"},{"id":22,"title":"Negative priority task","description":null,"priority":-1,"completed":false,"created_at":"2026-09-01T09:35:36"}] 
+ </msg>
+<msg time="2026-09-02T10:11:21.845371" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>python_api</arg>
+<arg>/tasks</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-09-02T10:11:21.822295" elapsed="0.023111"/>
+</kw>
+<status status="PASS" start="2026-09-02T10:11:21.820000" elapsed="0.026127"/>
+</test>
+<test id="s1-t6" name="Create Task Should Return 201 But Returns 200" line="36">
+<kw name="Get Python Headers" owner="common">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-09-02T10:11:21.847898" level="INFO">&amp;{headers} = { Authorization=Bearer Taman-ei-p1t1a1s-0lla-na1n-123 | Content-Type=application/json }</msg>
+<var>&amp;{headers}</var>
+<arg>Authorization=${VALID_TOKEN}</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-09-02T10:11:21.847490" elapsed="0.000431"/>
+</kw>
+<return>
+<value>${headers}</value>
+<status status="PASS" start="2026-09-02T10:11:21.847970" elapsed="0.000040"/>
+</return>
+<msg time="2026-09-02T10:11:21.848105" level="INFO">${headers} = {'Authorization': 'Bearer Taman-ei-p1t1a1s-0lla-na1n-123', 'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<status status="PASS" start="2026-09-02T10:11:21.847179" elapsed="0.000942"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-09-02T10:11:21.848958" level="INFO">${body} = {'title': 'Testing Task', 'priority': 1}</msg>
+<var>${body}</var>
+<arg>title=Testing Task</arg>
+<arg>priority=${1}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-09-02T10:11:21.848291" elapsed="0.000704"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-09-02T10:11:21.903949" level="INFO">POST Request : url=http://localhost:8000/tasks 
+ path_url=/tasks 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer Taman-ei-p1t1a1s-0lla-na1n-123', 'Content-Type': 'application/json', 'Content-Length': '40'} 
+ body=b'{"title": "Testing Task", "priority": 1}' 
+ </msg>
+<msg time="2026-09-02T10:11:21.904060" level="INFO">POST Response : url=http://localhost:8000/tasks 
+ status=200, reason=OK 
+ headers={'date': 'Wed, 02 Sep 2026 07:11:21 GMT', 'server': 'uvicorn', 'content-length': '117', 'content-type': 'application/json'} 
+ body={"id":23,"title":"Testing Task","description":null,"priority":1,"completed":false,"created_at":"2026-09-02T07:11:21"} 
+ </msg>
+<msg time="2026-09-02T10:11:21.904220" level="FAIL">Url: http://localhost:8000/tasks Expected status: 200 != 201</msg>
+<var>${resposne}</var>
+<arg>python_api</arg>
+<arg>/tasks</arg>
+<arg>json=${body}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=201</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="FAIL" start="2026-09-02T10:11:21.849162" elapsed="0.111784">Url: http://localhost:8000/tasks Expected status: 200 != 201</status>
+</kw>
+<status status="FAIL" start="2026-09-02T10:11:21.846649" elapsed="0.114596">Url: http://localhost:8000/tasks Expected status: 200 != 201</status>
+</test>
+<test id="s1-t7" name="Create Task With Null Title Should Return 400" line="41">
+<kw name="Get Python Headers" owner="common">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-09-02T10:11:21.962720" level="INFO">&amp;{headers} = { Authorization=Bearer Taman-ei-p1t1a1s-0lla-na1n-123 | Content-Type=application/json }</msg>
+<var>&amp;{headers}</var>
+<arg>Authorization=${VALID_TOKEN}</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-09-02T10:11:21.962339" elapsed="0.000405"/>
+</kw>
+<return>
+<value>${headers}</value>
+<status status="PASS" start="2026-09-02T10:11:21.962799" elapsed="0.000044"/>
+</return>
+<msg time="2026-09-02T10:11:21.962961" level="INFO">${headers} = {'Authorization': 'Bearer Taman-ei-p1t1a1s-0lla-na1n-123', 'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<status status="PASS" start="2026-09-02T10:11:21.962133" elapsed="0.000892"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-09-02T10:11:21.963819" level="INFO">${body} = {'priority': 1}</msg>
+<var>${body}</var>
+<arg>priority=${1}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-09-02T10:11:21.963254" elapsed="0.000594"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-09-02T10:11:22.010403" level="INFO">POST Request : url=http://localhost:8000/tasks 
+ path_url=/tasks 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer Taman-ei-p1t1a1s-0lla-na1n-123', 'Content-Type': 'application/json', 'Content-Length': '15'} 
+ body=b'{"priority": 1}' 
+ </msg>
+<msg time="2026-09-02T10:11:22.010531" level="INFO">POST Response : url=http://localhost:8000/tasks 
+ status=422, reason=Unprocessable Entity 
+ headers={'date': 'Wed, 02 Sep 2026 07:11:21 GMT', 'server': 'uvicorn', 'content-length': '100', 'content-type': 'application/json'} 
+ body={"detail":[{"type":"missing","loc":["body","title"],"msg":"Field required","input":{"priority":1}}]} 
+ </msg>
+<msg time="2026-09-02T10:11:22.010900" level="INFO">${resposne} = &lt;Response [422]&gt;</msg>
+<var>${resposne}</var>
+<arg>python_api</arg>
+<arg>/tasks</arg>
+<arg>json=${body}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=422</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-09-02T10:11:21.964034" elapsed="0.046905"/>
+</kw>
+<status status="PASS" start="2026-09-02T10:11:21.961743" elapsed="0.049497"/>
+</test>
+<test id="s1-t8" name="Get Nonexists Task Returns 404" line="47">
+<kw name="Get Python Headers" owner="common">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-09-02T10:11:22.013313" level="INFO">&amp;{headers} = { Authorization=Bearer Taman-ei-p1t1a1s-0lla-na1n-123 | Content-Type=application/json }</msg>
+<var>&amp;{headers}</var>
+<arg>Authorization=${VALID_TOKEN}</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-09-02T10:11:22.012815" elapsed="0.000525"/>
+</kw>
+<return>
+<value>${headers}</value>
+<status status="PASS" start="2026-09-02T10:11:22.013405" elapsed="0.000046"/>
+</return>
+<msg time="2026-09-02T10:11:22.013591" level="INFO">${headers} = {'Authorization': 'Bearer Taman-ei-p1t1a1s-0lla-na1n-123', 'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<status status="PASS" start="2026-09-02T10:11:22.012423" elapsed="0.001190"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-09-02T10:11:22.022617" level="INFO">GET Request : url=http://localhost:8000/tasks/99999 
+ path_url=/tasks/99999 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer Taman-ei-p1t1a1s-0lla-na1n-123', 'Content-Type': 'application/json'} 
+ body=None 
+ </msg>
+<msg time="2026-09-02T10:11:22.022767" level="INFO">GET Response : url=http://localhost:8000/tasks/99999 
+ status=200, reason=OK 
+ headers={'date': 'Wed, 02 Sep 2026 07:11:21 GMT', 'server': 'uvicorn', 'content-length': '87', 'content-type': 'application/json'} 
+ body={"id":0,"title":"","description":null,"priority":0,"completed":false,"created_at":null} 
+ </msg>
+<msg time="2026-09-02T10:11:22.023052" level="FAIL">Url: http://localhost:8000/tasks/99999 Expected status: 200 != 404</msg>
+<var>${respone}</var>
+<arg>python_api</arg>
+<arg>/tasks/99999</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=404</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="FAIL" start="2026-09-02T10:11:22.013784" elapsed="0.010920">Url: http://localhost:8000/tasks/99999 Expected status: 200 != 404</status>
+</kw>
+<status status="FAIL" start="2026-09-02T10:11:22.011793" elapsed="0.013388">Url: http://localhost:8000/tasks/99999 Expected status: 200 != 404</status>
+</test>
+<test id="s1-t9" name="Delete Task Returns 204" line="52">
+<kw name="Get Python Headers" owner="common">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-09-02T10:11:22.027638" level="INFO">&amp;{headers} = { Authorization=Bearer Taman-ei-p1t1a1s-0lla-na1n-123 | Content-Type=application/json }</msg>
+<var>&amp;{headers}</var>
+<arg>Authorization=${VALID_TOKEN}</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-09-02T10:11:22.026937" elapsed="0.000745"/>
+</kw>
+<return>
+<value>${headers}</value>
+<status status="PASS" start="2026-09-02T10:11:22.027795" elapsed="0.000062"/>
+</return>
+<msg time="2026-09-02T10:11:22.028070" level="INFO">${headers} = {'Authorization': 'Bearer Taman-ei-p1t1a1s-0lla-na1n-123', 'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<status status="PASS" start="2026-09-02T10:11:22.026581" elapsed="0.001520"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-09-02T10:11:22.029214" level="INFO">${body} = {'title': 'Task To Delete', 'priority': 1}</msg>
+<var>${body}</var>
+<arg>title=Task To Delete</arg>
+<arg>priority=${1}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-09-02T10:11:22.028423" elapsed="0.000825"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-09-02T10:11:22.080212" level="INFO">POST Request : url=http://localhost:8000/tasks 
+ path_url=/tasks 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer Taman-ei-p1t1a1s-0lla-na1n-123', 'Content-Type': 'application/json', 'Content-Length': '42'} 
+ body=b'{"title": "Task To Delete", "priority": 1}' 
+ </msg>
+<msg time="2026-09-02T10:11:22.080319" level="INFO">POST Response : url=http://localhost:8000/tasks 
+ status=200, reason=OK 
+ headers={'date': 'Wed, 02 Sep 2026 07:11:21 GMT', 'server': 'uvicorn', 'content-length': '119', 'content-type': 'application/json'} 
+ body={"id":24,"title":"Task To Delete","description":null,"priority":1,"completed":false,"created_at":"2026-09-02T07:11:22"} 
+ </msg>
+<msg time="2026-09-02T10:11:22.080491" level="INFO">${create} = &lt;Response [200]&gt;</msg>
+<var>${create}</var>
+<arg>python_api</arg>
+<arg>/tasks</arg>
+<arg>json=${body}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-09-02T10:11:22.029445" elapsed="0.051071"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-09-02T10:11:22.082062" level="INFO">${task_id} = 24</msg>
+<var>${task_id}</var>
+<arg>${create.json()['id']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-09-02T10:11:22.080788" elapsed="0.001327"/>
+</kw>
+<kw name="DELETE On Session" owner="RequestsLibrary">
+<msg time="2026-09-02T10:11:22.096153" level="INFO">DELETE Request : url=http://localhost:8000/tasks/24 
+ path_url=/tasks/24 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer Taman-ei-p1t1a1s-0lla-na1n-123', 'Content-Type': 'application/json', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg time="2026-09-02T10:11:22.096331" level="INFO">DELETE Response : url=http://localhost:8000/tasks/24 
+ status=200, reason=OK 
+ headers={'date': 'Wed, 02 Sep 2026 07:11:21 GMT', 'server': 'uvicorn', 'content-length': '119', 'content-type': 'application/json'} 
+ body={"id":24,"title":"Task To Delete","description":null,"priority":1,"completed":false,"created_at":"2026-09-02T07:11:22"} 
+ </msg>
+<msg time="2026-09-02T10:11:22.096532" level="FAIL">Url: http://localhost:8000/tasks/24 Expected status: 200 != 204</msg>
+<var>${response}</var>
+<arg>python_api</arg>
+<arg>/tasks/${task_id}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=204</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<status status="FAIL" start="2026-09-02T10:11:22.082479" elapsed="0.015377">Url: http://localhost:8000/tasks/24 Expected status: 200 != 204</status>
+</kw>
+<status status="FAIL" start="2026-09-02T10:11:22.025902" elapsed="0.072263">Url: http://localhost:8000/tasks/24 Expected status: 200 != 204</status>
+</test>
+<status status="FAIL" start="2026-09-02T10:11:21.453904" elapsed="0.644902"/>
+</suite>
+<statistics>
+<total>
+<stat pass="6" fail="3" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Python Api" id="s1" pass="6" fail="3" skip="0">Python Api</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
