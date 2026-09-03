@@ -41,7 +41,9 @@ def print_bug_detection_summary(results: list[dict]):
     print("BUG DETECTION SUMMARY BY APP")
     print("="*90)
 
-    for app in ["python", "java"]:
+    all_apps = sorted(set(r["app"] for r in results))
+    
+    for app in all_apps:
         print(f"\n{app.upper()} APP:")
         print(f"  {'Framework':<25} {'Mode':<10} {'Bugs detected':<15} {'False positives'}")
         print(f"  {'-'*65}")

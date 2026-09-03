@@ -1,0 +1,92 @@
+{
+  "operation": "GET /user/{username}",
+  "method": "GET",
+  "path_template": "/user/{username}",
+  "fingerprint": "703b3a8f",
+  "case_id": "AAt5ty",
+  "code_sample": "curl -X GET https://petstore3.swagger.io/api/v3/user/0",
+  "sequence": [
+    {
+      "method": "GET",
+      "url": "https://petstore3.swagger.io/api/v3/user/0",
+      "url_template": "https://petstore3.swagger.io/api/v3/user/{username}",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "AAt5ty"
+      },
+      "response": {
+        "status_code": 500,
+        "headers": {
+          "date": "Thu, 03 Sep 2026 09:02:46 GMT",
+          "content-type": "application/json",
+          "content-length": "110",
+          "connection": "keep-alive",
+          "access-control-allow-origin": "*",
+          "access-control-allow-methods": "GET, POST, DELETE, PUT",
+          "access-control-allow-headers": "Content-Type, api_key, Authorization",
+          "access-control-expose-headers": "Content-Disposition",
+          "server": "Jetty(9.4.53.v20231009)"
+        },
+        "body": "{\"code\":500,\"message\":\"There was an error processing your request. It has been logged (ID: 52459a921eaf3ad5)\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "not_a_server_error",
+          "status": "failure",
+          "message": "Server error"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.00011129999984405003,
+          "mode": "positive"
+        },
+        "components": {
+          "PATH": "positive"
+        },
+        "phase": {
+          "name": "coverage",
+          "data": {
+            "type": "CoveragePhaseData",
+            "description": "Default positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "scenario": "default_positive_test"
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [
+          [
+            "path",
+            "username"
+          ]
+        ],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {
+          "PATH": {
+            "username": "0"
+          }
+        }
+      },
+      "path": "/user/{username}",
+      "path_parameters": {
+        "username": "0"
+      },
+      "query": {},
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "none"
+      },
+      "media_type": null,
+      "parent_index": null
+    }
+  ]
+}

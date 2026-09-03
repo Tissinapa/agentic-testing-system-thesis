@@ -1,0 +1,85 @@
+{
+  "operation": "GET /api/v1/users/",
+  "method": "GET",
+  "path_template": "/api/v1/users/",
+  "fingerprint": "d0feabde",
+  "case_id": "WPUnHi",
+  "code_sample": "curl -X GET 'http://localhost/api/v1/users/?skip=0&x-schemathesis-unknown-property=42'",
+  "sequence": [
+    {
+      "method": "GET",
+      "url": "http://localhost/api/v1/users/?skip=0&x-schemathesis-unknown-property=42",
+      "url_template": "http://localhost/api/v1/users/",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "WPUnHi"
+      },
+      "response": {
+        "status_code": 401,
+        "headers": {
+          "content-length": "30",
+          "content-type": "application/json",
+          "date": "Thu, 03 Sep 2026 10:06:29 GMT",
+          "server": "uvicorn",
+          "www-authenticate": "[Filtered]"
+        },
+        "body": "{\"detail\":\"Not authenticated\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "status_code_conformance",
+          "status": "failure",
+          "message": "Undocumented HTTP status code\n\nReceived: 401\nDocumented: 200, 422"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 2.769999991869554e-05,
+          "mode": "negative"
+        },
+        "components": {
+          "QUERY": "negative"
+        },
+        "phase": {
+          "name": "coverage",
+          "data": {
+            "type": "CoveragePhaseData",
+            "description": "Object with unexpected properties",
+            "location": null,
+            "parameter": null,
+            "parameter_location": "QUERY",
+            "scenario": "object_unexpected_properties"
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {
+          "QUERY": {
+            "skip": 0,
+            "x-schemathesis-unknown-property": 42
+          }
+        }
+      },
+      "path": "/api/v1/users/",
+      "path_parameters": {},
+      "query": {
+        "skip": "0",
+        "x-schemathesis-unknown-property": "42"
+      },
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "none"
+      },
+      "media_type": null,
+      "parent_index": null
+    }
+  ]
+}

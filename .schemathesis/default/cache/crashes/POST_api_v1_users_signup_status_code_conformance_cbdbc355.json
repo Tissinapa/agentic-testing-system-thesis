@@ -1,0 +1,103 @@
+{
+  "operation": "POST /api/v1/users/signup",
+  "method": "POST",
+  "path_template": "/api/v1/users/signup",
+  "fingerprint": "cbdbc355",
+  "case_id": "IK65Ue",
+  "code_sample": "curl -X POST -H 'Content-Type: application/json' -d '{\"Q\\u00ef\\udac8\\ude07\\u00cc\\u0019\\u00de\\u00ad\\ud88b\\udd6e\\ud9c1\\udc1b\\\"\": [true], \"\\u000e\\u00c0\\u007f\": {\"o\\u0082\\u8f0d%~\": {\"\\u0098\\ud952\\udd64\\u00dak\\u0092\\u00aa\\u00c4\\udb62\\uddb2Y/\\udb4b\\udd40\": {\"\": -5.548768259922235e-160}, \"\\u00d8\\u009aeP\\u00b0-\\u0087\\u00b1-\\ud902\\ude7c\\ud8ba\\udc35\\uda4a\\udfcd\\u00fe\\u00891L\\u000f\\u00a3\\udadd\\udea6\\u2e53(k\\u00a2\\u00c1\\u00a8\": [1156724972362107.0], \"\\u00ac\": {\"\\u0e01 \\u0e33\\u0e01\\u0e33\": -62, \"\": true, \"\\ud8fa\\uddf5\\udb32\\ude910\\uda9c\\udde7\": 31655426398}}, \"\\ud940\\udd76N8~\": {}, \"T\\u00c4\\u00e9\\n0\\ud8e4\\udd68\\u00fa<~\": []}, \"password\": \"\\ud89a\\udc21>\\u00d4\\u00cak\\u00e9\\ud9f0\\udc0b8\\u00cf\\u00a6\\u00c5\\u00a27`_\\ud929\\udfa3\\u00af\\u0017C\\u0090\\u00e2\", \"full_name\": \"2C\\u00f4\\ud8e1\\uded4\", \"email\": \"#}dh|@4i.example\"}' http://localhost/api/v1/users/signup",
+  "sequence": [
+    {
+      "method": "POST",
+      "url": "http://localhost/api/v1/users/signup",
+      "url_template": "http://localhost/api/v1/users/signup",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "IK65Ue",
+        "Content-Type": "application/json",
+        "Content-Length": "758"
+      },
+      "response": {
+        "status_code": 500,
+        "headers": {
+          "content-length": "21",
+          "content-type": "text/plain; charset=utf-8",
+          "date": "Thu, 03 Sep 2026 10:06:32 GMT",
+          "server": "uvicorn"
+        },
+        "body": "Internal Server Error"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "status_code_conformance",
+          "status": "failure",
+          "message": "Undocumented HTTP status code\n\nReceived: 500\nDocumented: 200, 422"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.014404800000193063,
+          "mode": "positive"
+        },
+        "components": {
+          "BODY": "positive"
+        },
+        "phase": {
+          "name": "stateful",
+          "data": {
+            "type": "StatefulPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/api/v1/users/signup",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {
+          "Q\u00ef\udac8\ude07\u00cc\u0019\u00de\u00ad\ud88b\udd6e\ud9c1\udc1b\"": [
+            true
+          ],
+          "\u000e\u00c0\u007f": {
+            "o\u0082\u8f0d%~": {
+              "\u0098\ud952\udd64\u00dak\u0092\u00aa\u00c4\udb62\uddb2Y/\udb4b\udd40": {
+                "": -5.548768259922235e-160
+              },
+              "\u00d8\u009aeP\u00b0-\u0087\u00b1-\ud902\ude7c\ud8ba\udc35\uda4a\udfcd\u00fe\u00891L\u000f\u00a3\udadd\udea6\u2e53(k\u00a2\u00c1\u00a8": [
+                1156724972362107.0
+              ],
+              "\u00ac": {
+                "\u0e01 \u0e33\u0e01\u0e33": -62,
+                "": true,
+                "\ud8fa\uddf5\udb32\ude910\uda9c\udde7": 31655426398
+              }
+            },
+            "\ud940\udd76N8~": {},
+            "T\u00c4\u00e9\n0\ud8e4\udd68\u00fa<~": []
+          },
+          "password": "[Filtered]",
+          "full_name": "2C\u00f4\ud8e1\uded4",
+          "email": "#}dh|@4i.example"
+        }
+      },
+      "media_type": "application/json",
+      "parent_index": null
+    }
+  ]
+}

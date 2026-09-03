@@ -1,0 +1,84 @@
+{
+  "operation": "POST /api/v1/users/signup",
+  "method": "PATCH",
+  "path_template": "/api/v1/users/signup",
+  "fingerprint": "fe68bd72",
+  "case_id": "hGdn0B",
+  "code_sample": "curl -X PATCH -H 'Content-Type: application/json' -d '{\"email\": \"0@com\", \"password\": \"00000000\", \"full_name\": \"\"}' http://localhost/api/v1/users/signup",
+  "sequence": [
+    {
+      "method": "PATCH",
+      "url": "http://localhost/api/v1/users/signup",
+      "url_template": "http://localhost/api/v1/users/signup",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "hGdn0B",
+        "Content-Type": "application/json",
+        "Content-Length": "59"
+      },
+      "response": {
+        "status_code": 401,
+        "headers": {
+          "content-length": "30",
+          "content-type": "application/json",
+          "date": "Thu, 03 Sep 2026 10:06:29 GMT",
+          "server": "uvicorn",
+          "www-authenticate": "[Filtered]"
+        },
+        "body": "{\"detail\":\"Not authenticated\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "unsupported_method",
+          "status": "failure",
+          "message": "Unsupported methods\n\nUnsupported method PATCH returned 401, expected 405 Method Not Allowed\n\nReturn 405 for methods not listed in the OpenAPI spec"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 2.6999987312592566e-06,
+          "mode": "negative"
+        },
+        "components": {
+          "BODY": "positive"
+        },
+        "phase": {
+          "name": "coverage",
+          "data": {
+            "type": "CoveragePhaseData",
+            "description": "Unspecified HTTP method: PATCH",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "scenario": "unspecified_http_method"
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/api/v1/users/signup",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {
+          "email": "0@com",
+          "password": "[Filtered]",
+          "full_name": ""
+        }
+      },
+      "media_type": "application/json",
+      "parent_index": null
+    }
+  ]
+}

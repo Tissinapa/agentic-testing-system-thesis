@@ -1,0 +1,82 @@
+{
+  "operation": "POST /api/v1/users/signup",
+  "method": "POST",
+  "path_template": "/api/v1/users/signup",
+  "fingerprint": "c51c1b86",
+  "case_id": "kmOqgP",
+  "code_sample": "curl -X POST -H 'Content-Type: application/json' -d '{\"email\": \"0@com\", \"password\": \"00000000\"}' http://localhost/api/v1/users/signup",
+  "sequence": [
+    {
+      "method": "POST",
+      "url": "http://localhost/api/v1/users/signup",
+      "url_template": "http://localhost/api/v1/users/signup",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "kmOqgP",
+        "Content-Type": "application/json",
+        "Content-Length": "42"
+      },
+      "response": {
+        "status_code": 422,
+        "headers": {
+          "content-length": "267",
+          "content-type": "application/json",
+          "date": "Thu, 03 Sep 2026 10:06:30 GMT",
+          "server": "uvicorn"
+        },
+        "body": "{\"detail\":[{\"type\":\"value_error\",\"loc\":[\"body\",\"email\"],\"msg\":\"value is not a valid email address: The part after the @-sign is not valid. It should have a period.\",\"input\":\"0@com\",\"ctx\":{\"reason\":\"The part after the @-sign is not valid. It should have a period.\"}}]}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "positive_data_acceptance",
+          "status": "failure",
+          "message": "API rejected schema-compliant request\n\nValid data should have been accepted\nExpected: 2xx, 401, 403, 404, 409, 5xx"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.004535700001724763,
+          "mode": "positive"
+        },
+        "components": {
+          "BODY": "positive"
+        },
+        "phase": {
+          "name": "fuzzing",
+          "data": {
+            "type": "FuzzingPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/api/v1/users/signup",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {
+          "email": "0@com",
+          "password": "[Filtered]"
+        }
+      },
+      "media_type": "application/json",
+      "parent_index": null
+    }
+  ]
+}

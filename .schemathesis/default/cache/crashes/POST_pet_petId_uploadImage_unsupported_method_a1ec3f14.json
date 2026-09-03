@@ -1,0 +1,97 @@
+{
+  "operation": "POST /pet/{petId}/uploadImage",
+  "method": "TRACE",
+  "path_template": "/pet/{petId}/uploadImage",
+  "fingerprint": "a1ec3f14",
+  "case_id": "EZrrrI",
+  "code_sample": "curl -X TRACE -H 'Content-Type: application/octet-stream' 'https://petstore3.swagger.io/api/v3/pet/-9223372036854775808/uploadImage?additionalMetadata='",
+  "sequence": [
+    {
+      "method": "TRACE",
+      "url": "https://petstore3.swagger.io/api/v3/pet/-9223372036854775808/uploadImage?additionalMetadata=",
+      "url_template": "https://petstore3.swagger.io/api/v3/pet/{petId}/uploadImage",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "EZrrrI",
+        "Content-Type": "application/octet-stream",
+        "Content-Length": "0"
+      },
+      "response": {
+        "status_code": 405,
+        "headers": {
+          "date": "Thu, 03 Sep 2026 09:02:41 GMT",
+          "content-type": "text/html",
+          "content-length": "122",
+          "connection": "close"
+        },
+        "body": "<html>\r\n<head><title>405 Not Allowed</title></head>\r\n<body>\r\n<center><h1>405 Not Allowed</h1></center>\r\n</body>\r\n</html>\r\n"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "unsupported_method",
+          "status": "failure",
+          "message": "Unsupported methods\n\nTRACE returned 405 without required `Allow` header\n\nAdd `Allow` header listing supported methods (required by RFC 9110)"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 6.399999620043673e-06,
+          "mode": "negative"
+        },
+        "components": {
+          "PATH": "positive",
+          "QUERY": "positive",
+          "BODY": "positive"
+        },
+        "phase": {
+          "name": "coverage",
+          "data": {
+            "type": "CoveragePhaseData",
+            "description": "Unspecified HTTP method: TRACE",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "scenario": "unspecified_http_method"
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [
+          [
+            "path",
+            "petId"
+          ]
+        ],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {
+          "PATH": {
+            "petId": -9223372036854775808
+          },
+          "QUERY": {
+            "additionalMetadata": ""
+          }
+        }
+      },
+      "path": "/pet/{petId}/uploadImage",
+      "path_parameters": {
+        "petId": "-9223372036854775808"
+      },
+      "query": {
+        "additionalMetadata": ""
+      },
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": ""
+      },
+      "media_type": "application/octet-stream",
+      "parent_index": null
+    }
+  ]
+}

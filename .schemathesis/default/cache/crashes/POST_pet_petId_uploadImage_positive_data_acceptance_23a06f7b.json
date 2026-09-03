@@ -1,0 +1,88 @@
+{
+  "operation": "POST /pet/{petId}/uploadImage",
+  "method": "POST",
+  "path_template": "/pet/{petId}/uploadImage",
+  "fingerprint": "23a06f7b",
+  "case_id": "tjKsJf",
+  "code_sample": "curl -X POST -H 'Content-Type: application/octet-stream' https://petstore3.swagger.io/api/v3/pet/1/uploadImage",
+  "sequence": [
+    {
+      "method": "POST",
+      "url": "https://petstore3.swagger.io/api/v3/pet/1/uploadImage",
+      "url_template": "https://petstore3.swagger.io/api/v3/pet/{petId}/uploadImage",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "tjKsJf",
+        "Content-Type": "application/octet-stream",
+        "Content-Length": "0"
+      },
+      "response": {
+        "status_code": 400,
+        "headers": {
+          "date": "Thu, 03 Sep 2026 09:02:51 GMT",
+          "content-type": "application/json",
+          "content-length": "16",
+          "connection": "keep-alive",
+          "access-control-allow-origin": "*",
+          "access-control-allow-methods": "GET, POST, DELETE, PUT",
+          "access-control-allow-headers": "Content-Type, api_key, Authorization",
+          "access-control-expose-headers": "Content-Disposition",
+          "server": "Jetty(9.4.53.v20231009)"
+        },
+        "body": "No file uploaded"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "positive_data_acceptance",
+          "status": "failure",
+          "message": "API rejected schema-compliant request\n\nValid data should have been accepted\nExpected: 2xx, 401, 403, 404, 409, 5xx"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.003693199998451746,
+          "mode": "positive"
+        },
+        "components": {
+          "QUERY": "positive",
+          "PATH": "positive",
+          "BODY": "positive"
+        },
+        "phase": {
+          "name": "fuzzing",
+          "data": {
+            "type": "FuzzingPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/pet/{petId}/uploadImage",
+      "path_parameters": {
+        "petId": 1
+      },
+      "query": {},
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": ""
+      },
+      "media_type": "application/octet-stream",
+      "parent_index": null
+    }
+  ]
+}

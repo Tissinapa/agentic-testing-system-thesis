@@ -60,31 +60,37 @@ python -m agent.run --target python --base-url http://localhost:8000 --spec-url 
 python -m agent.run --target java --base-url http://localhost:8080 --spec-url http://localhost:8080/v3/api-docs --max-iterations 1 --token-budget 30000 --requirements docs/requirements_java.md
 
 
+AGENT OS TESTING
+- petstore3
+python -m agent.run --target java_os --base-url https://petstore3.swagger.io/api/v3 --spec-url https://petstore3.swagger.io/api/v3/openapi.json --mode black --token-budget 30000
+python -m agent.run --target java_os --base-url https://petstore3.swagger.io/api/v3 --spec-url https://petstore3.swagger.io/api/v3/openapi.json --mode white --source-code A:\swagger-petstore\src\main\java\io\swagger\petstore\controller\PetController.java --token-budget 10000
+python -m agent.run --target java_os --base-url https://petstore3.swagger.io/api/v3 --spec-url https://petstore3.swagger.io/api/v3/openapi.json --mode hybrid --source-code A:\swagger-petstore\src\main\java\io\swagger\petstore\controller\PetController.java --token-budget 40000
+
+FasApi full-stack template
+python -m agent.run --target python_os --base-url http://localhost --spec-url http://localhost/api/v1/openapi.json --mode black --requirements docs/requirements_python_os.md --token-budget 30000
+python -m agent.run --target python_os --base-url http://localhost --spec-url http://localhost/api/v1/openapi.json --mode white --requirements docs/requirements_python_os.md --source-code A:\full-stack-fastapi-template\backend\app\api\routes\users.py --token-budget 10000
+python -m agent.run --target python_os --base-url http://localhost --spec-url http://localhost/api/v1/openapi.json --mode hybrid --requirements docs/requirements_python_os.md --source-code A:\full-stack-fastapi-template\backend\app\api\routes\users.py --token-budget 40000
+
+
+OS TESTING WITH SCHEMATHESIS
+petstore3
+uv run schemathesis run https://petstore3.swagger.io/api/v3/openapi.json --checks all --report junit --report-dir results/schemathesis/java_os
+
+FastApi full-stack template
+uv run schemathesis run http://localhost/api/v1/openapi.json --checks all --report junit --report-dir results/schemathesis/python_os
+
+
 Test result skripts
 python -c "
 import json
-with open('results/agent/agentpython_20260827_150810.json') as f:
+with open('results/agent/agentpython_os_20260903_130154.json') as f:
     data = json.load(f)
 print('Summary:', data['summary'])
 print()
-print('Bugs detected:')
+print('Bugs:')
 for b in data['bugs']:
     print(f\"  {b['method']} {b['endpoint']} — {b['verdict']}\")
 "
-
-
-python -c "
-import json
-with open('results/agent/agentjava_20260827_151729.json') as f:
-    data = json.load(f)
-print('Summary:', data['summary'])
-print()
-print('Bugs detected:')
-for b in data['bugs']:
-    print(f\"  {b['method']} {b['endpoint']} — {b['verdict']}\")
-"
-
-
 
 # Black-box Python
 python -m agent.run --target python --base-url http://localhost:8000 --spec-url http://localhost:8000/openapi.json --mode black --requirements docs/requirements_python.md --token-budget 40000

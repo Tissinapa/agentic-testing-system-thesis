@@ -1,0 +1,90 @@
+{
+  "operation": "POST /api/v1/users/signup",
+  "method": "POST",
+  "path_template": "/api/v1/users/signup",
+  "fingerprint": "2f685524",
+  "case_id": "tElUsJ",
+  "code_sample": "curl -X POST -H 'Content-Type: application/json' -d $'!\ufffd\ufffd\ufffdp?\\x1fqb\ufffd\u0682\ufffd' http://localhost/api/v1/users/signup\n\n\u26a0\ufe0f  Request body contains non-printable characters. Actual value: b'!\\xef\\xbf\\xbd\\xef\\xbf\\xbd\\xef\\xbf\\xbdp?\\x1fqb\\xef\\xbf\\xbd\\xda\\x82\\xef\\xbf\\xbd'",
+  "sequence": [
+    {
+      "method": "POST",
+      "url": "http://localhost/api/v1/users/signup",
+      "url_template": "http://localhost/api/v1/users/signup",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "tElUsJ",
+        "Content-Type": "application/json",
+        "Content-Length": "13"
+      },
+      "response": {
+        "status_code": 400,
+        "headers": {
+          "content-length": "48",
+          "content-type": "application/json",
+          "date": "Thu, 03 Sep 2026 10:06:36 GMT",
+          "server": "uvicorn"
+        },
+        "body": "{\"detail\":\"There was an error parsing the body\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "status_code_conformance",
+          "status": "failure",
+          "message": "Undocumented HTTP status code\n\nReceived: 400\nDocumented: 200, 422"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.0035153999997419305,
+          "mode": "negative"
+        },
+        "components": {
+          "BODY": "negative"
+        },
+        "phase": {
+          "name": "stateful",
+          "data": {
+            "type": "StatefulPhaseData",
+            "description": "Invalid syntax: random bytes",
+            "location": null,
+            "parameter": null,
+            "parameter_location": "BODY",
+            "mutations": [
+              {
+                "path": [],
+                "schema_pointer": "",
+                "channel": "schema",
+                "operator": "syntax_fuzzing",
+                "keywords": [],
+                "parameter": null,
+                "original_value": null,
+                "new_value": null
+              }
+            ]
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/api/v1/users/signup",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "base64",
+        "value": "Iff/tXA/H3FizdqC8g=="
+      },
+      "media_type": "application/json",
+      "parent_index": null
+    }
+  ]
+}

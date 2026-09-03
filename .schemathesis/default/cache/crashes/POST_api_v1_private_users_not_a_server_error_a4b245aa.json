@@ -1,0 +1,84 @@
+{
+  "operation": "POST /api/v1/private/users/",
+  "method": "POST",
+  "path_template": "/api/v1/private/users/",
+  "fingerprint": "a4b245aa",
+  "case_id": "yxvJBk",
+  "code_sample": "curl -X POST -H 'Content-Type: application/json' -d '{\"email\": \"\", \"password\": \"\", \"full_name\": \"\", \"is_verified\": 0}' http://localhost/api/v1/private/users/",
+  "sequence": [
+    {
+      "method": "POST",
+      "url": "http://localhost/api/v1/private/users/",
+      "url_template": "http://localhost/api/v1/private/users/",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "yxvJBk",
+        "Content-Type": "application/json",
+        "Content-Length": "64"
+      },
+      "response": {
+        "status_code": 500,
+        "headers": {
+          "content-length": "21",
+          "content-type": "text/plain; charset=utf-8",
+          "date": "Thu, 03 Sep 2026 10:06:25 GMT",
+          "server": "uvicorn"
+        },
+        "body": "Internal Server Error"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "not_a_server_error",
+          "status": "failure",
+          "message": "Server error"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 5.870000313734636e-05,
+          "mode": "negative"
+        },
+        "components": {
+          "BODY": "negative"
+        },
+        "phase": {
+          "name": "coverage",
+          "data": {
+            "type": "CoveragePhaseData",
+            "description": "is_verified: Incorrect type",
+            "location": "/properties/is_verified/type",
+            "parameter": "application/json",
+            "parameter_location": "BODY",
+            "scenario": "incorrect_type"
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/api/v1/private/users/",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {
+          "email": "",
+          "password": "[Filtered]",
+          "full_name": "",
+          "is_verified": 0
+        }
+      },
+      "media_type": "application/json",
+      "parent_index": null
+    }
+  ]
+}

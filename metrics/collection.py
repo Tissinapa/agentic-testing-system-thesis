@@ -88,19 +88,19 @@ def load_pytest_results(filepath: Path) -> dict:
     }
 
 def load_schemathesis_results(filepath: Path) -> dict:
-    """Parse Schemathesis JUnit XML"""
     import xml.etree.ElementTree as ET
     tree = ET.parse(filepath)
     root = tree.getroot()
 
-    total = 0
-    failed = 0
+    total = int(root.get("tests", 0))
+    errors = int(root.get("errors", 0))
+    failures = int(root.get("failures", 0))
+    failed = errors + failures
+    passed = passed = max(0, total - failed)
 
-    for testsuite in root.iter("testsuite"):
-        total += int(testsuite.get("tests", 0))
-        failed += int(testsuite.get("failures", 0)) + int(testsuite.get("errors", 0))
-
-    app = "java" if filepath.parent.name.lower() == "java" else "python"
+    # Use folder name directly as app identifier
+    folder_name = filepath.parent.name.lower()
+    app = folder_name  # java, python, java_os, python_os
 
     return {
         "framework": "Schemathesis",
@@ -108,7 +108,7 @@ def load_schemathesis_results(filepath: Path) -> dict:
         "mode": "black",
         "tests_generated": total,
         "tests_executed": total,
-        "test_passed": total - failed,
+        "tests_passed": passed,
         "bugs_detected": failed,
         "false_positives": 0,
         "endpoints_covered": None,
@@ -152,8 +152,8 @@ def collect_all_results() ->list[dict]:
                 print(f"Warning: could not load {f.name}: {e}")
 
     # Schemathesis results — java and python subfolders
-    for app in ["java", "python"]:
-        schema_dir = RESULTS_DIR / "schemathesis" / app
+    for app_folder in ["java", "python", "java_os", "python_os"]:
+        schema_dir = RESULTS_DIR / "schemathesis" / app_folder
         if schema_dir.exists():
             for f in sorted(schema_dir.glob("*.xml")):
                 try:

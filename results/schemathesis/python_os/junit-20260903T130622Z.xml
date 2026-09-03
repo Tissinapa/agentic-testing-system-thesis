@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites errors="0" failures="23" skipped="0" tests="24" time="36.234691">
+  <testsuite name="schemathesis" hostname="DESKTOP-ME2TPEA" errors="0" failures="23" skipped="0" tests="24" time="36.234691">
+    <testcase name="POST /api/v1/items/" time="0.443204">
+      <failure type="failure">1. Test Case ID: o28u20
+
+- Invalid Allow header
+
+    `Allow` header does not match the schema — missing documented methods: POST
+
+    List exactly the methods this resource supports in `Allow`
+
+[405] Method Not Allowed:
+
+    `{"detail":"Method Not Allowed"}`
+
+Reproduce with:
+
+    curl -X OPTIONS -H 'Content-Type: application/json' -d '{"title": "0", "description": ""}' http://localhost/api/v1/items/</failure>
+      <failure type="failure">1. Test Case ID: WJNhEo
+
+- Undocumented HTTP status code
+
+    Received: 401
+    Documented: 200, 422
+
+[401] Unauthorized:
+
+    `{"detail":"Not authenticated"}`
+
+Reproduce with:
+
+    curl -X POST -H 'Content-Type: application/json' -d '{"title": "0"}' http://localhost/api/v1/items/</failure>
+    </testcase>
+    <testcase name="POST /api/v1/login/access-token" time="1.275282">
+      <failure type="failure">1. Test Case ID: mgvW7H
+
+- Server error
+
+- Undocumented HTTP status code
+
+    Received: 500
+    Documented: 200, 422
+
+[500] Internal Server Error:
+
+    `Internal Server Error`
+
+Reproduce with:
+
+    curl -X POST -H 'Content-Type: application/x-www-form-urlencoded' -d 'password=0&amp;username=0' http://localhost/api/v1/login/access-token</failure>
+    </testcase>
+    <testcase name="POST /api/v1/login/test-token" time="0.027721">
+      <failure type="failure">1. Test Case ID: DjUqAM
+
+- Undocumented HTTP status code
+
+    Received: 401
+    Documented: 200
+
+[401] Unauthorized:
+
+    `{"detail":"Not authenticated"}`
+
+Reproduce with:
+
+    curl -X POST http://localhost/api/v1/login/test-token</failure>
+    </testcase>
+    <testcase name="POST /api/v1/password-recovery-html-content/{email}" time="0.078892">
+      <failure type="failure">1. Test Case ID: YeYq6z
+
+- Undocumented HTTP status code
+
+    Received: 401
+    Documented: 200, 422
+
+[401] Unauthorized:
+
+    `{"detail":"Not authenticated"}`
+
+Reproduce with:
+
+    curl -X POST http://localhost/api/v1/password-recovery-html-content/0</failure>
+    </testcase>
+    <testcase name="POST /api/v1/password-recovery/{email}" time="0.043179">
+      <failure type="failure">1. Test Case ID: ZiWw8x
+
+- Server error
+
+- Undocumented HTTP status code
+
+    Received: 500
+    Documented: 200, 422
+
+[500] Internal Server Error:
+
+    `Internal Server Error`
+
+Reproduce with:
+
+    curl -X POST http://localhost/api/v1/password-recovery/0</failure>
+    </testcase>
+    <testcase name="POST /api/v1/private/users/" time="1.070151">
+      <failure type="failure">1. Test Case ID: yxvJBk
+
+- Server error
+
+- Undocumented HTTP status code
+
+    Received: 500
+    Documented: 200, 422
+
+[500] Internal Server Error:
+
+    `Internal Server Error`
+
+Reproduce with:
+
+    curl -X POST -H 'Content-Type: application/json' -d '{"email": "", "password": "", "full_name": "", "is_verified": 0}' http://localhost/api/v1/private/users/</failure>
+    </testcase>
+    <testcase name="POST /api/v1/reset-password/" time="1.176921">
+      <failure type="failure">1. Test Case ID: RJ8DZs
+
+- API rejected schema-compliant request
+
+    Valid data should have been accepted
+    Expected: 2xx, 401, 403, 404, 409, 5xx
+
+- Undocumented HTTP status code
+
+    Received: 400
+    Documented: 200, 422
+
+[400] Bad Request:
+
+    `{"detail":"Invalid token"}`
+
+Reproduce with:
+
+    curl -X POST -H 'Content-Type: application/json' -d '{"token": "", "new_password": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"}' http://localhost/api/v1/reset-password/</failure>
+    </testcase>
+    <testcase name="POST /api/v1/users/" time="1.940968">
+      <failure type="failure">1. Test Case ID: YXU2r0
+
+- Invalid Allow header
+
+    `Allow` header does not match the schema — missing documented methods: POST
+
+    List exactly the methods this resource supports in `Allow`
+
+[405] Method Not Allowed:
+
+    `{"detail":"Method Not Allowed"}`
+
+Reproduce with:
+
+    curl -X OPTIONS -H 'Content-Type: application/json' -d '{"email": "0@com", "is_active": true, "is_superuser": false, "full_name": "", "password": "00000000"}' http://localhost/api/v1/users/</failure>
+      <failure type="failure">1. Test Case ID: xzKEDo
+
+- Undocumented HTTP status code
+
+    Received: 401
+    Documented: 200, 422
+
+[401] Unauthorized:
+
+    `{"detail":"Not authenticated"}`
+
+Reproduce with:
+
+    curl -X POST -H 'Content-Type: application/json' -d '{"email": "0@com", "password": "00000000"}' http://localhost/api/v1/users/</failure>
+    </testcase>
+    <testcase name="POST /api/v1/users/signup" time="0.236146">
+      <failure type="failure">1. Test Case ID: hGdn0B
+
+- Unsupported methods
+
+    Unsupported method PATCH returned 401, expected 405 Method Not Allowed
+
+    Return 405 for methods not listed in the OpenAPI spec
+
+[401] Unauthorized:
+
+    `{"detail":"Not authenticated"}`
+
+Reproduce with:
+
+    curl -X PATCH -H 'Content-Type: application/json' -d '{"email": "0@com", "password": "00000000", "full_name": ""}' http://localhost/api/v1/users/signup</failure>
+      <failure type="failure">1. Test Case ID: kmOqgP
+
+- API rejected schema-compliant request
+
+    Valid data should have been accepted
+    Expected: 2xx, 401, 403, 404, 409, 5xx
+
+[422] Unprocessable Content:
+
+    `{"detail":[{"type":"value_error","loc":["body","email"],"msg":"value is not a valid email address: The part after the @-sign is not valid. It should have a period.","input":"0@com","ctx":{"reason":"The part after the @-sign is not valid. It should have a period."}}]}`
+
+Reproduce with:
+
+    curl -X POST -H 'Content-Type: application/json' -d '{"email": "0@com", "password": "00000000"}' http://localhost/api/v1/users/signup</failure>
+    </testcase>
+    <testcase name="POST /api/v1/utils/test-email/" time="0.017901">
+      <failure type="failure">1. Test Case ID: y2kp2S
+
+- Undocumented HTTP status code
+
+    Received: 401
+    Documented: 201, 422
+
+[401] Unauthorized:
+
+    `{"detail":"Not authenticated"}`
+
+Reproduce with:
+
+    curl -X POST http://localhost/api/v1/utils/test-email/</failure>
+    </testcase>
+    <testcase name="GET /api/v1/items/" time="0.018388">
+      <failure type="failure">1. Test Case ID: IxDjvg
+
+- Undocumented HTTP status code
+
+    Received: 401
+    Documented: 200, 422
+
+[401] Unauthorized:
+
+    `{"detail":"Not authenticated"}`
+
+Reproduce with:
+
+    curl -X GET 'http://localhost/api/v1/items/?skip=0&amp;x-schemathesis-unknown-property=42'</failure>
+    </testcase>
+    <testcase name="GET /api/v1/users/" time="0.014512">
+      <failure type="failure">1. Test Case ID: WPUnHi
+
+- Undocumented HTTP status code
+
+    Received: 401
+    Documented: 200, 422
+
+[401] Unauthorized:
+
+    `{"detail":"Not authenticated"}`
+
+Reproduce with:
+
+    curl -X GET 'http://localhost/api/v1/users/?skip=0&amp;x-schemathesis-unknown-property=42'</failure>
+    </testcase>
+    <testcase name="GET /api/v1/users/me" time="0.021299">
+      <failure type="failure">1. Test Case ID: oaWXXA
+
+- Invalid Allow header
+
+    `Allow` header does not match the schema — missing documented methods: DELETE, GET
+
+    List exactly the methods this resource supports in `Allow`
+
+[405] Method Not Allowed:
+
+    `{"detail":"Method Not Allowed"}`
+
+Reproduce with:
+
+    curl -X OPTIONS http://localhost/api/v1/users/me</failure>
+      <failure type="failure">1. Test Case ID: pVjjFq
+
+- Undocumented HTTP status code
+
+    Received: 401
+    Documented: 200
+
+[401] Unauthorized:
+
+    `{"detail":"Not authenticated"}`
+
+Reproduce with:
+
+    curl -X GET http://localhost/api/v1/users/me</failure>
+    </testcase>
+    <testcase name="GET /api/v1/utils/health-check/" time="0.028836" />
+    <testcase name="PATCH /api/v1/users/me" time="0.533271">
+      <failure type="failure">1. Test Case ID: 3IB8iQ
+
+- Undocumented HTTP status code
+
+    Received: 401
+    Documented: 200, 422
+
+[401] Unauthorized:
+
+    `{"detail":"Not authenticated"}`
+
+Reproduce with:
+
+    curl -X PATCH -H 'Content-Type: application/json' -d '[null, null]' http://localhost/api/v1/users/me</failure>
+    </testcase>
+    <testcase name="PATCH /api/v1/users/me/password" time="0.414874">
+      <failure type="failure">1. Test Case ID: oQ1kf7
+
+- Undocumented HTTP status code
+
+    Received: 401
+    Documented: 200, 422
+
+[401] Unauthorized:
+
+    `{"detail":"Not authenticated"}`
+
+Reproduce with:
+
+    curl -X PATCH -H 'Content-Type: application/json' -d '{"current_password": "00000000"}' http://localhost/api/v1/users/me/password</failure>
+    </testcase>
+    <testcase name="DELETE /api/v1/users/me" time="0.013693">
+      <failure type="failure">1. Test Case ID: 0ZPIky
+
+- Undocumented HTTP status code
+
+    Received: 401
+    Documented: 200
+
+[401] Unauthorized:
+
+    `{"detail":"Not authenticated"}`
+
+Reproduce with:
+
+    curl -X DELETE http://localhost/api/v1/users/me</failure>
+    </testcase>
+    <testcase name="PUT /api/v1/items/{id}" time="0.307030">
+      <failure type="failure">1. Test Case ID: rxLkSO
+
+- Invalid Allow header
+
+    `Allow` header does not match the schema — missing documented methods: DELETE, PUT
+
+    List exactly the methods this resource supports in `Allow`
+
+[405] Method Not Allowed:
+
+    `{"detail":"Method Not Allowed"}`
+
+Reproduce with:
+
+    curl -X OPTIONS -H 'Content-Type: application/json' -d '{"title": "0", "description": ""}' http://localhost/api/v1/items/e3e70682-c209-1cac-a29f-6fbed82c07cd</failure>
+      <failure type="failure">1. Test Case ID: ktFTtY
+
+- Undocumented HTTP status code
+
+    Received: 401
+    Documented: 200, 422
+
+[401] Unauthorized:
+
+    `{"detail":"Not authenticated"}`
+
+Reproduce with:
+
+    curl -X PUT -H 'Content-Type: application/json' -d '{}' http://localhost/api/v1/items/e3e70682-c209-1cac-a29f-6fbed82c07cd</failure>
+    </testcase>
+    <testcase name="GET /api/v1/items/{id}" time="0.017463">
+      <failure type="failure">1. Test Case ID: ki2JHu
+
+- Undocumented HTTP status code
+
+    Received: 401
+    Documented: 200, 422
+
+[401] Unauthorized:
+
+    `{"detail":"Not authenticated"}`
+
+Reproduce with:
+
+    curl -X GET http://localhost/api/v1/items/null%2Cnull</failure>
+    </testcase>
+    <testcase name="GET /api/v1/users/{user_id}" time="0.028765">
+      <failure type="failure">1. Test Case ID: PwwhcP
+
+- Invalid Allow header
+
+    `Allow` header does not match the schema — missing documented methods: DELETE, PATCH
+
+    List exactly the methods this resource supports in `Allow`
+
+[405] Method Not Allowed:
+
+    `{"detail":"Method Not Allowed"}`
+
+Reproduce with:
+
+    curl -X OPTIONS http://localhost/api/v1/users/e3e70682-c209-1cac-a29f-6fbed82c07cd</failure>
+      <failure type="failure">1. Test Case ID: nQHgKD
+
+- Undocumented HTTP status code
+
+    Received: 401
+    Documented: 200, 422
+
+[401] Unauthorized:
+
+    `{"detail":"Not authenticated"}`
+
+Reproduce with:
+
+    curl -X GET http://localhost/api/v1/users/e3e70682-c209-1cac-a29f-6fbed82c07cd</failure>
+    </testcase>
+    <testcase name="PATCH /api/v1/users/{user_id}" time="0.115546">
+      <failure type="failure">1. Test Case ID: XBQegS
+
+- Undocumented HTTP status code
+
+    Received: 401
+    Documented: 200, 422
+
+[401] Unauthorized:
+
+    `{"detail":"Not authenticated"}`
+
+Reproduce with:
+
+    curl -X PATCH -H 'Content-Type: application/json' -d '{"email": "0@com", "is_active": null, "is_superuser": null, "full_name": "", "password": "00000000"}' http://localhost/api/v1/users/null%2Cnull</failure>
+    </testcase>
+    <testcase name="DELETE /api/v1/items/{id}" time="0.018939">
+      <failure type="failure">1. Test Case ID: nuKXMV
+
+- Undocumented HTTP status code
+
+    Received: 401
+    Documented: 200, 422
+
+[401] Unauthorized:
+
+    `{"detail":"Not authenticated"}`
+
+Reproduce with:
+
+    curl -X DELETE http://localhost/api/v1/items/null%2Cnull</failure>
+    </testcase>
+    <testcase name="DELETE /api/v1/users/{user_id}" time="0.015822">
+      <failure type="failure">1. Test Case ID: mosrVz
+
+- Undocumented HTTP status code
+
+    Received: 401
+    Documented: 200, 422
+
+[401] Unauthorized:
+
+    `{"detail":"Not authenticated"}`
+
+Reproduce with:
+
+    curl -X DELETE http://localhost/api/v1/users/null%2Cnull</failure>
+    </testcase>
+    <testcase name="Stateful tests" time="28.375888">
+      <failure type="failure">1. Test Case ID: IK65Ue
+
+- Server error
+
+- Undocumented HTTP status code
+
+    Received: 500
+    Documented: 200, 422
+
+[500] Internal Server Error:
+
+    `Internal Server Error`
+
+Reproduce with:
+
+    curl -X POST -H 'Content-Type: application/json' -d '{"Q\u00ef\udac8\ude07\u00cc\u0019\u00de\u00ad\ud88b\udd6e\ud9c1\udc1b\"": [true], "\u000e\u00c0\u007f": {"o\u0082\u8f0d%~": {"\u0098\ud952\udd64\u00dak\u0092\u00aa\u00c4\udb62\uddb2Y/\udb4b\udd40": {"": -5.548768259922235e-160}, "\u00d8\u009aeP\u00b0-\u0087\u00b1-\ud902\ude7c\ud8ba\udc35\uda4a\udfcd\u00fe\u00891L\u000f\u00a3\udadd\udea6\u2e53(k\u00a2\u00c1\u00a8": [1156724972362107.0], "\u00ac": {"\u0e01 \u0e33\u0e01\u0e33": -62, "": true, "\ud8fa\uddf5\udb32\ude910\uda9c\udde7": 31655426398}}, "\ud940\udd76N8~": {}, "T\u00c4\u00e9\n0\ud8e4\udd68\u00fa&lt;~": []}, "password": "\ud89a\udc21&gt;\u00d4\u00cak\u00e9\ud9f0\udc0b8\u00cf\u00a6\u00c5\u00a27`_\ud929\udfa3\u00af\u0017C\u0090\u00e2", "full_name": "2C\u00f4\ud8e1\uded4", "email": "#}dh|@4i.example"}' http://localhost/api/v1/users/signup</failure>
+      <failure type="failure">1. Test Case ID: tElUsJ
+
+- Undocumented HTTP status code
+
+    Received: 400
+    Documented: 200, 422
+
+[400] Bad Request:
+
+    `{"detail":"There was an error parsing the body"}`
+
+Reproduce with:
+
+    curl -X POST -H 'Content-Type: application/json' -d $'!���p?\x1fqb�ڂ�' http://localhost/api/v1/users/signup
+    
+    ⚠️  Request body contains non-printable characters. Actual value: b'!\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbdp?\x1fqb\xef\xbf\xbd\xda\x82\xef\xbf\xbd'</failure>
+      <failure type="failure">1. Test Case ID: Cw7M1A
+
+- Undocumented HTTP status code
+
+    Received: 400
+    Documented: 200, 422
+
+[400] Bad Request:
+
+    `{"detail":"There was an error parsing the body"}`
+
+Reproduce with:
+
+    curl -X POST -H 'Content-Type: application/json' -d $'\x0bA�h�����' http://localhost/api/v1/users/
+    
+    ⚠️  Request body contains non-printable characters. Actual value: b'\x0bA\xef\xbf\xbdh\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd'</failure>
+      <failure type="failure">1. Test Case ID: lebPCK
+
+- Undocumented HTTP status code
+
+    Received: 400
+    Documented: 200, 422
+
+[400] Bad Request:
+
+    `{"detail":"There was an error parsing the body"}`
+
+Reproduce with:
+
+    curl -X POST -H 'Content-Type: application/json' -d '�s�����Gn/ɿ��\�A��' http://localhost/api/v1/items/</failure>
+    </testcase>
+  </testsuite>
+</testsuites>

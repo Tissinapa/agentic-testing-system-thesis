@@ -1,0 +1,80 @@
+{
+  "operation": "POST /api/v1/utils/test-email/",
+  "method": "POST",
+  "path_template": "/api/v1/utils/test-email/",
+  "fingerprint": "a9da7572",
+  "case_id": "y2kp2S",
+  "code_sample": "curl -X POST http://localhost/api/v1/utils/test-email/",
+  "sequence": [
+    {
+      "method": "POST",
+      "url": "http://localhost/api/v1/utils/test-email/",
+      "url_template": "http://localhost/api/v1/utils/test-email/",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "y2kp2S",
+        "Content-Length": "0"
+      },
+      "response": {
+        "status_code": 401,
+        "headers": {
+          "content-length": "30",
+          "content-type": "application/json",
+          "date": "Thu, 03 Sep 2026 10:06:29 GMT",
+          "server": "uvicorn",
+          "www-authenticate": "[Filtered]"
+        },
+        "body": "{\"detail\":\"Not authenticated\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "status_code_conformance",
+          "status": "failure",
+          "message": "Undocumented HTTP status code\n\nReceived: 401\nDocumented: 201, 422"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 1.1900003300979733e-05,
+          "mode": "negative"
+        },
+        "components": {
+          "QUERY": "negative"
+        },
+        "phase": {
+          "name": "coverage",
+          "data": {
+            "type": "CoveragePhaseData",
+            "description": "Missing `email_to` at query",
+            "location": null,
+            "parameter": "email_to",
+            "parameter_location": "QUERY",
+            "scenario": "missing_parameter"
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {
+          "QUERY": {}
+        }
+      },
+      "path": "/api/v1/utils/test-email/",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "none"
+      },
+      "media_type": null,
+      "parent_index": null
+    }
+  ]
+}

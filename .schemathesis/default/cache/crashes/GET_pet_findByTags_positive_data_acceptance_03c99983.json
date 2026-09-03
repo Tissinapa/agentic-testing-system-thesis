@@ -1,0 +1,85 @@
+{
+  "operation": "GET /pet/findByTags",
+  "method": "GET",
+  "path_template": "/pet/findByTags",
+  "fingerprint": "03c99983",
+  "case_id": "SFmMn6",
+  "code_sample": "curl -X GET 'https://petstore3.swagger.io/api/v3/pet/findByTags?tags='",
+  "sequence": [
+    {
+      "method": "GET",
+      "url": "https://petstore3.swagger.io/api/v3/pet/findByTags?tags=",
+      "url_template": "https://petstore3.swagger.io/api/v3/pet/findByTags",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "SFmMn6"
+      },
+      "response": {
+        "status_code": 400,
+        "headers": {
+          "date": "Thu, 03 Sep 2026 09:02:50 GMT",
+          "content-type": "application/xml",
+          "content-length": "28",
+          "connection": "keep-alive",
+          "access-control-allow-origin": "*",
+          "access-control-allow-methods": "GET, POST, DELETE, PUT",
+          "access-control-allow-headers": "Content-Type, api_key, Authorization",
+          "access-control-expose-headers": "Content-Disposition",
+          "server": "Jetty(9.4.53.v20231009)"
+        },
+        "body": "No tags provided. Try again?"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "positive_data_acceptance",
+          "status": "failure",
+          "message": "API rejected schema-compliant request\n\nValid data should have been accepted\nExpected: 2xx, 401, 403, 404, 409, 5xx"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.0016245000006165355,
+          "mode": "positive"
+        },
+        "components": {
+          "QUERY": "positive"
+        },
+        "phase": {
+          "name": "fuzzing",
+          "data": {
+            "type": "FuzzingPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/pet/findByTags",
+      "path_parameters": {},
+      "query": {
+        "tags": [
+          ""
+        ]
+      },
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "none"
+      },
+      "media_type": null,
+      "parent_index": null
+    }
+  ]
+}

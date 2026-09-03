@@ -1,0 +1,91 @@
+{
+  "operation": "GET /user/login",
+  "method": "GET",
+  "path_template": "/user/login",
+  "fingerprint": "4f22e8cb",
+  "case_id": "XSBBEe",
+  "code_sample": "curl -X GET 'https://petstore3.swagger.io/api/v3/user/login?username=&x-schemathesis-unknown-property=42'",
+  "sequence": [
+    {
+      "method": "GET",
+      "url": "https://petstore3.swagger.io/api/v3/user/login?username=&x-schemathesis-unknown-property=42",
+      "url_template": "https://petstore3.swagger.io/api/v3/user/login",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "XSBBEe"
+      },
+      "response": {
+        "status_code": 200,
+        "headers": {
+          "date": "Thu, 03 Sep 2026 09:02:39 GMT",
+          "content-type": "application/json",
+          "content-length": "43",
+          "connection": "keep-alive",
+          "access-control-allow-origin": "*",
+          "access-control-allow-methods": "GET, POST, DELETE, PUT",
+          "access-control-allow-headers": "Content-Type, api_key, Authorization",
+          "access-control-expose-headers": "Content-Disposition",
+          "x-rate-limit": "5000",
+          "x-expires-after": "Thu Sep 03 10:02:39 UTC 2026",
+          "server": "Jetty(9.4.53.v20231009)"
+        },
+        "body": "Logged in user session: 7666042109713872845"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "response_schema_conformance",
+          "status": "failure",
+          "message": "JSON deserialization error\n\nResponse must be valid JSON with 'Content-Type: application/json' header:\n\n  Expecting value: line 1 column 1 (char 0)"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.01021039999977802,
+          "mode": "negative"
+        },
+        "components": {
+          "QUERY": "negative"
+        },
+        "phase": {
+          "name": "coverage",
+          "data": {
+            "type": "CoveragePhaseData",
+            "description": "Object with unexpected properties",
+            "location": null,
+            "parameter": null,
+            "parameter_location": "QUERY",
+            "scenario": "object_unexpected_properties"
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {
+          "QUERY": {
+            "username": "",
+            "x-schemathesis-unknown-property": 42
+          }
+        }
+      },
+      "path": "/user/login",
+      "path_parameters": {},
+      "query": {
+        "username": "",
+        "x-schemathesis-unknown-property": "42"
+      },
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "none"
+      },
+      "media_type": null,
+      "parent_index": null
+    }
+  ]
+}

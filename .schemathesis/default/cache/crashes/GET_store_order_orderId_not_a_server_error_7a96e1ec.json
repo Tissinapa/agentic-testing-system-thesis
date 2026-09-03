@@ -1,0 +1,83 @@
+{
+  "operation": "GET /store/order/{orderId}",
+  "method": "GET",
+  "path_template": "/store/order/{orderId}",
+  "fingerprint": "7a96e1ec",
+  "case_id": "z2lMCU",
+  "code_sample": "curl -X GET https://petstore3.swagger.io/api/v3/store/order/1",
+  "sequence": [
+    {
+      "method": "GET",
+      "url": "https://petstore3.swagger.io/api/v3/store/order/1",
+      "url_template": "https://petstore3.swagger.io/api/v3/store/order/{orderId}",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "z2lMCU"
+      },
+      "response": {
+        "status_code": 500,
+        "headers": {
+          "date": "Thu, 03 Sep 2026 09:02:52 GMT",
+          "content-type": "application/json",
+          "content-length": "110",
+          "connection": "keep-alive",
+          "access-control-allow-origin": "*",
+          "access-control-allow-methods": "GET, POST, DELETE, PUT",
+          "access-control-allow-headers": "Content-Type, api_key, Authorization",
+          "access-control-expose-headers": "Content-Disposition",
+          "server": "Jetty(9.4.53.v20231009)"
+        },
+        "body": "{\"code\":500,\"message\":\"There was an error processing your request. It has been logged (ID: c908bc1f9eb123f1)\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "not_a_server_error",
+          "status": "failure",
+          "message": "Server error"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.0021018999996158527,
+          "mode": "positive"
+        },
+        "components": {
+          "PATH": "positive"
+        },
+        "phase": {
+          "name": "fuzzing",
+          "data": {
+            "type": "FuzzingPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/store/order/{orderId}",
+      "path_parameters": {
+        "orderId": 1
+      },
+      "query": {},
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "none"
+      },
+      "media_type": null,
+      "parent_index": null
+    }
+  ]
+}

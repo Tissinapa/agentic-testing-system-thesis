@@ -1,0 +1,89 @@
+{
+  "operation": "POST /store/order",
+  "method": "POST",
+  "path_template": "/store/order",
+  "fingerprint": "a3ff2695",
+  "case_id": "mhYOyB",
+  "code_sample": "curl -X POST -H 'Content-Type: application/x-www-form-urlencoded' -d 'id=10&petId=198772&quantity=7&status=approved&shipDate=2000-01-01T00%3A00%3A00Z&complete=False' https://petstore3.swagger.io/api/v3/store/order",
+  "sequence": [
+    {
+      "method": "POST",
+      "url": "https://petstore3.swagger.io/api/v3/store/order",
+      "url_template": "https://petstore3.swagger.io/api/v3/store/order",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "mhYOyB",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Length": "94"
+      },
+      "response": {
+        "status_code": 500,
+        "headers": {
+          "date": "Thu, 03 Sep 2026 09:02:35 GMT",
+          "content-type": "application/json",
+          "content-length": "110",
+          "connection": "keep-alive",
+          "access-control-allow-origin": "*",
+          "access-control-allow-methods": "GET, POST, DELETE, PUT",
+          "access-control-allow-headers": "Content-Type, api_key, Authorization",
+          "access-control-expose-headers": "Content-Disposition",
+          "server": "Jetty(9.4.53.v20231009)"
+        },
+        "body": "{\"code\":500,\"message\":\"There was an error processing your request. It has been logged (ID: 6b9ae5e7ec54a414)\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "not_a_server_error",
+          "status": "failure",
+          "message": "Server error"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 9.510000018053688e-05,
+          "mode": "positive"
+        },
+        "components": {},
+        "phase": {
+          "name": "examples",
+          "data": {
+            "type": "ExamplesPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/store/order",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {
+          "id": 10,
+          "petId": 198772,
+          "quantity": 7,
+          "status": "approved",
+          "shipDate": "2000-01-01T00:00:00Z",
+          "complete": false
+        }
+      },
+      "media_type": "application/x-www-form-urlencoded",
+      "parent_index": null
+    }
+  ]
+}

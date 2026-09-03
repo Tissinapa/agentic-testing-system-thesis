@@ -1,0 +1,88 @@
+{
+  "operation": "POST /pet/{petId}",
+  "method": "POST",
+  "path_template": "/pet/{petId}",
+  "fingerprint": "bb322528",
+  "case_id": "kcWErO",
+  "code_sample": "curl -X POST 'https://petstore3.swagger.io/api/v3/pet/5218515?name=%F1%93%B8%B3&status='",
+  "sequence": [
+    {
+      "method": "POST",
+      "url": "https://petstore3.swagger.io/api/v3/pet/5218515?name=%F1%93%B8%B3&status=",
+      "url_template": "https://petstore3.swagger.io/api/v3/pet/{petId}",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "kcWErO",
+        "Content-Length": "0"
+      },
+      "response": {
+        "status_code": 500,
+        "headers": {
+          "date": "Thu, 03 Sep 2026 09:02:59 GMT",
+          "content-type": "application/json",
+          "content-length": "110",
+          "connection": "keep-alive",
+          "access-control-allow-origin": "*",
+          "access-control-allow-methods": "GET, POST, DELETE, PUT",
+          "access-control-allow-headers": "Content-Type, api_key, Authorization",
+          "access-control-expose-headers": "Content-Disposition",
+          "server": "Jetty(9.4.53.v20231009)"
+        },
+        "body": "{\"code\":500,\"message\":\"There was an error processing your request. It has been logged (ID: bd8be3ea26c3f771)\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "not_a_server_error",
+          "status": "failure",
+          "message": "Server error"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.0021658000005118083,
+          "mode": "positive"
+        },
+        "components": {
+          "QUERY": "positive",
+          "PATH": "positive"
+        },
+        "phase": {
+          "name": "stateful",
+          "data": {
+            "type": "StatefulPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/pet/{petId}",
+      "path_parameters": {
+        "petId": 5218515
+      },
+      "query": {
+        "name": "\ud90f\ude33",
+        "status": ""
+      },
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "none"
+      },
+      "media_type": null,
+      "parent_index": null
+    }
+  ]
+}

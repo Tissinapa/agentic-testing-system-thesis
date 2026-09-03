@@ -1,0 +1,83 @@
+{
+  "operation": "POST /api/v1/users/",
+  "method": "POST",
+  "path_template": "/api/v1/users/",
+  "fingerprint": "2cfa5e7b",
+  "case_id": "xzKEDo",
+  "code_sample": "curl -X POST -H 'Content-Type: application/json' -d '{\"email\": \"0@com\", \"password\": \"00000000\"}' http://localhost/api/v1/users/",
+  "sequence": [
+    {
+      "method": "POST",
+      "url": "http://localhost/api/v1/users/",
+      "url_template": "http://localhost/api/v1/users/",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "xzKEDo",
+        "Content-Type": "application/json",
+        "Content-Length": "42"
+      },
+      "response": {
+        "status_code": 401,
+        "headers": {
+          "content-length": "30",
+          "content-type": "application/json",
+          "date": "Thu, 03 Sep 2026 10:06:30 GMT",
+          "server": "uvicorn",
+          "www-authenticate": "[Filtered]"
+        },
+        "body": "{\"detail\":\"Not authenticated\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "status_code_conformance",
+          "status": "failure",
+          "message": "Undocumented HTTP status code\n\nReceived: 401\nDocumented: 200, 422"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.004807000001164852,
+          "mode": "positive"
+        },
+        "components": {
+          "BODY": "positive"
+        },
+        "phase": {
+          "name": "fuzzing",
+          "data": {
+            "type": "FuzzingPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/api/v1/users/",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {
+          "email": "0@com",
+          "password": "[Filtered]"
+        }
+      },
+      "media_type": "application/json",
+      "parent_index": null
+    }
+  ]
+}

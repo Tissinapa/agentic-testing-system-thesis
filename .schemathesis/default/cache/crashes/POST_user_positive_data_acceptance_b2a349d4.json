@@ -1,0 +1,109 @@
+{
+  "operation": "POST /user",
+  "method": "POST",
+  "path_template": "/user",
+  "fingerprint": "b2a349d4",
+  "case_id": "AkXNt9",
+  "code_sample": "curl -X POST -H 'Content-Type: application/xml' -d '<user><___5T><__></__></___5T><__proto__>False</__proto__><___>66937157736365465600</___><___wI__><_p_W_0_>%\u00a33O\u00cd</_p_W_0_><___>-1.9704039801467372e+16</___><___>False</___><element>.\u008b\u00fb</element><element></element></___wI__><___0____________8.T_____>-1e-05</___0____________8.T_____><id>-1248136</id><userStatus>-4911</userStatus><username>\ud88b\udd72</username><email>q\u00894\udb16\udd44%\u00ed</email><password>\u00db8</password></user>' https://petstore3.swagger.io/api/v3/user",
+  "sequence": [
+    {
+      "method": "POST",
+      "url": "https://petstore3.swagger.io/api/v3/user",
+      "url_template": "https://petstore3.swagger.io/api/v3/user",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "AkXNt9",
+        "Content-Type": "application/xml",
+        "Content-Length": "415"
+      },
+      "response": {
+        "status_code": 400,
+        "headers": {
+          "date": "Thu, 03 Sep 2026 09:02:57 GMT",
+          "content-type": "application/json",
+          "content-length": "95",
+          "connection": "keep-alive",
+          "access-control-allow-origin": "*",
+          "access-control-allow-methods": "GET, POST, DELETE, PUT",
+          "access-control-allow-headers": "Content-Type, api_key, Authorization",
+          "access-control-expose-headers": "Content-Disposition",
+          "server": "Jetty(9.4.53.v20231009)"
+        },
+        "body": "{\"code\":400,\"message\":\"Input error: unable to convert input to io.swagger.petstore.model.User\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "positive_data_acceptance",
+          "status": "failure",
+          "message": "API rejected schema-compliant request\n\nValid data should have been accepted\nExpected: 2xx, 401, 403, 404, 409, 5xx\nHint: The request body contains 5 additional properties not defined in the schema (`__proto__`, `\u008d\u00b4`, `\u00c1\u00ff\u00aewI\udb49\udc31\u00a5` and 2 more). The server likely rejects unexpected fields. Add `additionalProperties: false` to your schema to prevent this."
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.011481599998660386,
+          "mode": "positive"
+        },
+        "components": {
+          "BODY": "positive"
+        },
+        "phase": {
+          "name": "stateful",
+          "data": {
+            "type": "StatefulPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/user",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {
+          "\u00df\u0018\u00d25T": {
+            "\u00c9\u0094": null
+          },
+          "__proto__": [
+            false
+          ],
+          "\u008d\u00b4": 66937157736365465600,
+          "\u00c1\u00ff\u00aewI\udb49\udc31\u00a5": {
+            "\ud89b\udea2p\u00e1W\u00e10\u00d1": "%\u00a33O\u00cd",
+            "\u00d8\u009e\u00f5": [
+              -1.9704039801467372e+16,
+              false
+            ],
+            "": [
+              "\u0005.\u008b\u00fb",
+              null
+            ]
+          },
+          "\u00e4|\u009a0\u00d7\u00d0\u00f5\u00a2\u00b8\u00a8\ud86b\uded8\u0083\u00a4)8.T\u001a\u00fc\u008b\u00a8": -1e-05,
+          "id": -1248136,
+          "userStatus": -4911,
+          "username": "\ud88b\udd72",
+          "email": "q\u00894\udb16\udd44%\u00ed",
+          "password": "[Filtered]"
+        }
+      },
+      "media_type": "application/xml",
+      "parent_index": null
+    }
+  ]
+}

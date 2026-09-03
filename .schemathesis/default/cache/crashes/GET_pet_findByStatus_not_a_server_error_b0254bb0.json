@@ -1,0 +1,83 @@
+{
+  "operation": "GET /pet/findByStatus",
+  "method": "GET",
+  "path_template": "/pet/findByStatus",
+  "fingerprint": "b0254bb0",
+  "case_id": "D4B2IQ",
+  "code_sample": "curl -X GET 'https://petstore3.swagger.io/api/v3/pet/findByStatus?status=sold'",
+  "sequence": [
+    {
+      "method": "GET",
+      "url": "https://petstore3.swagger.io/api/v3/pet/findByStatus?status=sold",
+      "url_template": "https://petstore3.swagger.io/api/v3/pet/findByStatus",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "D4B2IQ"
+      },
+      "response": {
+        "status_code": 500,
+        "headers": {
+          "date": "Thu, 03 Sep 2026 09:02:49 GMT",
+          "content-type": "application/json",
+          "content-length": "110",
+          "connection": "keep-alive",
+          "access-control-allow-origin": "*",
+          "access-control-allow-methods": "GET, POST, DELETE, PUT",
+          "access-control-allow-headers": "Content-Type, api_key, Authorization",
+          "access-control-expose-headers": "Content-Disposition",
+          "server": "Jetty(9.4.53.v20231009)"
+        },
+        "body": "{\"code\":500,\"message\":\"There was an error processing your request. It has been logged (ID: 305a3aa4d12d69e4)\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "not_a_server_error",
+          "status": "failure",
+          "message": "Server error"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.0017308999995293561,
+          "mode": "positive"
+        },
+        "components": {
+          "QUERY": "positive"
+        },
+        "phase": {
+          "name": "fuzzing",
+          "data": {
+            "type": "FuzzingPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/pet/findByStatus",
+      "path_parameters": {},
+      "query": {
+        "status": "sold"
+      },
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "none"
+      },
+      "media_type": null,
+      "parent_index": null
+    }
+  ]
+}

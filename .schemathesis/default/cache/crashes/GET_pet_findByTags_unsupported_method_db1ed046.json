@@ -1,0 +1,87 @@
+{
+  "operation": "GET /pet/findByTags",
+  "method": "TRACE",
+  "path_template": "/pet/findByTags",
+  "fingerprint": "db1ed046",
+  "case_id": "fjvx5d",
+  "code_sample": "curl -X TRACE 'https://petstore3.swagger.io/api/v3/pet/findByTags?tags='",
+  "sequence": [
+    {
+      "method": "TRACE",
+      "url": "https://petstore3.swagger.io/api/v3/pet/findByTags?tags=",
+      "url_template": "https://petstore3.swagger.io/api/v3/pet/findByTags",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "fjvx5d",
+        "Content-Length": "0"
+      },
+      "response": {
+        "status_code": 405,
+        "headers": {
+          "date": "Thu, 03 Sep 2026 09:02:38 GMT",
+          "content-type": "text/html",
+          "content-length": "122",
+          "connection": "close"
+        },
+        "body": "<html>\r\n<head><title>405 Not Allowed</title></head>\r\n<body>\r\n<center><h1>405 Not Allowed</h1></center>\r\n</body>\r\n</html>\r\n"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "unsupported_method",
+          "status": "failure",
+          "message": "Unsupported methods\n\nTRACE returned 405 without required `Allow` header\n\nAdd `Allow` header listing supported methods (required by RFC 9110)"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 4.599998646881431e-06,
+          "mode": "negative"
+        },
+        "components": {
+          "QUERY": "positive"
+        },
+        "phase": {
+          "name": "coverage",
+          "data": {
+            "type": "CoveragePhaseData",
+            "description": "Unspecified HTTP method: TRACE",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "scenario": "unspecified_http_method"
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {
+          "QUERY": {
+            "tags": [
+              ""
+            ]
+          }
+        }
+      },
+      "path": "/pet/findByTags",
+      "path_parameters": {},
+      "query": {
+        "tags": [
+          ""
+        ]
+      },
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "none"
+      },
+      "media_type": null,
+      "parent_index": null
+    }
+  ]
+}

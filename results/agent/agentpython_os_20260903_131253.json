@@ -1,0 +1,165 @@
+{
+  "meta": {
+    "target": "python_os",
+    "mode": "white",
+    "timestamp": "2026-09-03T13:12:53.965693",
+    "base_url": "http://localhost",
+    "spec_url": "http://localhost/api/v1/openapi.json",
+    "iterations": 1,
+    "token_usage": 3812,
+    "termination_reason": null
+  },
+  "summary": {
+    "test_cases_generated": 0,
+    "tests_executed": 0,
+    "bugs_detected": 10,
+    "false_positives": 0,
+    "endpoints_covered": 0
+  },
+  "test_cases": [],
+  "results": [],
+  "evaluations": [
+    {
+      "test_id": "WB-001",
+      "endpoint": "create_user",
+      "bug_detected": true,
+      "verdict": "Plaintext password sent via email",
+      "resoning": "The plaintext password from user_in.password is passed to generate_new_account_email and likely included in email content. Passwords must never be transmitted in plaintext."
+    },
+    {
+      "test_id": "WB-002",
+      "endpoint": "register_user",
+      "bug_detected": true,
+      "verdict": "Open user registration when signup should be disabled",
+      "resoning": "The /signup endpoint has no guard checking if self-registration is allowed. Requirements note signup may be disabled by default, but no settings.users_open_registration check is present."
+    },
+    {
+      "test_id": "WB-003",
+      "endpoint": "read_user_by_id",
+      "bug_detected": true,
+      "verdict": "Wrong order of null check and privilege check in read_user_by_id",
+      "resoning": "If user is None and current_user is not superuser, a 403 is raised instead of 404. The None check must come before the privilege check to avoid misleading error responses."
+    },
+    {
+      "test_id": "WB-004",
+      "endpoint": "update_password_me",
+      "bug_detected": true,
+      "verdict": "Password same-value check occurs after hashing work",
+      "resoning": "The check for current_password == new_password happens after verify_password but should happen first to avoid unnecessary processing and to give clearer logical flow."
+    },
+    {
+      "test_id": "WB-005",
+      "endpoint": "update_password_me",
+      "bug_detected": true,
+      "verdict": "verify_password return value unpacking may be fragile",
+      "resoning": "verify_password is unpacked as 'verified, _' implying it returns a tuple, which is unusual for a password verification function. If the signature changes, this silently breaks."
+    },
+    {
+      "test_id": "WB-006",
+      "endpoint": "create_user, register_user",
+      "bug_detected": true,
+      "verdict": "Missing HTTP 201 status code for resource creation endpoints",
+      "resoning": "POST endpoints that create resources return the default 200 status code instead of 201 Created, which violates REST conventions."
+    },
+    {
+      "test_id": "WB-007",
+      "endpoint": "read_user_by_id",
+      "bug_detected": true,
+      "verdict": "Non-superuser can retrieve any user profile by guessing their own ID match",
+      "resoning": "A regular user can fetch their own profile via /users/{user_id}, but since the None check is after the privilege check, behavior is inconsistent and could leak info about user existence."
+    },
+    {
+      "test_id": "WB-008",
+      "endpoint": "delete_user",
+      "bug_detected": true,
+      "verdict": "Items deleted without cascade check or transaction safety",
+      "resoning": "Items are deleted via a separate statement before deleting the user, but if the user deletion fails, items are already gone. There is no explicit transaction rollback guard."
+    },
+    {
+      "test_id": "WB-009",
+      "endpoint": "read_users",
+      "bug_detected": true,
+      "verdict": "No upper bound validation on pagination limit parameter",
+      "resoning": "The limit parameter defaults to 100 but has no enforced maximum. A caller could pass limit=1000000 causing excessive database load."
+    },
+    {
+      "test_id": "WB-010",
+      "endpoint": "register_user",
+      "bug_detected": true,
+      "verdict": "Signup disabled requirement not enforced",
+      "resoning": "Requirements state signup may be disabled by default. The code provides no mechanism to enforce this, meaning the endpoint is always active."
+    }
+  ],
+  "bugs": [
+    {
+      "test_id": "WB-001",
+      "endpoint": "create_user",
+      "method": "GET",
+      "verdict": "Plaintext password sent via email",
+      "resoning": "The plaintext password from user_in.password is passed to generate_new_account_email and likely included in email content. Passwords must never be transmitted in plaintext."
+    },
+    {
+      "test_id": "WB-002",
+      "endpoint": "register_user",
+      "method": "GET",
+      "verdict": "Open user registration when signup should be disabled",
+      "resoning": "The /signup endpoint has no guard checking if self-registration is allowed. Requirements note signup may be disabled by default, but no settings.users_open_registration check is present."
+    },
+    {
+      "test_id": "WB-003",
+      "endpoint": "read_user_by_id",
+      "method": "GET",
+      "verdict": "Wrong order of null check and privilege check in read_user_by_id",
+      "resoning": "If user is None and current_user is not superuser, a 403 is raised instead of 404. The None check must come before the privilege check to avoid misleading error responses."
+    },
+    {
+      "test_id": "WB-004",
+      "endpoint": "update_password_me",
+      "method": "GET",
+      "verdict": "Password same-value check occurs after hashing work",
+      "resoning": "The check for current_password == new_password happens after verify_password but should happen first to avoid unnecessary processing and to give clearer logical flow."
+    },
+    {
+      "test_id": "WB-005",
+      "endpoint": "update_password_me",
+      "method": "GET",
+      "verdict": "verify_password return value unpacking may be fragile",
+      "resoning": "verify_password is unpacked as 'verified, _' implying it returns a tuple, which is unusual for a password verification function. If the signature changes, this silently breaks."
+    },
+    {
+      "test_id": "WB-006",
+      "endpoint": "create_user, register_user",
+      "method": "GET",
+      "verdict": "Missing HTTP 201 status code for resource creation endpoints",
+      "resoning": "POST endpoints that create resources return the default 200 status code instead of 201 Created, which violates REST conventions."
+    },
+    {
+      "test_id": "WB-007",
+      "endpoint": "read_user_by_id",
+      "method": "GET",
+      "verdict": "Non-superuser can retrieve any user profile by guessing their own ID match",
+      "resoning": "A regular user can fetch their own profile via /users/{user_id}, but since the None check is after the privilege check, behavior is inconsistent and could leak info about user existence."
+    },
+    {
+      "test_id": "WB-008",
+      "endpoint": "delete_user",
+      "method": "GET",
+      "verdict": "Items deleted without cascade check or transaction safety",
+      "resoning": "Items are deleted via a separate statement before deleting the user, but if the user deletion fails, items are already gone. There is no explicit transaction rollback guard."
+    },
+    {
+      "test_id": "WB-009",
+      "endpoint": "read_users",
+      "method": "GET",
+      "verdict": "No upper bound validation on pagination limit parameter",
+      "resoning": "The limit parameter defaults to 100 but has no enforced maximum. A caller could pass limit=1000000 causing excessive database load."
+    },
+    {
+      "test_id": "WB-010",
+      "endpoint": "register_user",
+      "method": "GET",
+      "verdict": "Signup disabled requirement not enforced",
+      "resoning": "Requirements state signup may be disabled by default. The code provides no mechanism to enforce this, meaning the endpoint is always active."
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "operation": "DELETE /pet/{petId}",
+  "method": "DELETE",
+  "path_template": "/pet/{petId}",
+  "fingerprint": "17c855c8",
+  "case_id": "KmaIWQ",
+  "code_sample": "curl -X DELETE -H 'api_key: [Filtered]' https://petstore3.swagger.io/api/v3/pet/9223372036854775806",
+  "sequence": [
+    {
+      "method": "DELETE",
+      "url": "https://petstore3.swagger.io/api/v3/pet/9223372036854775806",
+      "url_template": "https://petstore3.swagger.io/api/v3/pet/{petId}",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "api_key": "[Filtered]",
+        "X-Schemathesis-TestCaseId": "KmaIWQ",
+        "Content-Length": "0"
+      },
+      "response": {
+        "status_code": 500,
+        "headers": {
+          "date": "Thu, 03 Sep 2026 09:02:47 GMT",
+          "content-type": "application/json",
+          "content-length": "110",
+          "connection": "keep-alive",
+          "access-control-allow-origin": "*",
+          "access-control-allow-methods": "GET, POST, DELETE, PUT",
+          "access-control-allow-headers": "Content-Type, api_key, Authorization",
+          "access-control-expose-headers": "Content-Disposition",
+          "server": "Jetty(9.4.53.v20231009)"
+        },
+        "body": "{\"code\":500,\"message\":\"There was an error processing your request. It has been logged (ID: 399fc4e558216e2a)\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "not_a_server_error",
+          "status": "failure",
+          "message": "Server error"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 1.3099999705445953e-05,
+          "mode": "positive"
+        },
+        "components": {
+          "PATH": "positive",
+          "HEADER": "positive"
+        },
+        "phase": {
+          "name": "coverage",
+          "data": {
+            "type": "CoveragePhaseData",
+            "description": "Near-boundary number",
+            "location": null,
+            "parameter": "petId",
+            "parameter_location": "PATH",
+            "scenario": "near_boundary_number"
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [
+          [
+            "path",
+            "petId"
+          ]
+        ],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {
+          "PATH": {
+            "petId": 9223372036854775806
+          },
+          "HEADER": {
+            "api_key": ""
+          }
+        }
+      },
+      "path": "/pet/{petId}",
+      "path_parameters": {
+        "petId": "9223372036854775806"
+      },
+      "query": {},
+      "case_headers": {
+        "api_key": "[Filtered]"
+      },
+      "cookies": {},
+      "case_body": {
+        "encoding": "none"
+      },
+      "media_type": null,
+      "parent_index": null
+    }
+  ]
+}

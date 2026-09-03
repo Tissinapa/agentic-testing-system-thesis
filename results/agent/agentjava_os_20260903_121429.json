@@ -1,0 +1,207 @@
+{
+  "meta": {
+    "target": "java_os",
+    "mode": "white",
+    "timestamp": "2026-09-03T12:14:29.234761",
+    "base_url": "https://petstore3.swagger.io/api/v3",
+    "spec_url": "https://petstore3.swagger.io/api/v3/openapi.json",
+    "iterations": 1,
+    "token_usage": 4388,
+    "termination_reason": null
+  },
+  "summary": {
+    "test_cases_generated": 0,
+    "tests_executed": 0,
+    "bugs_detected": 13,
+    "false_positives": 0,
+    "endpoints_covered": 0
+  },
+  "test_cases": [],
+  "results": [],
+  "evaluations": [
+    {
+      "test_id": "WB-001",
+      "endpoint": "findPetsByStatus",
+      "bug_detected": true,
+      "verdict": "False error notification on successful findPetsByStatus",
+      "resoning": "After successfully finding pets, the code calls notifier.notify(new RuntimeException('Pets not found')) before returning the success response. This is a copy-paste bug that sends false error signals."
+    },
+    {
+      "test_id": "WB-002",
+      "endpoint": "deletePet, uploadFile",
+      "bug_detected": true,
+      "verdict": "apiKey parameter accepted but never validated",
+      "resoning": "Both deletePet and uploadFile accept an apiKey parameter but never check or validate it, making the API key check completely ineffective."
+    },
+    {
+      "test_id": "WB-003",
+      "endpoint": "deletePet",
+      "bug_detected": true,
+      "verdict": "Incorrect HTTP status code for failed delete",
+      "resoning": "When a pet cannot be deleted, the code returns HTTP 304 NOT_MODIFIED. This is semantically wrong; 304 is a redirection code for caching. A 500 or 422 would be more appropriate."
+    },
+    {
+      "test_id": "WB-004",
+      "endpoint": "uploadFile",
+      "bug_detected": true,
+      "verdict": "Incorrect HTTP status code for failed upload/update",
+      "resoning": "When a pet cannot be updated after file upload, the code returns HTTP 304 NOT_MODIFIED, which is semantically incorrect for a mutation failure."
+    },
+    {
+      "test_id": "WB-005",
+      "endpoint": "addPet",
+      "bug_detected": true,
+      "verdict": "addPet does not return HTTP 201 Created",
+      "resoning": "Creating a new resource should return HTTP 201 Created per REST conventions. The method returns no explicit status, defaulting to 200 OK."
+    },
+    {
+      "test_id": "WB-006",
+      "endpoint": "PetController constructor",
+      "bug_detected": true,
+      "verdict": "Silent exception swallowing in constructor",
+      "resoning": "The catch block for notifier instantiation is completely empty with only a comment. Failures are silently ignored, making debugging very difficult."
+    },
+    {
+      "test_id": "WB-007",
+      "endpoint": "PetController constructor",
+      "bug_detected": true,
+      "verdict": "Arbitrary class instantiation via environment variable",
+      "resoning": "The notifierClass env var is used to instantiate an arbitrary class via reflection with no validation or whitelist, which could allow loading of malicious classes."
+    },
+    {
+      "test_id": "WB-008",
+      "endpoint": "uploadFile",
+      "bug_detected": true,
+      "verdict": "Local file path exposed in photo URLs",
+      "resoning": "file.getAbsolutePath() stores and returns the server's local filesystem path in the pet's photoUrls, exposing internal server directory structure to clients."
+    },
+    {
+      "test_id": "WB-009",
+      "endpoint": "findPetsByTags",
+      "bug_detected": true,
+      "verdict": "findPetsByTags returns null entity on no results",
+      "resoning": "If findPetByTags returns null, the method wraps null in a ResponseContext without a NOT_FOUND status, potentially causing client-side null handling issues."
+    },
+    {
+      "test_id": "WB-010",
+      "endpoint": "updatePetWithForm",
+      "bug_detected": true,
+      "verdict": "Misleading error message in updatePetWithForm",
+      "resoning": "When petId is null, the error message says 'No Pet provided. Try again?' instead of 'No petId provided', which is confusing and inaccurate."
+    },
+    {
+      "test_id": "WB-011",
+      "endpoint": "Multiple methods",
+      "bug_detected": true,
+      "verdict": "RuntimeException used for normal flow notification",
+      "resoning": "RuntimeException instances are created and passed to the notifier for ordinary business events like missing parameters. This misuses exceptions for control flow."
+    },
+    {
+      "test_id": "WB-012",
+      "endpoint": "uploadFile",
+      "bug_detected": true,
+      "verdict": "Unnecessary re-fetch of pet after uploadFile update",
+      "resoning": "After updating and re-adding the pet, the code fetches it again by petId to return it, which is redundant since existingPet already holds the updated data."
+    },
+    {
+      "test_id": "WB-013",
+      "endpoint": "PetController class field",
+      "bug_detected": true,
+      "verdict": "Mutable static field for petData",
+      "resoning": "petData is declared static, meaning it is shared across all instances. This can cause concurrency issues if multiple requests mutate it simultaneously."
+    }
+  ],
+  "bugs": [
+    {
+      "test_id": "WB-001",
+      "endpoint": "findPetsByStatus",
+      "method": "GET",
+      "verdict": "False error notification on successful findPetsByStatus",
+      "resoning": "After successfully finding pets, the code calls notifier.notify(new RuntimeException('Pets not found')) before returning the success response. This is a copy-paste bug that sends false error signals."
+    },
+    {
+      "test_id": "WB-002",
+      "endpoint": "deletePet, uploadFile",
+      "method": "GET",
+      "verdict": "apiKey parameter accepted but never validated",
+      "resoning": "Both deletePet and uploadFile accept an apiKey parameter but never check or validate it, making the API key check completely ineffective."
+    },
+    {
+      "test_id": "WB-003",
+      "endpoint": "deletePet",
+      "method": "GET",
+      "verdict": "Incorrect HTTP status code for failed delete",
+      "resoning": "When a pet cannot be deleted, the code returns HTTP 304 NOT_MODIFIED. This is semantically wrong; 304 is a redirection code for caching. A 500 or 422 would be more appropriate."
+    },
+    {
+      "test_id": "WB-004",
+      "endpoint": "uploadFile",
+      "method": "GET",
+      "verdict": "Incorrect HTTP status code for failed upload/update",
+      "resoning": "When a pet cannot be updated after file upload, the code returns HTTP 304 NOT_MODIFIED, which is semantically incorrect for a mutation failure."
+    },
+    {
+      "test_id": "WB-005",
+      "endpoint": "addPet",
+      "method": "GET",
+      "verdict": "addPet does not return HTTP 201 Created",
+      "resoning": "Creating a new resource should return HTTP 201 Created per REST conventions. The method returns no explicit status, defaulting to 200 OK."
+    },
+    {
+      "test_id": "WB-006",
+      "endpoint": "PetController constructor",
+      "method": "GET",
+      "verdict": "Silent exception swallowing in constructor",
+      "resoning": "The catch block for notifier instantiation is completely empty with only a comment. Failures are silently ignored, making debugging very difficult."
+    },
+    {
+      "test_id": "WB-007",
+      "endpoint": "PetController constructor",
+      "method": "GET",
+      "verdict": "Arbitrary class instantiation via environment variable",
+      "resoning": "The notifierClass env var is used to instantiate an arbitrary class via reflection with no validation or whitelist, which could allow loading of malicious classes."
+    },
+    {
+      "test_id": "WB-008",
+      "endpoint": "uploadFile",
+      "method": "GET",
+      "verdict": "Local file path exposed in photo URLs",
+      "resoning": "file.getAbsolutePath() stores and returns the server's local filesystem path in the pet's photoUrls, exposing internal server directory structure to clients."
+    },
+    {
+      "test_id": "WB-009",
+      "endpoint": "findPetsByTags",
+      "method": "GET",
+      "verdict": "findPetsByTags returns null entity on no results",
+      "resoning": "If findPetByTags returns null, the method wraps null in a ResponseContext without a NOT_FOUND status, potentially causing client-side null handling issues."
+    },
+    {
+      "test_id": "WB-010",
+      "endpoint": "updatePetWithForm",
+      "method": "GET",
+      "verdict": "Misleading error message in updatePetWithForm",
+      "resoning": "When petId is null, the error message says 'No Pet provided. Try again?' instead of 'No petId provided', which is confusing and inaccurate."
+    },
+    {
+      "test_id": "WB-011",
+      "endpoint": "Multiple methods",
+      "method": "GET",
+      "verdict": "RuntimeException used for normal flow notification",
+      "resoning": "RuntimeException instances are created and passed to the notifier for ordinary business events like missing parameters. This misuses exceptions for control flow."
+    },
+    {
+      "test_id": "WB-012",
+      "endpoint": "uploadFile",
+      "method": "GET",
+      "verdict": "Unnecessary re-fetch of pet after uploadFile update",
+      "resoning": "After updating and re-adding the pet, the code fetches it again by petId to return it, which is redundant since existingPet already holds the updated data."
+    },
+    {
+      "test_id": "WB-013",
+      "endpoint": "PetController class field",
+      "method": "GET",
+      "verdict": "Mutable static field for petData",
+      "resoning": "petData is declared static, meaning it is shared across all instances. This can cause concurrency issues if multiple requests mutate it simultaneously."
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "operation": "PUT /user/{username}",
+  "method": "TRACE",
+  "path_template": "/user/{username}",
+  "fingerprint": "43f71093",
+  "case_id": "VHoQVX",
+  "code_sample": "curl -X TRACE -H 'Content-Type: application/json' -d '{\"id\": 10, \"username\": \"theUser\", \"firstName\": \"John\", \"lastName\": \"James\", \"email\": \"john@email.com\", \"password\": \"12345\", \"phone\": \"12345\", \"userStatus\": 1}' https://petstore3.swagger.io/api/v3/user/0",
+  "sequence": [
+    {
+      "method": "TRACE",
+      "url": "https://petstore3.swagger.io/api/v3/user/0",
+      "url_template": "https://petstore3.swagger.io/api/v3/user/{username}",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "VHoQVX",
+        "Content-Type": "application/json",
+        "Content-Length": "158"
+      },
+      "response": {
+        "status_code": 405,
+        "headers": {
+          "date": "Thu, 03 Sep 2026 09:02:44 GMT",
+          "content-type": "text/html",
+          "content-length": "122",
+          "connection": "close"
+        },
+        "body": "<html>\r\n<head><title>405 Not Allowed</title></head>\r\n<body>\r\n<center><h1>405 Not Allowed</h1></center>\r\n</body>\r\n</html>\r\n"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "unsupported_method",
+          "status": "failure",
+          "message": "Unsupported methods\n\nTRACE returned 405 without required `Allow` header\n\nAdd `Allow` header listing supported methods (required by RFC 9110)"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 5.699999746866524e-06,
+          "mode": "negative"
+        },
+        "components": {
+          "PATH": "positive",
+          "BODY": "positive"
+        },
+        "phase": {
+          "name": "coverage",
+          "data": {
+            "type": "CoveragePhaseData",
+            "description": "Unspecified HTTP method: TRACE",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "scenario": "unspecified_http_method"
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [
+          [
+            "path",
+            "username"
+          ],
+          [
+            "body",
+            "id"
+          ],
+          [
+            "body",
+            "username"
+          ]
+        ],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {
+          "PATH": {
+            "username": "0"
+          }
+        }
+      },
+      "path": "/user/{username}",
+      "path_parameters": {
+        "username": "0"
+      },
+      "query": {},
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {
+          "id": 10,
+          "username": "theUser",
+          "firstName": "John",
+          "lastName": "James",
+          "email": "john@email.com",
+          "password": "[Filtered]",
+          "phone": "12345",
+          "userStatus": 1
+        }
+      },
+      "media_type": "application/json",
+      "parent_index": null
+    }
+  ]
+}

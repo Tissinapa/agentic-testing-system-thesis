@@ -1,0 +1,79 @@
+{
+  "operation": "GET /api/v1/users/{user_id}",
+  "method": "GET",
+  "path_template": "/api/v1/users/{user_id}",
+  "fingerprint": "94f9d5fc",
+  "case_id": "nQHgKD",
+  "code_sample": "curl -X GET http://localhost/api/v1/users/e3e70682-c209-1cac-a29f-6fbed82c07cd",
+  "sequence": [
+    {
+      "method": "GET",
+      "url": "http://localhost/api/v1/users/e3e70682-c209-1cac-a29f-6fbed82c07cd",
+      "url_template": "http://localhost/api/v1/users/{user_id}",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "nQHgKD"
+      },
+      "response": {
+        "status_code": 401,
+        "headers": {
+          "content-length": "30",
+          "content-type": "application/json",
+          "date": "Thu, 03 Sep 2026 10:06:31 GMT",
+          "server": "uvicorn",
+          "www-authenticate": "[Filtered]"
+        },
+        "body": "{\"detail\":\"Not authenticated\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "status_code_conformance",
+          "status": "failure",
+          "message": "Undocumented HTTP status code\n\nReceived: 401\nDocumented: 200, 422"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.0025100999991991557,
+          "mode": "positive"
+        },
+        "components": {
+          "PATH": "positive"
+        },
+        "phase": {
+          "name": "fuzzing",
+          "data": {
+            "type": "FuzzingPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/api/v1/users/{user_id}",
+      "path_parameters": {
+        "user_id": "e3e70682-c209-1cac-a29f-6fbed82c07cd"
+      },
+      "query": {},
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "none"
+      },
+      "media_type": null,
+      "parent_index": null
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "operation": "POST /api/v1/items/",
+  "method": "POST",
+  "path_template": "/api/v1/items/",
+  "fingerprint": "351da5e9",
+  "case_id": "lebPCK",
+  "code_sample": "curl -X POST -H 'Content-Type: application/json' -d '\ufffds\ufffd\ufffd\ufffd\ufffd\ufffdGn/\u027f\ufffd\ufffd\\\ufffdA\ufffd\ufffd' http://localhost/api/v1/items/",
+  "sequence": [
+    {
+      "method": "POST",
+      "url": "http://localhost/api/v1/items/",
+      "url_template": "http://localhost/api/v1/items/",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "lebPCK",
+        "Content-Type": "application/json",
+        "Content-Length": "19"
+      },
+      "response": {
+        "status_code": 400,
+        "headers": {
+          "content-length": "48",
+          "content-type": "application/json",
+          "date": "Thu, 03 Sep 2026 10:06:47 GMT",
+          "server": "uvicorn"
+        },
+        "body": "{\"detail\":\"There was an error parsing the body\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "status_code_conformance",
+          "status": "failure",
+          "message": "Undocumented HTTP status code\n\nReceived: 400\nDocumented: 200, 422"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.004182500000752043,
+          "mode": "negative"
+        },
+        "components": {
+          "BODY": "negative"
+        },
+        "phase": {
+          "name": "stateful",
+          "data": {
+            "type": "StatefulPhaseData",
+            "description": "Invalid syntax: random bytes",
+            "location": null,
+            "parameter": null,
+            "parameter_location": "BODY",
+            "mutations": [
+              {
+                "path": [],
+                "schema_pointer": "",
+                "channel": "schema",
+                "operator": "syntax_fuzzing",
+                "keywords": [],
+                "parameter": null,
+                "original_value": null,
+                "new_value": null
+              }
+            ]
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/api/v1/items/",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "base64",
+        "value": "1HO14Ie2hkduL8m/595c90GYxg=="
+      },
+      "media_type": "application/json",
+      "parent_index": null
+    }
+  ]
+}

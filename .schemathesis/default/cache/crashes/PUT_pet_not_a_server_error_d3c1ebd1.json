@@ -1,0 +1,92 @@
+{
+  "operation": "PUT /pet",
+  "method": "PUT",
+  "path_template": "/pet",
+  "fingerprint": "d3c1ebd1",
+  "case_id": "2GOWGg",
+  "code_sample": "curl -X PUT -H 'Content-Type: application/x-www-form-urlencoded' -d 'id=10&name=doggie&category=id&category=name&status=sold' https://petstore3.swagger.io/api/v3/pet",
+  "sequence": [
+    {
+      "method": "PUT",
+      "url": "https://petstore3.swagger.io/api/v3/pet",
+      "url_template": "https://petstore3.swagger.io/api/v3/pet",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "2GOWGg",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Length": "55"
+      },
+      "response": {
+        "status_code": 500,
+        "headers": {
+          "date": "Thu, 03 Sep 2026 09:02:35 GMT",
+          "content-type": "application/json",
+          "content-length": "110",
+          "connection": "keep-alive",
+          "access-control-allow-origin": "*",
+          "access-control-allow-methods": "GET, POST, DELETE, PUT",
+          "access-control-allow-headers": "Content-Type, api_key, Authorization",
+          "access-control-expose-headers": "Content-Disposition",
+          "server": "Jetty(9.4.53.v20231009)"
+        },
+        "body": "{\"code\":500,\"message\":\"There was an error processing your request. It has been logged (ID: 447e299bcdefc492)\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "not_a_server_error",
+          "status": "failure",
+          "message": "Server error"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 9.169999975711107e-05,
+          "mode": "positive"
+        },
+        "components": {},
+        "phase": {
+          "name": "examples",
+          "data": {
+            "type": "ExamplesPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/pet",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {
+          "id": 10,
+          "name": "doggie",
+          "category": {
+            "id": 1,
+            "name": "Dogs"
+          },
+          "photoUrls": [],
+          "tags": [],
+          "status": "sold"
+        }
+      },
+      "media_type": "application/x-www-form-urlencoded",
+      "parent_index": null
+    }
+  ]
+}

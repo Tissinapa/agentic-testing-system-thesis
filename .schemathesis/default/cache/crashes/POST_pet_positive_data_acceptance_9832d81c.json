@@ -1,0 +1,128 @@
+{
+  "operation": "POST /pet",
+  "method": "POST",
+  "path_template": "/pet",
+  "fingerprint": "9832d81c",
+  "case_id": "Mqfsf3",
+  "code_sample": "curl -X POST -H 'Content-Type: application/xml' -d '<pet><element></element><l>-5.468900772368788e+290</l><tags><tag></tag><tag><element><_3___Ve><__.0n_>False</__.0n_></_3___Ve><R_______7_______></R_______7_______></element><__><__w___>-564148</__w___><___K_z>120</___K_z></__></tag><tag><_7__z__K___>2114</_7__z__K___><_7__z__K___></_7__z__K___><_V____K1____Z___></_V____K1____Z___><_Ju__></_Ju__><_a___></_a___><id>-10344969</id><name></name></tag></tags><photoUrls><photoUrl>G\u00c4\u00c5\ud9ad\uddf6U\udb9b\udeca\uda95\udc956X</photoUrl><photoUrl>__dict__</photoUrl><photoUrl>r\udb17\udd54\udbdd\udd5d^\u0090\u00c0</photoUrl><photoUrl></photoUrl><photoUrl></photoUrl><photoUrl>h\u009c\u009c\u0093</photoUrl><photoUrl>\u00b3-\udac4\ude87\u00da</photoUrl><photoUrl>\u00f3H</photoUrl></photoUrls><name>\u00cf</name><id>9223372036854775807</id></pet>' https://petstore3.swagger.io/api/v3/pet",
+  "sequence": [
+    {
+      "method": "POST",
+      "url": "https://petstore3.swagger.io/api/v3/pet",
+      "url_template": "https://petstore3.swagger.io/api/v3/pet",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "Mqfsf3",
+        "Content-Type": "application/xml",
+        "Content-Length": "707"
+      },
+      "response": {
+        "status_code": 400,
+        "headers": {
+          "date": "Thu, 03 Sep 2026 09:03:06 GMT",
+          "content-type": "application/json",
+          "content-length": "94",
+          "connection": "keep-alive",
+          "access-control-allow-origin": "*",
+          "access-control-allow-methods": "GET, POST, DELETE, PUT",
+          "access-control-allow-headers": "Content-Type, api_key, Authorization",
+          "access-control-expose-headers": "Content-Disposition",
+          "server": "Jetty(9.4.53.v20231009)"
+        },
+        "body": "{\"code\":400,\"message\":\"Input error: unable to convert input to io.swagger.petstore.model.Pet\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "positive_data_acceptance",
+          "status": "failure",
+          "message": "API rejected schema-compliant request\n\nValid data should have been accepted\nExpected: 2xx, 401, 403, 404, 409, 5xx\nHint: The request body contains 2 additional properties not defined in the schema (``, `l`). The server likely rejects unexpected fields. Add `additionalProperties: false` to your schema to prevent this."
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.009508799999821349,
+          "mode": "positive"
+        },
+        "components": {
+          "BODY": "positive"
+        },
+        "phase": {
+          "name": "stateful",
+          "data": {
+            "type": "StatefulPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/pet",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {
+          "": {},
+          "l": -5.468900772368788e+290,
+          "tags": [
+            {},
+            {
+              "": {
+                "\uc4053\u00a6\u00f3$Ve": {
+                  "\udabd\udde0\u00ae.0n\u000f": false
+                },
+                "R%},\u00b1\u0010 \u00a07\b\u0018\u0003\udb77\udfee\udb78\ude51\u000e\udaa9\uded6": null
+              },
+              "\u00b8": {
+                "~\ud8c3\udefbw\u0086\u009f\u008a": -564148,
+                "\u00d2\u00eb\udac6\ude09K}z": 120
+              }
+            },
+            {
+              "B": [],
+              "\u00ab7\u009a\u00f1z\u00b1\u00abK\u0018\u00ee]": [
+                2114,
+                null
+              ],
+              "\nV\u0007\u00a9\ud87c\udebb\u009eK\u00b9\u0011\u0097\udbf5\udc49\u008cZ\u00a7\u00b8": {
+                "\u00e0": []
+              },
+              "\udb74\udd73Ju\u00b7\u0003": {},
+              "\u10d5\u00aa\ud9e7\udf6b]\ud9c8\udff8": {},
+              "id": -10344969,
+              "name": ""
+            }
+          ],
+          "photoUrls": [
+            "G\u00c4\u001f\u00c5\u0000\ud9ad\uddf6U\udb9b\udeca\u001c\uda95\udc956X",
+            "__dict__",
+            "r\udb17\udd54\udbdd\udd5d^\u0090\u00c0",
+            "",
+            "",
+            "h\u009c\u009c\u0002\u0093",
+            "\u00b3-\udac4\ude87\u0018\u00da",
+            "\u00f3H"
+          ],
+          "name": "\u00cf",
+          "id": 9223372036854775807
+        }
+      },
+      "media_type": "application/xml",
+      "parent_index": null
+    }
+  ]
+}

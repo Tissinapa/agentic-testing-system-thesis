@@ -1,0 +1,91 @@
+{
+  "operation": "POST /store/order",
+  "method": "POST",
+  "path_template": "/store/order",
+  "fingerprint": "45d116fa",
+  "case_id": "WFOBNL",
+  "code_sample": "curl -X POST -H 'Content-Type: application/xml' -d '<order><_______g_nq2_____><_>-19615033</_><_w_9_>False</_w_9_><___K__0__J_>False</___K__0__J_></_______g_nq2_____><status>placed</status></order>' https://petstore3.swagger.io/api/v3/store/order",
+  "sequence": [
+    {
+      "method": "POST",
+      "url": "https://petstore3.swagger.io/api/v3/store/order",
+      "url_template": "https://petstore3.swagger.io/api/v3/store/order",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "WFOBNL",
+        "Content-Type": "application/xml",
+        "Content-Length": "145"
+      },
+      "response": {
+        "status_code": 400,
+        "headers": {
+          "date": "Thu, 03 Sep 2026 09:03:01 GMT",
+          "content-type": "application/json",
+          "content-length": "96",
+          "connection": "keep-alive",
+          "access-control-allow-origin": "*",
+          "access-control-allow-methods": "GET, POST, DELETE, PUT",
+          "access-control-allow-headers": "Content-Type, api_key, Authorization",
+          "access-control-expose-headers": "Content-Disposition",
+          "server": "Jetty(9.4.53.v20231009)"
+        },
+        "body": "{\"code\":400,\"message\":\"Input error: unable to convert input to io.swagger.petstore.model.Order\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "positive_data_acceptance",
+          "status": "failure",
+          "message": "API rejected schema-compliant request\n\nValid data should have been accepted\nExpected: 2xx, 401, 403, 404, 409, 5xx\nHint: The request body contains 1 additional property not defined in the schema (`\u0085\u00dd\u0017'[\u0010\uda6f\udda1g\ud813\udc78nq\u00b2\u00ca\ud9a5\udf75\udbfc\udcbf&\u00db`). The server likely rejects unexpected fields. Add `additionalProperties: false` to your schema to prevent this."
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.0030095000001892913,
+          "mode": "positive"
+        },
+        "components": {
+          "BODY": "positive"
+        },
+        "phase": {
+          "name": "stateful",
+          "data": {
+            "type": "StatefulPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/store/order",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {
+          "\u0085\u00dd\u0017'[\u0010\uda6f\udda1g\ud813\udc78nq\u00b2\u00ca\ud9a5\udf75\udbfc\udcbf&\u00db": {
+            "\udb64\udd40": -19615033,
+            "\u000ew\u00f29\u0005": false,
+            "\uda51\udec7\uf8d7\ud8ef\uddc5K\u001b 0\u0098\u0081J\u0002": false
+          },
+          "status": "placed"
+        }
+      },
+      "media_type": "application/xml",
+      "parent_index": null
+    }
+  ]
+}

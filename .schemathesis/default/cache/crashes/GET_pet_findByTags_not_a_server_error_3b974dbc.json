@@ -1,0 +1,102 @@
+{
+  "operation": "GET /pet/findByTags",
+  "method": "GET",
+  "path_template": "/pet/findByTags",
+  "fingerprint": "3b974dbc",
+  "case_id": "cE6DA8",
+  "code_sample": "curl -X GET 'https://petstore3.swagger.io/api/v3/pet/findByTags?tags=%C3%A6%C5%93%C3%86%C5%92%EF%AC%80%CA%A4%CA%A8%C3%9F&tags=%F3%BB%B8%ACN%F3%9A%9E%9B%F3%A4%9C%A4%C2%96%0Fl%C3%B6%C2%A3&tags=%C3%A0%C3%AB&tags=%C2%8F%C3%92%07%18%C3%A9%C2%96%C3%86%C2%AC&tags=%F3%A5%AA%88%C2%A5%F2%A8%BF%93&tags=%C3%9D%09i1%C3%93&tags=0%2F0&tags=&tags=&tags=g&tags=&tags=%C2%8A%F2%8A%B6%80%C3%9F%C2%91Rb%C2%9C%F2%81%AA%9B-%C2%A9&tags=%C3%B0%C3%AD%11%2A%C3%89%C2%BF%60%23%C2%9C%C2%89%C2%A6Y%F2%B6%A8%97%15%C2%B0%2A%C3%83%25%C2%BA%F2%B4%9B%94&tags=&tags=%C3%AC&tags=A%C2%A4%13x%C2%90%F1%94%85%97&tags=&tags=fz'",
+  "sequence": [
+    {
+      "method": "GET",
+      "url": "https://petstore3.swagger.io/api/v3/pet/findByTags?tags=%C3%A6%C5%93%C3%86%C5%92%EF%AC%80%CA%A4%CA%A8%C3%9F&tags=%F3%BB%B8%ACN%F3%9A%9E%9B%F3%A4%9C%A4%C2%96%0Fl%C3%B6%C2%A3&tags=%C3%A0%C3%AB&tags=%C2%8F%C3%92%07%18%C3%A9%C2%96%C3%86%C2%AC&tags=%F3%A5%AA%88%C2%A5%F2%A8%BF%93&tags=%C3%9D%09i1%C3%93&tags=0%2F0&tags=&tags=&tags=g&tags=&tags=%C2%8A%F2%8A%B6%80%C3%9F%C2%91Rb%C2%9C%F2%81%AA%9B-%C2%A9&tags=%C3%B0%C3%AD%11%2A%C3%89%C2%BF%60%23%C2%9C%C2%89%C2%A6Y%F2%B6%A8%97%15%C2%B0%2A%C3%83%25%C2%BA%F2%B4%9B%94&tags=&tags=%C3%AC&tags=A%C2%A4%13x%C2%90%F1%94%85%97&tags=&tags=fz",
+      "url_template": "https://petstore3.swagger.io/api/v3/pet/findByTags",
+      "headers": {
+        "User-Agent": "schemathesis/4.25.2",
+        "Accept-Encoding": "gzip, deflate, zstd",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "cE6DA8"
+      },
+      "response": {
+        "status_code": 500,
+        "headers": {
+          "date": "Thu, 03 Sep 2026 09:03:05 GMT",
+          "content-type": "application/json",
+          "content-length": "110",
+          "connection": "keep-alive",
+          "access-control-allow-origin": "*",
+          "access-control-allow-methods": "GET, POST, DELETE, PUT",
+          "access-control-allow-headers": "Content-Type, api_key, Authorization",
+          "access-control-expose-headers": "Content-Disposition",
+          "server": "Jetty(9.4.53.v20231009)"
+        },
+        "body": "{\"code\":500,\"message\":\"There was an error processing your request. It has been logged (ID: 808d654623128eeb)\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "not_a_server_error",
+          "status": "failure",
+          "message": "Server error"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.0016059999998105923,
+          "mode": "positive"
+        },
+        "components": {
+          "QUERY": "positive"
+        },
+        "phase": {
+          "name": "stateful",
+          "data": {
+            "type": "StatefulPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/pet/findByTags",
+      "path_parameters": {},
+      "query": {
+        "tags": [
+          "\u00e6\u0153\u00c6\u0152\ufb00\u02a4\u02a8\u00df",
+          "\udbaf\ude2cN\udb29\udf9b\udb51\udf24\u0096\u000fl\u00f6\u00a3",
+          "\u00e0\u00eb",
+          "\u008f\u00d2\u0007\u0018\u00e9\u0096\u00c6\u00ac",
+          "\udb56\ude88\u00a5\uda63\udfd3",
+          "\u00dd\ti1\u00d3",
+          "0/0",
+          "",
+          "",
+          "g",
+          "",
+          "\u008a\ud9eb\udd80\u00df\u0091Rb\u009c\ud9c6\ude9b-\u00a9",
+          "\u00f0\u00ed\u0011*\u00c9\u00bf`#\u009c\u0089\u00a6Y\uda9a\ude17\u0015\u00b0*\u00c3%\u00ba\uda91\uded4",
+          "",
+          "\u00ec",
+          "A\u00a4\u0013x\u0090\ud910\udd57",
+          "",
+          "fz"
+        ]
+      },
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "none"
+      },
+      "media_type": null,
+      "parent_index": null
+    }
+  ]
+}
