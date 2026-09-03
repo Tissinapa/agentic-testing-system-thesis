@@ -51,7 +51,7 @@ class EvaluationResult(BaseModel):
 class AgentConfig(BaseModel):
     base_url: str
     spec_url: str
-    target: Literal["java","python"] = "python"
+    target: Literal["java","python","java_os","python_os"] = "python"
     mode: Literal["black","white", "hybrid"] = "black"
     max_iterations: int = 1    #This can be changed later
     token_budget: int = 10000   #Change this later

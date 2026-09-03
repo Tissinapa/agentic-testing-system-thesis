@@ -11,7 +11,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description="AI testing agent")
     parser.add_argument(
         "--target",
-        choices=["java","python"],
+        choices=["java","python","java_os","python_os"],
         required=True,
         help="Target application language"
     )
