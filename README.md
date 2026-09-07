@@ -94,7 +94,7 @@ Swagger UI:
 
 ```bash
 # Black-box API testing only
-python -m agent.run --target python --base-url http://localhost:8000 --spec-url http://localhost:8000/openapi.json --max-iterations 1 --token-budget 30000
+python -m agent.run --target python --base-url http://localhost:8000 --spec-url http://localhost:8000/openapi.json --mode black --token-budget 30000
 # White-box source code analysis only
 python -m agent.run --target python --base-url http://localhost:8000 --spec-url http://localhost:8000/openapi.json --mode white --requirements docs/requirements_python.md --source-code path\to\fastapi-target-thesis\app\routers\tasks.py --token-budget 10000
 # Hybrid both
@@ -198,9 +198,6 @@ python metrics/export_excel.py
 python metrics/parse_agent_results.py
 # Output: results/agent_evaluations.xlsx
 
-# Seeded bug catalogue
-python metrics/create_bug_tables.py
-# Output: results/thesis_bugs_and_evaluations.xlsx
 ```
 
 ---
