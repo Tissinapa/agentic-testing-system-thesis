@@ -106,8 +106,11 @@ python -m agent.run --target python --base-url http://localhost:8000 --spec-url 
 ### CLI for java target testing
 
 ``` bash
+# Black-box API testing only
 python -m agent.run --target java --base-url http://localhost:8080 --spec-url http://localhost:8080/v3/api-docs --mode black --requirements docs/requirements_java.md--token-budget 30000
+# White-box source code analysis only
 python -m agent.run --target java --base-url http://localhost:8080 --spec-url http://localhost:8080/v3/api-docs --mode white --requirements docs/requirements_java.md --source-code path\to\springboot-targe-thesis\src\main\java\com\example\springboottargethesis\controller\TaskController.java --token-budget 10000
+# Hybrid both
 python -m agent.run --target java --base-url http://localhost:8080 --spec-url http://localhost:8080/v3/api-docs --mode hybrid --requirements docs/requirements_java.md --source-code path\to\springboot-targe-thesis\src\main\java\com\example\springboottargethesis\controller\TaskController.java --token-budget 30000
 
 ```
@@ -210,7 +213,7 @@ pytest tests/ -v
 If you get windows error 5 access denied, use this command to run all tests. Delete temp folder afterwards
 ```bash
 pytest tests/ -v --basetemp=./tmp
-
+```
 ---
 
 ## Agent Architecture
