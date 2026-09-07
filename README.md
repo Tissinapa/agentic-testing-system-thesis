@@ -216,30 +216,6 @@ pytest tests/ -v --basetemp=./tmp
 ```
 ---
 
-## Agent Architecture
-
-```
-OpenAPI spec + Requirements + Source code (optional)
-                    │
-              [Parser node]
-                    │
-          ┌─────────┴──────────┐
-          │ black/hybrid       │ white
-          ▼                    ▼
-    [Generator]         [White-box analyzer]
-          │
-    [Executor]
-          │
-    [Evaluator]
-          │
-    [Reflection]
-          │
-    [White-box] (hybrid only)
-          │
-    [Termination]
-          │
-    results/agent/*.json
-```
 
 ### Testing modes
 
