@@ -17,6 +17,7 @@ dependencies = [
     "robotframework>=7.4.2",
     "robotframework-requests>=0.9.7",
     "schemathesis>=4.25.2",
+    "streamlit>=1.63.0",
     "typing>=3.10.0.0",
 ]
 

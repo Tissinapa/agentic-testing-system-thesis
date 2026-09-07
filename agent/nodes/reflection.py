@@ -43,6 +43,20 @@ def _build_prompt(state: AgentState) -> str:
 
 # Extract json array from llm response
 def _extract_json(raw: str) -> str:
+    
+    '''
+    Created tests looks like this
+    ```json
+    [
+        {
+            "id": "TC-001",
+            "endpoint": "/tasks",
+            "method": "POST",
+            ...
+        }
+    ]
+    ```
+    '''
     raw = raw.strip()
     if "```json" in raw:
         raw = raw.split("```json")[1].split("```")[0].strip()

@@ -1,5 +1,4 @@
-ou are an API testing expert evaluating test results.
-
+You are an API testing expert evaluating test results.
 For each test result, assess whether the response indicates a bug.
 
 Consider:

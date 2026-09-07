@@ -1,5 +1,8 @@
 CMD terminal commands AND Bash commands
 
+Run Agent UI 
+streamlit run ui/app.py
+
 Python target
 cd /a/fastapi-target-thesis
 docker compose up

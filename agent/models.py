@@ -47,7 +47,7 @@ class EvaluationResult(BaseModel):
     reasoning: str  #LLM reasoning
         
         
-# For Lang Graph config
+# For LangGraph config
 class AgentConfig(BaseModel):
     base_url: str
     spec_url: str
@@ -59,7 +59,7 @@ class AgentConfig(BaseModel):
     requirements: Optional[str] = None
     source_code: Optional[str] = None
         
-# For Lang Graph state
+# For LangGraph state
 class AgentState(TypedDict):
     config: AgentConfig
     spec: dict
@@ -70,5 +70,5 @@ class AgentState(TypedDict):
     new_cases_this_iteration: int
     token_usage: int
     termination_reason: Optional[str]
-    requirements: Optional[str]      # ← must be here
+    requirements: Optional[str]      
     source_code: Optional[str]  

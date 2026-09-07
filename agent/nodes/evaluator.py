@@ -28,6 +28,21 @@ def _build_prompt(batch: list[ApiTestResult], requirements: str) -> str:
         requirements=requirements,
     )     
 def _extract_json(raw: str) -> str:
+    # Extract json array from llm response
+    
+    '''
+    Created tests looks like this
+    ```json
+    [
+        {
+            "id": "TC-001",
+            "endpoint": "/tasks",
+            "method": "POST",
+            ...
+        }
+    ]
+    ```
+    '''
     raw = raw.strip()
     if "```json" in raw:
         raw = raw.split("```json")[1].split("```")[0].strip()
