@@ -9,8 +9,8 @@ A LangGraph-based AI testing agent that autonomously generates, executes, and ev
 | Repo | Description |
 |---|---|
 | `agentic-testing-thesis` | This repo AI agent, comparison frameworks, metrics |
-| `fastapi-target-thesis` | Python FastAPI target application with seeded bugs |
-| `springboot-targe-thesis` | Java Spring Boot target application with seeded bugs |
+| [fastapi-target-thesis](https://github.com/Tissinapa/testing-target-python-thesis) | Python FastAPI target application with seeded bugs |
+| [springboot-targe-thesis](https://github.com/Tissinapa/testing-target-java-thesis) | Java Spring Boot target application with seeded bugs |
 
 ---
 
