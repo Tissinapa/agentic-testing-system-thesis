@@ -1,0 +1,768 @@
+{
+  "meta": {
+    "target": "python_os",
+    "mode": "black",
+    "timestamp": "2026-09-10T15:17:27.199229",
+    "base_url": "http://localhost",
+    "spec_url": "http://localhost/api/v1/openapi.json",
+    "iterations": 1,
+    "token_usage": 25042,
+    "termination_reason": null
+  },
+  "summary": {
+    "test_cases_generated": 25,
+    "tests_executed": 20,
+    "bugs_detected": 12,
+    "false_positives": 4,
+    "endpoints_covered": 10
+  },
+  "test_cases": [
+    {
+      "id": "TC-952B9601",
+      "endpoint": "/api/v1/utils/health-check/",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": null,
+      "expected_status": 200,
+      "rationale": "Health check endpoint should return true with no auth required"
+    },
+    {
+      "id": "TC-EE125239",
+      "endpoint": "/api/v1/login/access-token",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      "payload": null,
+      "expected_status": 200,
+      "rationale": "Happy path - login with valid credentials returns access token"
+    },
+    {
+      "id": "TC-93967AB2",
+      "endpoint": "/api/v1/login/access-token",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      "payload": null,
+      "expected_status": 400,
+      "rationale": "Login with invalid password should return 400"
+    },
+    {
+      "id": "TC-E4F2B5B4",
+      "endpoint": "/api/v1/login/access-token",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      "payload": null,
+      "expected_status": 400,
+      "rationale": "Login with non-existent user should return 400"
+    },
+    {
+      "id": "TC-4FF6EF22",
+      "endpoint": "/api/v1/login/access-token",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      "payload": null,
+      "expected_status": 422,
+      "rationale": "Login with missing credentials should return validation error"
+    },
+    {
+      "id": "TC-B857E74D",
+      "endpoint": "/api/v1/login/test-token",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": null,
+      "expected_status": 401,
+      "rationale": "Test token with invalid bearer token should return 401"
+    },
+    {
+      "id": "TC-0272E49A",
+      "endpoint": "/api/v1/users/",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": null,
+      "expected_status": 401,
+      "rationale": "Get users with invalid token should return 401 unauthorized"
+    },
+    {
+      "id": "TC-EA48E898",
+      "endpoint": "/api/v1/users/",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": null,
+      "expected_status": 401,
+      "rationale": "Get users with missing Authorization header should return 401"
+    },
+    {
+      "id": "TC-5345004A",
+      "endpoint": "/api/v1/users/me",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": null,
+      "expected_status": 401,
+      "rationale": "Get current user with invalid token should return 401"
+    },
+    {
+      "id": "TC-B229B6C1",
+      "endpoint": "/api/v1/users/me",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": null,
+      "expected_status": 401,
+      "rationale": "Get current user with no auth header should return 401"
+    },
+    {
+      "id": "TC-6F6F2563",
+      "endpoint": "/api/v1/users/me",
+      "method": "PATCH",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": {
+        "full_name": "Updated Name",
+        "email": "updated@example.com"
+      },
+      "expected_status": 401,
+      "rationale": "Update current user profile with invalid token should return 401"
+    },
+    {
+      "id": "TC-D256A392",
+      "endpoint": "/api/v1/users/me/password",
+      "method": "PATCH",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": {
+        "current_password": "changethis",
+        "new_password": "newpassword123"
+      },
+      "expected_status": 401,
+      "rationale": "Update password with invalid token should return 401"
+    },
+    {
+      "id": "TC-80FCD80A",
+      "endpoint": "/api/v1/users/me/password",
+      "method": "PATCH",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": {},
+      "expected_status": 401,
+      "rationale": "Update password with missing fields and invalid token should return 401"
+    },
+    {
+      "id": "TC-087378F7",
+      "endpoint": "/api/v1/users/00000000-0000-0000-0000-000000000000",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": null,
+      "expected_status": 401,
+      "rationale": "Get user by UUID with invalid token should return 401"
+    },
+    {
+      "id": "TC-6F8F86B0",
+      "endpoint": "/api/v1/users/not-a-valid-uuid",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": null,
+      "expected_status": 422,
+      "rationale": "Get user with non-UUID path param should return 422 validation error"
+    },
+    {
+      "id": "TC-18375BC6",
+      "endpoint": "/api/v1/items/",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": null,
+      "expected_status": 401,
+      "rationale": "Get items with invalid token should return 401"
+    },
+    {
+      "id": "TC-CC49097F",
+      "endpoint": "/api/v1/items/",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": null,
+      "expected_status": 401,
+      "rationale": "Get items with no auth header should return 401"
+    },
+    {
+      "id": "TC-41049D22",
+      "endpoint": "/api/v1/items/",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": {
+        "title": "Test Item",
+        "description": "A sample item"
+      },
+      "expected_status": 401,
+      "rationale": "Create item with invalid token should return 401"
+    },
+    {
+      "id": "TC-E9DAED38",
+      "endpoint": "/api/v1/items/",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": {},
+      "expected_status": 401,
+      "rationale": "Create item with missing required fields and invalid token should return 401"
+    },
+    {
+      "id": "TC-477054CF",
+      "endpoint": "/api/v1/items/not-a-valid-uuid",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": null,
+      "expected_status": 422,
+      "rationale": "Get item with invalid UUID format should return 422 validation error"
+    },
+    {
+      "id": "TC-R001",
+      "endpoint": "/api/v1/users/me",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": null,
+      "expected_status": 401,
+      "rationale": "No Authorization header at all should return 401; confirms if 403 bug is tied to bad token value or missing header too"
+    },
+    {
+      "id": "TC-R002",
+      "endpoint": "/api/v1/users/me",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmYWtlIn0.fakesig"
+      },
+      "payload": null,
+      "expected_status": 401,
+      "rationale": "Structurally valid but fake JWT should return 401 Unauthorized, not 403, to further confirm auth classification bug"
+    },
+    {
+      "id": "TC-R003",
+      "endpoint": "/api/v1/login/access-token",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      "payload": null,
+      "expected_status": 200,
+      "rationale": "Happy path login with valid form credentials to confirm token issuance works and obtain token for further tests"
+    },
+    {
+      "id": "TC-R004",
+      "endpoint": "/api/v1/login/access-token",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      "payload": null,
+      "expected_status": 400,
+      "rationale": "Login with invalid credentials should return 400; verifies error code for authentication failure on login endpoint"
+    },
+    {
+      "id": "TC-R005",
+      "endpoint": "/api/v1/items/",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": null,
+      "expected_status": 401,
+      "rationale": "No Authorization header on items endpoint; checks if missing token also yields 403 instead of 401, confirming scope of the bug"
+    }
+  ],
+  "results": [
+    {
+      "test_id": "TC-952B9601",
+      "endpoint": "/api/v1/utils/health-check/",
+      "method": "GET",
+      "status_received": 0,
+      "status_expected": 200,
+      "passed": false,
+      "error": "2 validation errors for ApiTestResult\nresponse_body.dict[any,any]\n  Input should be a valid dictionary [type=dict_type, input_value=True, input_type=bool]\n    For further information visit https://errors.pydantic.dev/2.13/v/dict_type\nresponse_body.list[any]\n  Input should be a valid list [type=list_type, input_value=True, input_type=bool]\n    For further information visit https://errors.pydantic.dev/2.13/v/list_type"
+    },
+    {
+      "test_id": "TC-EE125239",
+      "endpoint": "/api/v1/login/access-token",
+      "method": "POST",
+      "status_received": 422,
+      "status_expected": 200,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-93967AB2",
+      "endpoint": "/api/v1/login/access-token",
+      "method": "POST",
+      "status_received": 422,
+      "status_expected": 400,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-E4F2B5B4",
+      "endpoint": "/api/v1/login/access-token",
+      "method": "POST",
+      "status_received": 422,
+      "status_expected": 400,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-4FF6EF22",
+      "endpoint": "/api/v1/login/access-token",
+      "method": "POST",
+      "status_received": 422,
+      "status_expected": 422,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-B857E74D",
+      "endpoint": "/api/v1/login/test-token",
+      "method": "POST",
+      "status_received": 403,
+      "status_expected": 401,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-0272E49A",
+      "endpoint": "/api/v1/users/",
+      "method": "GET",
+      "status_received": 403,
+      "status_expected": 401,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-EA48E898",
+      "endpoint": "/api/v1/users/",
+      "method": "GET",
+      "status_received": 401,
+      "status_expected": 401,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-5345004A",
+      "endpoint": "/api/v1/users/me",
+      "method": "GET",
+      "status_received": 403,
+      "status_expected": 401,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-B229B6C1",
+      "endpoint": "/api/v1/users/me",
+      "method": "GET",
+      "status_received": 401,
+      "status_expected": 401,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-6F6F2563",
+      "endpoint": "/api/v1/users/me",
+      "method": "PATCH",
+      "status_received": 403,
+      "status_expected": 401,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-D256A392",
+      "endpoint": "/api/v1/users/me/password",
+      "method": "PATCH",
+      "status_received": 403,
+      "status_expected": 401,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-80FCD80A",
+      "endpoint": "/api/v1/users/me/password",
+      "method": "PATCH",
+      "status_received": 403,
+      "status_expected": 401,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-087378F7",
+      "endpoint": "/api/v1/users/00000000-0000-0000-0000-000000000000",
+      "method": "GET",
+      "status_received": 403,
+      "status_expected": 401,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-6F8F86B0",
+      "endpoint": "/api/v1/users/not-a-valid-uuid",
+      "method": "GET",
+      "status_received": 403,
+      "status_expected": 422,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-18375BC6",
+      "endpoint": "/api/v1/items/",
+      "method": "GET",
+      "status_received": 403,
+      "status_expected": 401,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-CC49097F",
+      "endpoint": "/api/v1/items/",
+      "method": "GET",
+      "status_received": 401,
+      "status_expected": 401,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-41049D22",
+      "endpoint": "/api/v1/items/",
+      "method": "POST",
+      "status_received": 403,
+      "status_expected": 401,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-E9DAED38",
+      "endpoint": "/api/v1/items/",
+      "method": "POST",
+      "status_received": 403,
+      "status_expected": 401,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-477054CF",
+      "endpoint": "/api/v1/items/not-a-valid-uuid",
+      "method": "GET",
+      "status_received": 403,
+      "status_expected": 422,
+      "passed": false,
+      "error": null
+    }
+  ],
+  "evaluations": [
+    {
+      "test_id": "TC-952B9601",
+      "endpoint": "/api/v1/utils/health-check/",
+      "bug_detected": false,
+      "verdict": "Test framework error, not an API bug",
+      "reasoning": "The failure is caused by a Pydantic validation error in the test harness when trying to parse the boolean 'true' response body, not an API malfunction. The health check likely returned the correct boolean true value as per spec.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-EE125239",
+      "endpoint": "/api/v1/login/access-token",
+      "bug_detected": false,
+      "verdict": "Test case misconfigured, no payload sent",
+      "reasoning": "The test sent a null payload instead of valid credentials, so the 422 response is correct API behavior. This is a test design issue, not an API bug.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-93967AB2",
+      "endpoint": "/api/v1/login/access-token",
+      "bug_detected": false,
+      "verdict": "Test case misconfigured, no payload sent",
+      "reasoning": "Again no payload was provided so the API correctly returned 422 for missing required fields. The expected 400 for invalid password cannot be tested without actual credentials in the payload.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-E4F2B5B4",
+      "endpoint": "/api/v1/login/access-token",
+      "bug_detected": false,
+      "verdict": "Test case misconfigured, no payload sent",
+      "reasoning": "No credentials were sent in the payload so 422 is the correct response. The test cannot evaluate non-existent user behavior without actually sending a username and password.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-4FF6EF22",
+      "endpoint": "/api/v1/login/access-token",
+      "bug_detected": false,
+      "verdict": "Correct 422 returned for missing credentials",
+      "reasoning": "The API correctly returns 422 with field-level validation errors when required username and password fields are absent, matching the expected status.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-B857E74D",
+      "endpoint": "/api/v1/login/test-token",
+      "bug_detected": true,
+      "verdict": "API returns 403 instead of 401 for invalid token",
+      "reasoning": "An invalid or malformed bearer token should result in 401 Unauthorized per HTTP semantics and the test expectation, but the API returns 403 Forbidden, indicating an incorrect status code mapping.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-0272E49A",
+      "endpoint": "/api/v1/users/",
+      "bug_detected": true,
+      "verdict": "API returns 403 instead of 401 for invalid token on /users/",
+      "reasoning": "Similar to TC-B857E74D, an invalid bearer token should yield 401 Unauthorized but the API returns 403, which is semantically incorrect for a credential validation failure.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-EA48E898",
+      "endpoint": "/api/v1/users/",
+      "bug_detected": false,
+      "verdict": "Correct 401 returned when Authorization header is missing",
+      "reasoning": "The API correctly distinguishes between a missing auth header (401 Not authenticated) and an invalid token, returning the expected status code.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-5345004A",
+      "endpoint": "/api/v1/users/me",
+      "bug_detected": true,
+      "verdict": "API returns 403 instead of 401 for invalid token on /users/me",
+      "reasoning": "An invalid bearer token on a protected endpoint should return 401 Unauthorized, but the API returns 403 Forbidden, indicating a consistent but incorrect error code for credential validation failures.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-B229B6C1",
+      "endpoint": "/api/v1/users/me",
+      "bug_detected": false,
+      "verdict": "Correct 401 returned when Authorization header is missing",
+      "reasoning": "The API correctly returns 401 with 'Not authenticated' when no Authorization header is provided, matching the expected behavior.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-6F6F2563",
+      "endpoint": "/api/v1/users/me",
+      "bug_detected": true,
+      "verdict": "API returns 403 instead of 401 for invalid token",
+      "reasoning": "When an invalid token is provided, the API should return 401 Unauthorized per HTTP standards and the test expectation. Returning 403 Forbidden conflates authentication failure with authorization failure.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-D256A392",
+      "endpoint": "/api/v1/users/me/password",
+      "bug_detected": true,
+      "verdict": "API returns 403 instead of 401 for invalid token on password update",
+      "reasoning": "Same issue as TC-6F6F2563; invalid credentials should yield 401 not 403, indicating a systemic misclassification of authentication errors.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-80FCD80A",
+      "endpoint": "/api/v1/users/me/password",
+      "bug_detected": true,
+      "verdict": "API returns 403 instead of 401 for invalid token with empty payload",
+      "reasoning": "Authentication check should take priority and return 401 for an invalid token regardless of payload validity. Returning 403 is semantically incorrect.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-087378F7",
+      "endpoint": "/api/v1/users/00000000-0000-0000-0000-000000000000",
+      "bug_detected": true,
+      "verdict": "API returns 403 instead of 401 for invalid token on user lookup",
+      "reasoning": "An invalid token should result in 401 Unauthorized before any resource-level authorization check that would produce a 403.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-6F8F86B0",
+      "endpoint": "/api/v1/users/not-a-valid-uuid",
+      "bug_detected": true,
+      "verdict": "API returns 403 instead of 422 for invalid UUID with bad token",
+      "reasoning": "Authentication failure and input validation ordering is ambiguous, but the expected 422 for a malformed UUID path param is not returned, and 403 instead of 401 indicates an auth classification bug as well.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-18375BC6",
+      "endpoint": "/api/v1/items/",
+      "bug_detected": true,
+      "verdict": "API returns 403 instead of 401 for invalid token on items list",
+      "reasoning": "Invalid token should produce 401 Unauthorized. The API is consistently returning 403 for bad tokens, which is a systemic bug.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-CC49097F",
+      "endpoint": "/api/v1/items/",
+      "bug_detected": false,
+      "verdict": "Correct 401 returned when no auth header is present",
+      "reasoning": "The API correctly returns 401 with 'Not authenticated' when no Authorization header is provided, matching the expected behavior.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-41049D22",
+      "endpoint": "/api/v1/items/",
+      "bug_detected": true,
+      "verdict": "API returns 403 instead of 401 for invalid token on item creation",
+      "reasoning": "Same systemic issue; an invalid bearer token should yield 401 Unauthorized, not 403 Forbidden.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-E9DAED38",
+      "endpoint": "/api/v1/items/",
+      "bug_detected": true,
+      "verdict": "API returns 403 instead of 401 for invalid token with empty payload on item creation",
+      "reasoning": "Authentication failure should return 401 before any payload validation or authorization logic, making this response semantically incorrect.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-477054CF",
+      "endpoint": "/api/v1/items/not-a-valid-uuid",
+      "bug_detected": true,
+      "verdict": "API returns 403 instead of 422 for invalid UUID path param with bad token",
+      "reasoning": "Expected 422 for malformed UUID path parameter is not returned; the API prioritizes token rejection with 403 instead of 401, indicating dual bugs in auth classification and possibly middleware ordering.",
+      "severity": null,
+      "recommendation": null
+    }
+  ],
+  "bugs": [
+    {
+      "test_id": "TC-B857E74D",
+      "endpoint": "/api/v1/login/test-token",
+      "method": "POST",
+      "verdict": "API returns 403 instead of 401 for invalid token",
+      "resoning": "An invalid or malformed bearer token should result in 401 Unauthorized per HTTP semantics and the test expectation, but the API returns 403 Forbidden, indicating an incorrect status code mapping."
+    },
+    {
+      "test_id": "TC-0272E49A",
+      "endpoint": "/api/v1/users/",
+      "method": "GET",
+      "verdict": "API returns 403 instead of 401 for invalid token on /users/",
+      "resoning": "Similar to TC-B857E74D, an invalid bearer token should yield 401 Unauthorized but the API returns 403, which is semantically incorrect for a credential validation failure."
+    },
+    {
+      "test_id": "TC-5345004A",
+      "endpoint": "/api/v1/users/me",
+      "method": "GET",
+      "verdict": "API returns 403 instead of 401 for invalid token on /users/me",
+      "resoning": "An invalid bearer token on a protected endpoint should return 401 Unauthorized, but the API returns 403 Forbidden, indicating a consistent but incorrect error code for credential validation failures."
+    },
+    {
+      "test_id": "TC-6F6F2563",
+      "endpoint": "/api/v1/users/me",
+      "method": "PATCH",
+      "verdict": "API returns 403 instead of 401 for invalid token",
+      "resoning": "When an invalid token is provided, the API should return 401 Unauthorized per HTTP standards and the test expectation. Returning 403 Forbidden conflates authentication failure with authorization failure."
+    },
+    {
+      "test_id": "TC-D256A392",
+      "endpoint": "/api/v1/users/me/password",
+      "method": "PATCH",
+      "verdict": "API returns 403 instead of 401 for invalid token on password update",
+      "resoning": "Same issue as TC-6F6F2563; invalid credentials should yield 401 not 403, indicating a systemic misclassification of authentication errors."
+    },
+    {
+      "test_id": "TC-80FCD80A",
+      "endpoint": "/api/v1/users/me/password",
+      "method": "PATCH",
+      "verdict": "API returns 403 instead of 401 for invalid token with empty payload",
+      "resoning": "Authentication check should take priority and return 401 for an invalid token regardless of payload validity. Returning 403 is semantically incorrect."
+    },
+    {
+      "test_id": "TC-087378F7",
+      "endpoint": "/api/v1/users/00000000-0000-0000-0000-000000000000",
+      "method": "GET",
+      "verdict": "API returns 403 instead of 401 for invalid token on user lookup",
+      "resoning": "An invalid token should result in 401 Unauthorized before any resource-level authorization check that would produce a 403."
+    },
+    {
+      "test_id": "TC-6F8F86B0",
+      "endpoint": "/api/v1/users/not-a-valid-uuid",
+      "method": "GET",
+      "verdict": "API returns 403 instead of 422 for invalid UUID with bad token",
+      "resoning": "Authentication failure and input validation ordering is ambiguous, but the expected 422 for a malformed UUID path param is not returned, and 403 instead of 401 indicates an auth classification bug as well."
+    },
+    {
+      "test_id": "TC-18375BC6",
+      "endpoint": "/api/v1/items/",
+      "method": "GET",
+      "verdict": "API returns 403 instead of 401 for invalid token on items list",
+      "resoning": "Invalid token should produce 401 Unauthorized. The API is consistently returning 403 for bad tokens, which is a systemic bug."
+    },
+    {
+      "test_id": "TC-41049D22",
+      "endpoint": "/api/v1/items/",
+      "method": "POST",
+      "verdict": "API returns 403 instead of 401 for invalid token on item creation",
+      "resoning": "Same systemic issue; an invalid bearer token should yield 401 Unauthorized, not 403 Forbidden."
+    },
+    {
+      "test_id": "TC-E9DAED38",
+      "endpoint": "/api/v1/items/",
+      "method": "POST",
+      "verdict": "API returns 403 instead of 401 for invalid token with empty payload on item creation",
+      "resoning": "Authentication failure should return 401 before any payload validation or authorization logic, making this response semantically incorrect."
+    },
+    {
+      "test_id": "TC-477054CF",
+      "endpoint": "/api/v1/items/not-a-valid-uuid",
+      "method": "GET",
+      "verdict": "API returns 403 instead of 422 for invalid UUID path param with bad token",
+      "resoning": "Expected 422 for malformed UUID path parameter is not returned; the API prioritizes token rejection with 403 instead of 401, indicating dual bugs in auth classification and possibly middleware ordering."
+    }
+  ]
+}

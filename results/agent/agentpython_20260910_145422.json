@@ -1,0 +1,185 @@
+{
+  "meta": {
+    "target": "python",
+    "mode": "white",
+    "timestamp": "2026-09-10T14:54:22.181906",
+    "base_url": "http://localhost:8000",
+    "spec_url": "http://localhost:8000/openapi.json",
+    "iterations": 1,
+    "token_usage": 2449,
+    "termination_reason": null
+  },
+  "summary": {
+    "test_cases_generated": 0,
+    "tests_executed": 0,
+    "bugs_detected": 10,
+    "false_positives": 0,
+    "endpoints_covered": 0
+  },
+  "test_cases": [],
+  "results": [],
+  "evaluations": [
+    {
+      "test_id": "WB-001",
+      "endpoint": "app/auth.py (verify_auth_token, implied by requirements)",
+      "bug_detected": true,
+      "verdict": "Hardcoded API token in requirements",
+      "reasoning": "The token value 'Taman-ei-p1t1a1s-0lla-na1n-123' is hardcoded and static. Anyone with access to requirements or source can authenticate.",
+      "severity": "critical",
+      "recommendation": "Use dynamically generated JWT tokens with expiry instead of a static hardcoded token value."
+    },
+    {
+      "test_id": "WB-002",
+      "endpoint": "create_task",
+      "bug_detected": true,
+      "verdict": "POST /tasks returns 200 instead of 201",
+      "reasoning": "The create_task endpoint has status_code=200 but requirements specify that creating a task must return HTTP 201 Created.",
+      "severity": "high",
+      "recommendation": "Change status_code=200 to status_code=201 in the @router.post decorator for create_task."
+    },
+    {
+      "test_id": "WB-003",
+      "endpoint": "get_task",
+      "bug_detected": true,
+      "verdict": "GET non-existent task returns 200 with fake data instead of 404",
+      "reasoning": "When a task is not found, the endpoint returns a fake empty TaskResponse with status 200. Requirements state it must return 404.",
+      "severity": "high",
+      "recommendation": "Replace the fake TaskResponse return with: raise HTTPException(status_code=404, detail='Task was not found')"
+    },
+    {
+      "test_id": "WB-004",
+      "endpoint": "delete_task",
+      "bug_detected": true,
+      "verdict": "DELETE /tasks returns 200 instead of 204",
+      "reasoning": "The delete_task endpoint has status_code=200 and returns a response body. Requirements specify 204 No Content on successful deletion.",
+      "severity": "high",
+      "recommendation": "Change status_code=200 to status_code=204 and remove the returned TaskResponse body from delete_task."
+    },
+    {
+      "test_id": "WB-005",
+      "endpoint": "update_task",
+      "bug_detected": true,
+      "verdict": "Incorrect HTTP status code label in error message",
+      "reasoning": "The error detail says 'Tasks was not found' with incorrect pluralization. Minor but inconsistent with delete_task which says 'Task was not found'.",
+      "severity": "medium",
+      "recommendation": "Change detail message to 'Task was not found' to be consistent and grammatically correct."
+    },
+    {
+      "test_id": "WB-006",
+      "endpoint": "get_tasks",
+      "bug_detected": true,
+      "verdict": "get_tasks returns all tasks without pagination or user scoping",
+      "reasoning": "All tasks are returned with no limit or pagination. For large datasets this can cause memory and performance issues.",
+      "severity": "medium",
+      "recommendation": "Add pagination parameters (skip and limit) to the get_tasks endpoint and apply .offset(skip).limit(limit) to the query."
+    },
+    {
+      "test_id": "WB-007",
+      "endpoint": "create_task",
+      "bug_detected": true,
+      "verdict": "Missing database rollback on exception in create_task",
+      "reasoning": "If db.commit() or db.refresh() raises an exception, the session is left in a dirty state with no rollback, risking data inconsistency.",
+      "severity": "medium",
+      "recommendation": "Wrap db.add, db.commit, and db.refresh in a try/except block and call db.rollback() in the except clause before re-raising."
+    },
+    {
+      "test_id": "WB-008",
+      "endpoint": "update_task",
+      "bug_detected": true,
+      "verdict": "Missing database rollback on exception in update_task",
+      "reasoning": "If db.commit() or db.refresh() raises an exception during update, the session is left dirty with no rollback handler.",
+      "severity": "medium",
+      "recommendation": "Wrap the commit and refresh calls in a try/except block with db.rollback() in the except clause."
+    },
+    {
+      "test_id": "WB-009",
+      "endpoint": "delete_task",
+      "bug_detected": true,
+      "verdict": "delete_task manually constructs TaskResponse before deletion unnecessarily",
+      "reasoning": "The response body is manually built from task attributes before deletion, which is redundant given the endpoint should return 204 No Content.",
+      "severity": "low",
+      "recommendation": "After fixing status_code to 204, remove the TaskResponse construction and simply delete the task and return nothing."
+    },
+    {
+      "test_id": "WB-010",
+      "endpoint": "get_task, update_task, delete_task",
+      "bug_detected": true,
+      "verdict": "No input validation on task_id path parameter range",
+      "reasoning": "Negative or zero task_id values are accepted and passed to the database query without validation, causing unnecessary DB lookups.",
+      "severity": "low",
+      "recommendation": "Add a validation check to reject task_id values less than 1 with a 422 or 400 error, or use Pydantic Path with gt=0."
+    }
+  ],
+  "bugs": [
+    {
+      "test_id": "WB-001",
+      "endpoint": "app/auth.py (verify_auth_token, implied by requirements)",
+      "method": "GET",
+      "verdict": "Hardcoded API token in requirements",
+      "resoning": "The token value 'Taman-ei-p1t1a1s-0lla-na1n-123' is hardcoded and static. Anyone with access to requirements or source can authenticate."
+    },
+    {
+      "test_id": "WB-002",
+      "endpoint": "create_task",
+      "method": "GET",
+      "verdict": "POST /tasks returns 200 instead of 201",
+      "resoning": "The create_task endpoint has status_code=200 but requirements specify that creating a task must return HTTP 201 Created."
+    },
+    {
+      "test_id": "WB-003",
+      "endpoint": "get_task",
+      "method": "GET",
+      "verdict": "GET non-existent task returns 200 with fake data instead of 404",
+      "resoning": "When a task is not found, the endpoint returns a fake empty TaskResponse with status 200. Requirements state it must return 404."
+    },
+    {
+      "test_id": "WB-004",
+      "endpoint": "delete_task",
+      "method": "GET",
+      "verdict": "DELETE /tasks returns 200 instead of 204",
+      "resoning": "The delete_task endpoint has status_code=200 and returns a response body. Requirements specify 204 No Content on successful deletion."
+    },
+    {
+      "test_id": "WB-005",
+      "endpoint": "update_task",
+      "method": "GET",
+      "verdict": "Incorrect HTTP status code label in error message",
+      "resoning": "The error detail says 'Tasks was not found' with incorrect pluralization. Minor but inconsistent with delete_task which says 'Task was not found'."
+    },
+    {
+      "test_id": "WB-006",
+      "endpoint": "get_tasks",
+      "method": "GET",
+      "verdict": "get_tasks returns all tasks without pagination or user scoping",
+      "resoning": "All tasks are returned with no limit or pagination. For large datasets this can cause memory and performance issues."
+    },
+    {
+      "test_id": "WB-007",
+      "endpoint": "create_task",
+      "method": "GET",
+      "verdict": "Missing database rollback on exception in create_task",
+      "resoning": "If db.commit() or db.refresh() raises an exception, the session is left in a dirty state with no rollback, risking data inconsistency."
+    },
+    {
+      "test_id": "WB-008",
+      "endpoint": "update_task",
+      "method": "GET",
+      "verdict": "Missing database rollback on exception in update_task",
+      "resoning": "If db.commit() or db.refresh() raises an exception during update, the session is left dirty with no rollback handler."
+    },
+    {
+      "test_id": "WB-009",
+      "endpoint": "delete_task",
+      "method": "GET",
+      "verdict": "delete_task manually constructs TaskResponse before deletion unnecessarily",
+      "resoning": "The response body is manually built from task attributes before deletion, which is redundant given the endpoint should return 204 No Content."
+    },
+    {
+      "test_id": "WB-010",
+      "endpoint": "get_task, update_task, delete_task",
+      "method": "GET",
+      "verdict": "No input validation on task_id path parameter range",
+      "resoning": "Negative or zero task_id values are accepted and passed to the database query without validation, causing unnecessary DB lookups."
+    }
+  ]
+}

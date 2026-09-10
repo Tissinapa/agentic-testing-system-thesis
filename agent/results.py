@@ -41,13 +41,15 @@ def export_results(state: AgentState, target: str) -> dict:
             }
             for r in state["results"]
         ],
-        "evaluations":[
+        "evaluations": [
             {
                 "test_id": e.test_case.id,
-                "endpoint":e.test_case.endpoint,
+                "endpoint": e.test_case.endpoint,
                 "bug_detected": e.bug_detected,
                 "verdict": e.verdict,
-                "resoning": e.reasoning,
+                "reasoning": e.reasoning,
+                "severity": e.severity,
+                "recommendation": e.recommendation,
             }
             for e in state["evaluations"]
         ],

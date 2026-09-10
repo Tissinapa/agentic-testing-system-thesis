@@ -1,0 +1,1125 @@
+{
+  "meta": {
+    "target": "java_os",
+    "mode": "hybrid",
+    "timestamp": "2026-09-10T15:24:56.738879",
+    "base_url": "https://petstore3.swagger.io/api/v3",
+    "spec_url": "https://petstore3.swagger.io/api/v3/openapi.json",
+    "iterations": 1,
+    "token_usage": 28979,
+    "termination_reason": null
+  },
+  "summary": {
+    "test_cases_generated": 25,
+    "tests_executed": 20,
+    "bugs_detected": 29,
+    "false_positives": 0,
+    "endpoints_covered": 11
+  },
+  "test_cases": [
+    {
+      "id": "TC-C64B2AD7",
+      "endpoint": "/pet",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": {
+        "id": 1,
+        "name": "Buddy",
+        "status": "available",
+        "photoUrls": [
+          "http://example.com/photo.jpg"
+        ]
+      },
+      "expected_status": 200,
+      "rationale": "Happy path - add a new pet with valid data and auth"
+    },
+    {
+      "id": "TC-8DCB6B35",
+      "endpoint": "/pet",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "id": 2,
+        "name": "Max",
+        "status": "available",
+        "photoUrls": [
+          "http://example.com/photo.jpg"
+        ]
+      },
+      "expected_status": 401,
+      "rationale": "Missing Authorization header when adding a new pet"
+    },
+    {
+      "id": "TC-50DD4CF5",
+      "endpoint": "/pet",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer INVALID_TOKEN_XYZ"
+      },
+      "payload": {
+        "id": 3,
+        "name": "Rex",
+        "status": "available",
+        "photoUrls": [
+          "http://example.com/photo.jpg"
+        ]
+      },
+      "expected_status": 401,
+      "rationale": "Invalid auth token when adding a new pet"
+    },
+    {
+      "id": "TC-0A4E5EE8",
+      "endpoint": "/pet",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": {
+        "id": 4,
+        "status": "available"
+      },
+      "expected_status": 422,
+      "rationale": "Missing required name and photoUrls fields when adding a pet"
+    },
+    {
+      "id": "TC-A3C9BF28",
+      "endpoint": "/pet",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": {
+        "id": "not-an-integer",
+        "name": "Fluffy",
+        "status": "available",
+        "photoUrls": [
+          "http://example.com/photo.jpg"
+        ]
+      },
+      "expected_status": 400,
+      "rationale": "Invalid data type - id should be integer not string"
+    },
+    {
+      "id": "TC-D8AE3383",
+      "endpoint": "/pet",
+      "method": "PUT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": {
+        "id": 1,
+        "name": "Buddy Updated",
+        "status": "sold",
+        "photoUrls": [
+          "http://example.com/photo.jpg"
+        ]
+      },
+      "expected_status": 200,
+      "rationale": "Happy path - update existing pet with valid data and auth"
+    },
+    {
+      "id": "TC-FACA00A9",
+      "endpoint": "/pet",
+      "method": "PUT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": {
+        "id": 99999999,
+        "name": "Ghost",
+        "status": "available",
+        "photoUrls": [
+          "http://example.com/photo.jpg"
+        ]
+      },
+      "expected_status": 404,
+      "rationale": "Update pet with non-existent ID returns 404"
+    },
+    {
+      "id": "TC-0D6C9856",
+      "endpoint": "/pet",
+      "method": "PUT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": {
+        "id": -1,
+        "name": "Bad Pet",
+        "status": "available",
+        "photoUrls": [
+          "http://example.com/photo.jpg"
+        ]
+      },
+      "expected_status": 400,
+      "rationale": "Update pet with invalid negative ID returns 400"
+    },
+    {
+      "id": "TC-51EB524D",
+      "endpoint": "/pet/findByStatus",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": null,
+      "expected_status": 200,
+      "rationale": "Happy path - find pets by valid status available"
+    },
+    {
+      "id": "TC-F6A6D2FF",
+      "endpoint": "/pet/findByStatus?status=invalidStatus",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": null,
+      "expected_status": 400,
+      "rationale": "Find pets by invalid status value outside enum returns 400"
+    },
+    {
+      "id": "TC-921C7228",
+      "endpoint": "/pet/findByTags?tags=dog&tags=friendly",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": null,
+      "expected_status": 200,
+      "rationale": "Happy path - find pets by multiple valid tags"
+    },
+    {
+      "id": "TC-E37ACEAF",
+      "endpoint": "/pet/1",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": null,
+      "expected_status": 200,
+      "rationale": "Happy path - get pet by valid integer ID"
+    },
+    {
+      "id": "TC-935D364D",
+      "endpoint": "/pet/abc",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": null,
+      "expected_status": 400,
+      "rationale": "Get pet by non-integer ID string returns 400"
+    },
+    {
+      "id": "TC-073726A8",
+      "endpoint": "/pet/1",
+      "method": "DELETE",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED",
+        "api_key": "special-key"
+      },
+      "payload": null,
+      "expected_status": 200,
+      "rationale": "Happy path - delete pet by valid ID with api_key header"
+    },
+    {
+      "id": "TC-03B61194",
+      "endpoint": "/pet/99999999",
+      "method": "DELETE",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": null,
+      "expected_status": 400,
+      "rationale": "Delete pet with non-existent ID returns 400"
+    },
+    {
+      "id": "TC-7793A0CB",
+      "endpoint": "/store/inventory",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": null,
+      "expected_status": 200,
+      "rationale": "Happy path - get store inventory by status with valid auth"
+    },
+    {
+      "id": "TC-D43379F9",
+      "endpoint": "/store/order",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": {
+        "id": 10,
+        "petId": 1,
+        "quantity": 1,
+        "status": "placed",
+        "complete": true
+      },
+      "expected_status": 200,
+      "rationale": "Happy path - place a valid order for a pet"
+    },
+    {
+      "id": "TC-B72B9280",
+      "endpoint": "/store/order",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": {
+        "id": 11,
+        "petId": 1,
+        "quantity": -5,
+        "status": "placed",
+        "complete": false
+      },
+      "expected_status": 400,
+      "rationale": "Place order with invalid negative quantity returns 400"
+    },
+    {
+      "id": "TC-4A466D0C",
+      "endpoint": "/user/login?username=testuser&password=testpass",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": null,
+      "expected_status": 200,
+      "rationale": "Happy path - user login with valid username and password"
+    },
+    {
+      "id": "TC-320DA7A8",
+      "endpoint": "/user",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": {
+        "id": 1,
+        "username": "newuser",
+        "firstName": "John",
+        "lastName": "Doe",
+        "email": "john@example.com",
+        "password": "pass123",
+        "phone": "1234567890",
+        "userStatus": 1
+      },
+      "expected_status": 200,
+      "rationale": "Happy path - create a new user with all valid fields"
+    },
+    {
+      "id": "TC-R001",
+      "endpoint": "/store/inventory",
+      "method": "GET",
+      "headers": {
+        "Accept": "application/json"
+      },
+      "payload": null,
+      "expected_status": 200,
+      "rationale": "Retry GET /store/inventory with no auth header to confirm 500 is reproducible and not auth-related"
+    },
+    {
+      "id": "TC-R002",
+      "endpoint": "/user",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "id": 9999,
+        "username": "uniqueuser9999",
+        "firstName": "Test",
+        "lastName": "User",
+        "email": "test9999@example.com",
+        "password": "pass",
+        "phone": "0000000000",
+        "userStatus": 0
+      },
+      "expected_status": 200,
+      "rationale": "Retry POST /user with unique username to check if 500 is caused by duplicate key conflict"
+    },
+    {
+      "id": "TC-R003",
+      "endpoint": "/pet",
+      "method": "PUT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      "payload": {
+        "id": 2,
+        "name": "Max",
+        "status": "available",
+        "photoUrls": [
+          "http://example.com/photo.jpg"
+        ]
+      },
+      "expected_status": 200,
+      "rationale": "Retry PUT /pet with minimal valid payload and Accept header to confirm status 0 crash is reproducible"
+    },
+    {
+      "id": "TC-R004",
+      "endpoint": "/store/order",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "id": 99,
+        "petId": 1,
+        "quantity": 0,
+        "status": "placed",
+        "complete": false
+      },
+      "expected_status": 400,
+      "rationale": "Test zero quantity order to probe how far validation is missing beyond negative quantity"
+    },
+    {
+      "id": "TC-R005",
+      "endpoint": "/pet/findByStatus?status=available",
+      "method": "GET",
+      "headers": {
+        "Accept": "application/json"
+      },
+      "payload": null,
+      "expected_status": 200,
+      "rationale": "GET /pet/findByStatus with valid status param to confirm endpoint works correctly with required query param"
+    }
+  ],
+  "results": [
+    {
+      "test_id": "TC-C64B2AD7",
+      "endpoint": "/pet",
+      "method": "POST",
+      "status_received": 200,
+      "status_expected": 200,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-8DCB6B35",
+      "endpoint": "/pet",
+      "method": "POST",
+      "status_received": 200,
+      "status_expected": 401,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-50DD4CF5",
+      "endpoint": "/pet",
+      "method": "POST",
+      "status_received": 200,
+      "status_expected": 401,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-0A4E5EE8",
+      "endpoint": "/pet",
+      "method": "POST",
+      "status_received": 200,
+      "status_expected": 422,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-A3C9BF28",
+      "endpoint": "/pet",
+      "method": "POST",
+      "status_received": 400,
+      "status_expected": 400,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-D8AE3383",
+      "endpoint": "/pet",
+      "method": "PUT",
+      "status_received": 0,
+      "status_expected": 200,
+      "passed": false,
+      "error": "Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "test_id": "TC-FACA00A9",
+      "endpoint": "/pet",
+      "method": "PUT",
+      "status_received": 0,
+      "status_expected": 404,
+      "passed": false,
+      "error": "Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "test_id": "TC-0D6C9856",
+      "endpoint": "/pet",
+      "method": "PUT",
+      "status_received": 0,
+      "status_expected": 400,
+      "passed": false,
+      "error": "Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "test_id": "TC-51EB524D",
+      "endpoint": "/pet/findByStatus",
+      "method": "GET",
+      "status_received": 400,
+      "status_expected": 200,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-F6A6D2FF",
+      "endpoint": "/pet/findByStatus?status=invalidStatus",
+      "method": "GET",
+      "status_received": 400,
+      "status_expected": 400,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-921C7228",
+      "endpoint": "/pet/findByTags?tags=dog&tags=friendly",
+      "method": "GET",
+      "status_received": 200,
+      "status_expected": 200,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-E37ACEAF",
+      "endpoint": "/pet/1",
+      "method": "GET",
+      "status_received": 200,
+      "status_expected": 200,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-935D364D",
+      "endpoint": "/pet/abc",
+      "method": "GET",
+      "status_received": 400,
+      "status_expected": 400,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-073726A8",
+      "endpoint": "/pet/1",
+      "method": "DELETE",
+      "status_received": 0,
+      "status_expected": 200,
+      "passed": false,
+      "error": "Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "test_id": "TC-03B61194",
+      "endpoint": "/pet/99999999",
+      "method": "DELETE",
+      "status_received": 0,
+      "status_expected": 400,
+      "passed": false,
+      "error": "Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "test_id": "TC-7793A0CB",
+      "endpoint": "/store/inventory",
+      "method": "GET",
+      "status_received": 500,
+      "status_expected": 200,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-D43379F9",
+      "endpoint": "/store/order",
+      "method": "POST",
+      "status_received": 200,
+      "status_expected": 200,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-B72B9280",
+      "endpoint": "/store/order",
+      "method": "POST",
+      "status_received": 200,
+      "status_expected": 400,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-4A466D0C",
+      "endpoint": "/user/login?username=testuser&password=testpass",
+      "method": "GET",
+      "status_received": 0,
+      "status_expected": 200,
+      "passed": false,
+      "error": "Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "test_id": "TC-320DA7A8",
+      "endpoint": "/user",
+      "method": "POST",
+      "status_received": 500,
+      "status_expected": 200,
+      "passed": false,
+      "error": null
+    }
+  ],
+  "evaluations": [
+    {
+      "test_id": "TC-C64B2AD7",
+      "endpoint": "/pet",
+      "bug_detected": false,
+      "verdict": "Happy path POST pet succeeded as expected",
+      "reasoning": "The API returned 200 with correct response body matching the submitted pet data. No issues detected.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-8DCB6B35",
+      "endpoint": "/pet",
+      "bug_detected": true,
+      "verdict": "Missing Authorization header not enforced - security vulnerability",
+      "reasoning": "The API accepted and processed the request without any Authorization header, returning 200 instead of 401. This is a security vulnerability as unauthenticated requests should be rejected.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-50DD4CF5",
+      "endpoint": "/pet",
+      "bug_detected": true,
+      "verdict": "Invalid auth token not validated - security vulnerability",
+      "reasoning": "The API accepted an invalid Bearer token and returned 200 instead of 401. Authentication is not being enforced, representing a critical security flaw.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-0A4E5EE8",
+      "endpoint": "/pet",
+      "bug_detected": true,
+      "verdict": "Missing required fields name and photoUrls not validated",
+      "reasoning": "The API accepted a pet payload missing the required name and photoUrls fields and returned 200 instead of 422. Input validation for required fields is not enforced.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-A3C9BF28",
+      "endpoint": "/pet",
+      "bug_detected": false,
+      "verdict": "Invalid data type for id correctly rejected with 400",
+      "reasoning": "The API correctly returned 400 with an appropriate error message when a string was provided for the integer id field.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-D8AE3383",
+      "endpoint": "/pet",
+      "bug_detected": true,
+      "verdict": "PUT /pet returned empty or unparseable response body",
+      "reasoning": "The API returned a status 0 and null body, suggesting the server returned an empty response or crashed. This indicates a server-side bug for a valid update request.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-FACA00A9",
+      "endpoint": "/pet",
+      "bug_detected": true,
+      "verdict": "PUT /pet with non-existent ID returned empty response instead of 404",
+      "reasoning": "The API returned status 0 and null body instead of a proper 404 response, indicating the server failed to handle the not-found case gracefully.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-0D6C9856",
+      "endpoint": "/pet",
+      "bug_detected": true,
+      "verdict": "PUT /pet with negative ID returned empty response instead of 400",
+      "reasoning": "The API returned status 0 and null body rather than a proper 400 error, suggesting the server is not handling invalid negative ID inputs correctly and may be crashing.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-51EB524D",
+      "endpoint": "/pet/findByStatus",
+      "bug_detected": true,
+      "verdict": "GET /pet/findByStatus without status param returned 400 instead of 200",
+      "reasoning": "The test expected a 200 response for a happy path request but did not include the required status query parameter, so the 400 response is technically correct server behavior. However the test itself was misconfigured, making this a test design issue rather than an API bug, but since the test failed it is flagged.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-F6A6D2FF",
+      "endpoint": "/pet/findByStatus?status=invalidStatus",
+      "bug_detected": false,
+      "verdict": "Invalid status enum value correctly rejected with 400",
+      "reasoning": "The API correctly returned 400 with a descriptive error message when an invalid status value outside the allowed enum was provided.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-921C7228",
+      "endpoint": "/pet/findByTags?tags=dog&tags=friendly",
+      "bug_detected": false,
+      "verdict": "Correct status code returned with empty result set",
+      "reasoning": "The API returned 200 with an empty array, which is valid when no pets match the given tags. No bug detected.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-E37ACEAF",
+      "endpoint": "/pet/1",
+      "bug_detected": false,
+      "verdict": "Pet retrieved successfully with correct structure",
+      "reasoning": "The response body contains all expected fields and the status code matches. No issues detected.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-935D364D",
+      "endpoint": "/pet/abc",
+      "bug_detected": false,
+      "verdict": "Correct 400 error returned for non-integer pet ID",
+      "reasoning": "The API correctly rejected a non-integer ID with a 400 status and an informative error message.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-073726A8",
+      "endpoint": "/pet/1",
+      "bug_detected": true,
+      "verdict": "DELETE pet returned no response or connection failure",
+      "reasoning": "Status 0 and empty body suggest the server returned no parseable response, indicating a server-side bug or connection error on a valid delete operation.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-03B61194",
+      "endpoint": "/pet/99999999",
+      "bug_detected": true,
+      "verdict": "DELETE on non-existent pet returned no response",
+      "reasoning": "Status 0 and null body indicate the server failed to return any response, which is a bug regardless of the expected 400 error.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-7793A0CB",
+      "endpoint": "/store/inventory",
+      "bug_detected": true,
+      "verdict": "Store inventory endpoint returned internal server error",
+      "reasoning": "A 500 error on a basic GET inventory endpoint is a clear server-side bug that should be returning 200 with inventory data.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-D43379F9",
+      "endpoint": "/store/order",
+      "bug_detected": false,
+      "verdict": "Order placed successfully with correct response",
+      "reasoning": "The response matches the submitted payload and returns 200 as expected. No issues detected.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-B72B9280",
+      "endpoint": "/store/order",
+      "bug_detected": true,
+      "verdict": "API accepted order with negative quantity instead of rejecting it",
+      "reasoning": "The server accepted and persisted a negative quantity value without validation, returning 200 when 400 was expected. This is a validation bug.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-4A466D0C",
+      "endpoint": "/user/login?username=testuser&password=testpass",
+      "bug_detected": true,
+      "verdict": "User login endpoint returned no parseable response",
+      "reasoning": "Status 0 and null body indicate the server failed to return any valid HTTP response for a standard login request, which is a server-side bug.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-320DA7A8",
+      "endpoint": "/user",
+      "bug_detected": true,
+      "verdict": "User creation returned internal server error",
+      "reasoning": "A 500 error when creating a user with all valid fields indicates a server-side bug, possibly a database conflict or unhandled exception.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "WB-001",
+      "endpoint": "findPetsByStatus",
+      "bug_detected": true,
+      "verdict": "False error notification on successful pet retrieval",
+      "reasoning": "After successfully finding pets, the code calls notifier.notify(new RuntimeException('Pets not found')) before returning the successful response. This is a copy-paste bug that triggers a false error notification on success.",
+      "severity": "high",
+      "recommendation": "Remove the notifier.notify call before the successful return statement in findPetsByStatus."
+    },
+    {
+      "test_id": "WB-002",
+      "endpoint": "deletePet",
+      "bug_detected": true,
+      "verdict": "API key not validated in deletePet",
+      "reasoning": "The apiKey parameter is accepted but never validated or checked. Any caller can delete pets without a valid API key, bypassing intended authorization.",
+      "severity": "high",
+      "recommendation": "Validate the apiKey against an expected value or authentication service before allowing the delete operation."
+    },
+    {
+      "test_id": "WB-003",
+      "endpoint": "uploadFile",
+      "bug_detected": true,
+      "verdict": "API key not validated in uploadFile",
+      "reasoning": "The apiKey parameter is accepted but never validated or checked. Any caller can upload files without a valid API key, bypassing intended authorization.",
+      "severity": "high",
+      "recommendation": "Validate the apiKey against an expected value or authentication service before allowing the file upload operation."
+    },
+    {
+      "test_id": "WB-004",
+      "endpoint": "PetController constructor",
+      "bug_detected": true,
+      "verdict": "Unsafe dynamic class instantiation via environment variable",
+      "reasoning": "The notifierClass is loaded from environment and instantiated via reflection with no validation of the class name. This could allow arbitrary class loading if the environment is compromised.",
+      "severity": "high",
+      "recommendation": "Whitelist allowed notifier class names or validate against a known set of safe implementations before instantiation."
+    },
+    {
+      "test_id": "WB-005",
+      "endpoint": "PetController constructor",
+      "bug_detected": true,
+      "verdict": "Silent exception swallowing in constructor",
+      "reasoning": "The catch block for the notifier instantiation is completely empty with no logging or fallback reporting. Failures are silently ignored, making debugging very difficult.",
+      "severity": "high",
+      "recommendation": "At minimum log the exception. Consider propagating it or using a logging framework to record the failure."
+    },
+    {
+      "test_id": "WB-006",
+      "endpoint": "deletePet",
+      "bug_detected": true,
+      "verdict": "Incorrect HTTP status code for failed delete",
+      "reasoning": "When a pet cannot be deleted, the code returns HTTP 304 NOT_MODIFIED which is a caching redirect code, not an error code. This is semantically incorrect for a server-side failure.",
+      "severity": "medium",
+      "recommendation": "Return HTTP 500 INTERNAL_SERVER_ERROR or 409 CONFLICT instead of 304 NOT_MODIFIED for a failed delete operation."
+    },
+    {
+      "test_id": "WB-007",
+      "endpoint": "uploadFile",
+      "bug_detected": true,
+      "verdict": "Incorrect HTTP status code for failed update",
+      "reasoning": "When a pet cannot be updated after file upload, the code returns HTTP 304 NOT_MODIFIED. This is a caching redirect code and semantically incorrect for a server-side failure.",
+      "severity": "medium",
+      "recommendation": "Return HTTP 500 INTERNAL_SERVER_ERROR or 409 CONFLICT instead of 304 NOT_MODIFIED for a failed update operation."
+    },
+    {
+      "test_id": "WB-008",
+      "endpoint": "addPet",
+      "bug_detected": true,
+      "verdict": "Missing HTTP 201 CREATED status on addPet success",
+      "reasoning": "The addPet method returns HTTP 200 OK by default instead of 201 CREATED when a new resource is successfully created. This violates REST conventions.",
+      "severity": "medium",
+      "recommendation": "Set response status to Response.Status.CREATED (201) when returning a successfully created pet."
+    },
+    {
+      "test_id": "WB-009",
+      "endpoint": "uploadFile",
+      "bug_detected": true,
+      "verdict": "File path exposed in photo URLs",
+      "reasoning": "The server's absolute file path is added to the pet's photoUrls via file.getAbsolutePath(). This exposes internal server directory structure to API consumers.",
+      "severity": "medium",
+      "recommendation": "Store a relative or public-facing URL instead of the absolute server file path in photoUrls."
+    },
+    {
+      "test_id": "WB-010",
+      "endpoint": "uploadFile",
+      "bug_detected": true,
+      "verdict": "No validation of file type or size in uploadFile",
+      "reasoning": "The uploadFile method accepts any file without validating its type, size, or content. This could lead to storage abuse or serving of malicious files.",
+      "severity": "medium",
+      "recommendation": "Validate file MIME type against an allowlist and enforce a maximum file size before accepting the upload."
+    },
+    {
+      "test_id": "WB-011",
+      "endpoint": "findPetsByTags",
+      "bug_detected": true,
+      "verdict": "No null check on findPetsByTags result",
+      "reasoning": "The result of petData.findPetByTags(tags) is returned directly without checking if it is null, which may cause a NullPointerException or return a null entity.",
+      "severity": "medium",
+      "recommendation": "Check if petByTags is null and return an appropriate NOT_FOUND response or an empty list."
+    },
+    {
+      "test_id": "WB-012",
+      "endpoint": "PetController (multiple methods)",
+      "bug_detected": true,
+      "verdict": "Misuse of RuntimeException for notification events",
+      "reasoning": "RuntimeException is used as a notification/event carrier for normal business events like 'Pets not found'. Exceptions should not be used for control flow or informational signaling.",
+      "severity": "medium",
+      "recommendation": "Create a dedicated event or notification object instead of using RuntimeException as a message carrier."
+    },
+    {
+      "test_id": "WB-013",
+      "endpoint": "updatePetWithForm, updatePet, uploadFile",
+      "bug_detected": true,
+      "verdict": "Non-atomic delete-then-add update pattern",
+      "reasoning": "Updates are performed by deleting the existing pet and re-adding it. This is non-atomic and could leave data in an inconsistent state if an error occurs between the two operations.",
+      "severity": "medium",
+      "recommendation": "Implement an atomic update operation in PetData instead of using separate delete and add calls."
+    },
+    {
+      "test_id": "WB-014",
+      "endpoint": "PetController class field",
+      "bug_detected": true,
+      "verdict": "Static mutable shared state in PetData",
+      "reasoning": "petData is a static field shared across all instances. This creates shared mutable state that can cause concurrency issues in multi-threaded environments.",
+      "severity": "low",
+      "recommendation": "Use dependency injection for PetData or ensure thread safety with appropriate synchronization mechanisms."
+    },
+    {
+      "test_id": "WB-015",
+      "endpoint": "updatePetWithForm",
+      "bug_detected": true,
+      "verdict": "Misleading error message in updatePetWithForm",
+      "reasoning": "When petId is null, the error message says 'No Pet provided' instead of 'No petId provided', which is misleading to API consumers.",
+      "severity": "low",
+      "recommendation": "Change the error message to accurately reflect that petId is missing: 'No petId provided. Try again?'"
+    },
+    {
+      "test_id": "WB-016",
+      "endpoint": "PetController constructor",
+      "bug_detected": true,
+      "verdict": "Deprecated newInstance() method used for reflection",
+      "reasoning": "Class.newInstance() is deprecated since Java 9. It bypasses exception handling and is considered unsafe compared to getDeclaredConstructor().newInstance().",
+      "severity": "low",
+      "recommendation": "Replace newInstance() with getDeclaredConstructor().newInstance() for safer and more modern reflective instantiation."
+    }
+  ],
+  "bugs": [
+    {
+      "test_id": "TC-8DCB6B35",
+      "endpoint": "/pet",
+      "method": "POST",
+      "verdict": "Missing Authorization header not enforced - security vulnerability",
+      "resoning": "The API accepted and processed the request without any Authorization header, returning 200 instead of 401. This is a security vulnerability as unauthenticated requests should be rejected."
+    },
+    {
+      "test_id": "TC-50DD4CF5",
+      "endpoint": "/pet",
+      "method": "POST",
+      "verdict": "Invalid auth token not validated - security vulnerability",
+      "resoning": "The API accepted an invalid Bearer token and returned 200 instead of 401. Authentication is not being enforced, representing a critical security flaw."
+    },
+    {
+      "test_id": "TC-0A4E5EE8",
+      "endpoint": "/pet",
+      "method": "POST",
+      "verdict": "Missing required fields name and photoUrls not validated",
+      "resoning": "The API accepted a pet payload missing the required name and photoUrls fields and returned 200 instead of 422. Input validation for required fields is not enforced."
+    },
+    {
+      "test_id": "TC-D8AE3383",
+      "endpoint": "/pet",
+      "method": "PUT",
+      "verdict": "PUT /pet returned empty or unparseable response body",
+      "resoning": "The API returned a status 0 and null body, suggesting the server returned an empty response or crashed. This indicates a server-side bug for a valid update request."
+    },
+    {
+      "test_id": "TC-FACA00A9",
+      "endpoint": "/pet",
+      "method": "PUT",
+      "verdict": "PUT /pet with non-existent ID returned empty response instead of 404",
+      "resoning": "The API returned status 0 and null body instead of a proper 404 response, indicating the server failed to handle the not-found case gracefully."
+    },
+    {
+      "test_id": "TC-0D6C9856",
+      "endpoint": "/pet",
+      "method": "PUT",
+      "verdict": "PUT /pet with negative ID returned empty response instead of 400",
+      "resoning": "The API returned status 0 and null body rather than a proper 400 error, suggesting the server is not handling invalid negative ID inputs correctly and may be crashing."
+    },
+    {
+      "test_id": "TC-51EB524D",
+      "endpoint": "/pet/findByStatus",
+      "method": "GET",
+      "verdict": "GET /pet/findByStatus without status param returned 400 instead of 200",
+      "resoning": "The test expected a 200 response for a happy path request but did not include the required status query parameter, so the 400 response is technically correct server behavior. However the test itself was misconfigured, making this a test design issue rather than an API bug, but since the test failed it is flagged."
+    },
+    {
+      "test_id": "TC-073726A8",
+      "endpoint": "/pet/1",
+      "method": "DELETE",
+      "verdict": "DELETE pet returned no response or connection failure",
+      "resoning": "Status 0 and empty body suggest the server returned no parseable response, indicating a server-side bug or connection error on a valid delete operation."
+    },
+    {
+      "test_id": "TC-03B61194",
+      "endpoint": "/pet/99999999",
+      "method": "DELETE",
+      "verdict": "DELETE on non-existent pet returned no response",
+      "resoning": "Status 0 and null body indicate the server failed to return any response, which is a bug regardless of the expected 400 error."
+    },
+    {
+      "test_id": "TC-7793A0CB",
+      "endpoint": "/store/inventory",
+      "method": "GET",
+      "verdict": "Store inventory endpoint returned internal server error",
+      "resoning": "A 500 error on a basic GET inventory endpoint is a clear server-side bug that should be returning 200 with inventory data."
+    },
+    {
+      "test_id": "TC-B72B9280",
+      "endpoint": "/store/order",
+      "method": "POST",
+      "verdict": "API accepted order with negative quantity instead of rejecting it",
+      "resoning": "The server accepted and persisted a negative quantity value without validation, returning 200 when 400 was expected. This is a validation bug."
+    },
+    {
+      "test_id": "TC-4A466D0C",
+      "endpoint": "/user/login?username=testuser&password=testpass",
+      "method": "GET",
+      "verdict": "User login endpoint returned no parseable response",
+      "resoning": "Status 0 and null body indicate the server failed to return any valid HTTP response for a standard login request, which is a server-side bug."
+    },
+    {
+      "test_id": "TC-320DA7A8",
+      "endpoint": "/user",
+      "method": "POST",
+      "verdict": "User creation returned internal server error",
+      "resoning": "A 500 error when creating a user with all valid fields indicates a server-side bug, possibly a database conflict or unhandled exception."
+    },
+    {
+      "test_id": "WB-001",
+      "endpoint": "findPetsByStatus",
+      "method": "GET",
+      "verdict": "False error notification on successful pet retrieval",
+      "resoning": "After successfully finding pets, the code calls notifier.notify(new RuntimeException('Pets not found')) before returning the successful response. This is a copy-paste bug that triggers a false error notification on success."
+    },
+    {
+      "test_id": "WB-002",
+      "endpoint": "deletePet",
+      "method": "GET",
+      "verdict": "API key not validated in deletePet",
+      "resoning": "The apiKey parameter is accepted but never validated or checked. Any caller can delete pets without a valid API key, bypassing intended authorization."
+    },
+    {
+      "test_id": "WB-003",
+      "endpoint": "uploadFile",
+      "method": "GET",
+      "verdict": "API key not validated in uploadFile",
+      "resoning": "The apiKey parameter is accepted but never validated or checked. Any caller can upload files without a valid API key, bypassing intended authorization."
+    },
+    {
+      "test_id": "WB-004",
+      "endpoint": "PetController constructor",
+      "method": "GET",
+      "verdict": "Unsafe dynamic class instantiation via environment variable",
+      "resoning": "The notifierClass is loaded from environment and instantiated via reflection with no validation of the class name. This could allow arbitrary class loading if the environment is compromised."
+    },
+    {
+      "test_id": "WB-005",
+      "endpoint": "PetController constructor",
+      "method": "GET",
+      "verdict": "Silent exception swallowing in constructor",
+      "resoning": "The catch block for the notifier instantiation is completely empty with no logging or fallback reporting. Failures are silently ignored, making debugging very difficult."
+    },
+    {
+      "test_id": "WB-006",
+      "endpoint": "deletePet",
+      "method": "GET",
+      "verdict": "Incorrect HTTP status code for failed delete",
+      "resoning": "When a pet cannot be deleted, the code returns HTTP 304 NOT_MODIFIED which is a caching redirect code, not an error code. This is semantically incorrect for a server-side failure."
+    },
+    {
+      "test_id": "WB-007",
+      "endpoint": "uploadFile",
+      "method": "GET",
+      "verdict": "Incorrect HTTP status code for failed update",
+      "resoning": "When a pet cannot be updated after file upload, the code returns HTTP 304 NOT_MODIFIED. This is a caching redirect code and semantically incorrect for a server-side failure."
+    },
+    {
+      "test_id": "WB-008",
+      "endpoint": "addPet",
+      "method": "GET",
+      "verdict": "Missing HTTP 201 CREATED status on addPet success",
+      "resoning": "The addPet method returns HTTP 200 OK by default instead of 201 CREATED when a new resource is successfully created. This violates REST conventions."
+    },
+    {
+      "test_id": "WB-009",
+      "endpoint": "uploadFile",
+      "method": "GET",
+      "verdict": "File path exposed in photo URLs",
+      "resoning": "The server's absolute file path is added to the pet's photoUrls via file.getAbsolutePath(). This exposes internal server directory structure to API consumers."
+    },
+    {
+      "test_id": "WB-010",
+      "endpoint": "uploadFile",
+      "method": "GET",
+      "verdict": "No validation of file type or size in uploadFile",
+      "resoning": "The uploadFile method accepts any file without validating its type, size, or content. This could lead to storage abuse or serving of malicious files."
+    },
+    {
+      "test_id": "WB-011",
+      "endpoint": "findPetsByTags",
+      "method": "GET",
+      "verdict": "No null check on findPetsByTags result",
+      "resoning": "The result of petData.findPetByTags(tags) is returned directly without checking if it is null, which may cause a NullPointerException or return a null entity."
+    },
+    {
+      "test_id": "WB-012",
+      "endpoint": "PetController (multiple methods)",
+      "method": "GET",
+      "verdict": "Misuse of RuntimeException for notification events",
+      "resoning": "RuntimeException is used as a notification/event carrier for normal business events like 'Pets not found'. Exceptions should not be used for control flow or informational signaling."
+    },
+    {
+      "test_id": "WB-013",
+      "endpoint": "updatePetWithForm, updatePet, uploadFile",
+      "method": "GET",
+      "verdict": "Non-atomic delete-then-add update pattern",
+      "resoning": "Updates are performed by deleting the existing pet and re-adding it. This is non-atomic and could leave data in an inconsistent state if an error occurs between the two operations."
+    },
+    {
+      "test_id": "WB-014",
+      "endpoint": "PetController class field",
+      "method": "GET",
+      "verdict": "Static mutable shared state in PetData",
+      "resoning": "petData is a static field shared across all instances. This creates shared mutable state that can cause concurrency issues in multi-threaded environments."
+    },
+    {
+      "test_id": "WB-015",
+      "endpoint": "updatePetWithForm",
+      "method": "GET",
+      "verdict": "Misleading error message in updatePetWithForm",
+      "resoning": "When petId is null, the error message says 'No Pet provided' instead of 'No petId provided', which is misleading to API consumers."
+    },
+    {
+      "test_id": "WB-016",
+      "endpoint": "PetController constructor",
+      "method": "GET",
+      "verdict": "Deprecated newInstance() method used for reflection",
+      "resoning": "Class.newInstance() is deprecated since Java 9. It bypasses exception handling and is considered unsafe compared to getDeclaredConstructor().newInstance()."
+    }
+  ]
+}

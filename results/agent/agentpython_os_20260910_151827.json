@@ -1,0 +1,185 @@
+{
+  "meta": {
+    "target": "python_os",
+    "mode": "white",
+    "timestamp": "2026-09-10T15:18:27.599974",
+    "base_url": "http://localhost",
+    "spec_url": "http://localhost/api/v1/openapi.json",
+    "iterations": 1,
+    "token_usage": 3953,
+    "termination_reason": null
+  },
+  "summary": {
+    "test_cases_generated": 0,
+    "tests_executed": 0,
+    "bugs_detected": 10,
+    "false_positives": 0,
+    "endpoints_covered": 0
+  },
+  "test_cases": [],
+  "results": [],
+  "evaluations": [
+    {
+      "test_id": "WB-001",
+      "endpoint": "create_user",
+      "bug_detected": true,
+      "verdict": "Plaintext password sent in welcome email",
+      "reasoning": "The user's plaintext password is passed to generate_new_account_email and potentially included in email content. Sending plaintext passwords via email is a critical security risk.",
+      "severity": "high",
+      "recommendation": "Never include plaintext passwords in emails. Send a password reset link instead, or prompt the admin to share credentials securely."
+    },
+    {
+      "test_id": "WB-002",
+      "endpoint": "register_user",
+      "bug_detected": true,
+      "verdict": "Registration endpoint missing guard for disabled signups",
+      "reasoning": "The /signup endpoint has no check for whether open registration is enabled (e.g. settings.USERS_OPEN_REGISTRATION). Any anonymous user can create accounts regardless of configuration.",
+      "severity": "high",
+      "recommendation": "Add a check at the start of register_user: if not settings.USERS_OPEN_REGISTRATION: raise HTTPException(status_code=403, detail='Open user registration is disabled')."
+    },
+    {
+      "test_id": "WB-003",
+      "endpoint": "read_user_by_id",
+      "bug_detected": true,
+      "verdict": "Incorrect ordering of null check in read_user_by_id causes potential error",
+      "reasoning": "The function checks if user == current_user and returns before checking if user is None. If the user_id does not exist, session.get returns None and comparing None == current_user may behave unexpectedly or mask a 404.",
+      "severity": "high",
+      "recommendation": "Move the 'if user is None: raise HTTPException(404)' check to be the first check after session.get, before any comparison with current_user."
+    },
+    {
+      "test_id": "WB-004",
+      "endpoint": "read_user_by_id",
+      "bug_detected": true,
+      "verdict": "Non-superuser can retrieve any user object if IDs match via equality check",
+      "reasoning": "The equality check 'user == current_user' relies on ORM object identity/equality. If the ORM model __eq__ is not properly defined, this comparison could be unreliable and bypass privilege checks.",
+      "severity": "medium",
+      "recommendation": "Replace object equality with explicit ID comparison: if user.id == current_user.id: return user, to ensure correct and safe behavior."
+    },
+    {
+      "test_id": "WB-005",
+      "endpoint": "update_password_me",
+      "bug_detected": true,
+      "verdict": "Password verification order allows timing side-channel",
+      "reasoning": "The same-password check (current == new) is done after the verify_password call. The check compares plaintext passwords, which is acceptable, but the order means an attacker with wrong password never sees the same-password error.",
+      "severity": "medium",
+      "recommendation": "Check if current_password == new_password before calling verify_password to provide consistent responses and reduce unnecessary hashing."
+    },
+    {
+      "test_id": "WB-006",
+      "endpoint": "update_user_me, update_password_me, delete_user_me, register_user, delete_user",
+      "bug_detected": true,
+      "verdict": "Missing commit error handling across all write endpoints",
+      "reasoning": "No try/except blocks wrap session.commit() calls. A database error will result in an unhandled 500 with potentially leaked internal details rather than a graceful error response.",
+      "severity": "medium",
+      "recommendation": "Wrap session.commit() in try/except, rollback on failure, and raise an appropriate HTTPException with a safe message."
+    },
+    {
+      "test_id": "WB-007",
+      "endpoint": "create_user, register_user",
+      "bug_detected": true,
+      "verdict": "Incorrect HTTP status code for duplicate user on creation",
+      "reasoning": "A 400 Bad Request is returned when a user with the email already exists. The semantically correct code for a conflict on a resource is 409 Conflict, which is already used in update endpoints.",
+      "severity": "medium",
+      "recommendation": "Change status_code from 400 to 409 in create_user and register_user when a duplicate email is detected, for consistency and correctness."
+    },
+    {
+      "test_id": "WB-008",
+      "endpoint": "delete_user_me",
+      "bug_detected": true,
+      "verdict": "Items deleted without cascade in delete_user_me",
+      "reasoning": "delete_user_me deletes the user but does not explicitly delete or handle the user's owned items. The admin delete_user endpoint does clean up items, but the self-delete path does not.",
+      "severity": "low",
+      "recommendation": "Add a delete statement for items owned by the user before deleting the user, or rely on a database-level cascade delete constraint that is explicitly confirmed."
+    },
+    {
+      "test_id": "WB-009",
+      "endpoint": "read_users",
+      "bug_detected": true,
+      "verdict": "Pagination skip and limit not validated for negative or excessive values",
+      "reasoning": "The skip and limit parameters have no validation. Negative skip or a very large limit could cause unexpected query behavior or performance issues.",
+      "severity": "low",
+      "recommendation": "Use FastAPI query parameter validation: skip: int = Query(default=0, ge=0), limit: int = Query(default=100, ge=1, le=1000)."
+    },
+    {
+      "test_id": "WB-010",
+      "endpoint": "register_user",
+      "bug_detected": true,
+      "verdict": "Signup may be disabled by default per requirements but no guard exists",
+      "reasoning": "Requirements state 'Signup may be disabled by default'. The current implementation has no mechanism to disable the signup endpoint, contradicting this requirement.",
+      "severity": "low",
+      "recommendation": "Implement a settings.USERS_OPEN_REGISTRATION flag and check it at the start of the register_user endpoint."
+    }
+  ],
+  "bugs": [
+    {
+      "test_id": "WB-001",
+      "endpoint": "create_user",
+      "method": "GET",
+      "verdict": "Plaintext password sent in welcome email",
+      "resoning": "The user's plaintext password is passed to generate_new_account_email and potentially included in email content. Sending plaintext passwords via email is a critical security risk."
+    },
+    {
+      "test_id": "WB-002",
+      "endpoint": "register_user",
+      "method": "GET",
+      "verdict": "Registration endpoint missing guard for disabled signups",
+      "resoning": "The /signup endpoint has no check for whether open registration is enabled (e.g. settings.USERS_OPEN_REGISTRATION). Any anonymous user can create accounts regardless of configuration."
+    },
+    {
+      "test_id": "WB-003",
+      "endpoint": "read_user_by_id",
+      "method": "GET",
+      "verdict": "Incorrect ordering of null check in read_user_by_id causes potential error",
+      "resoning": "The function checks if user == current_user and returns before checking if user is None. If the user_id does not exist, session.get returns None and comparing None == current_user may behave unexpectedly or mask a 404."
+    },
+    {
+      "test_id": "WB-004",
+      "endpoint": "read_user_by_id",
+      "method": "GET",
+      "verdict": "Non-superuser can retrieve any user object if IDs match via equality check",
+      "resoning": "The equality check 'user == current_user' relies on ORM object identity/equality. If the ORM model __eq__ is not properly defined, this comparison could be unreliable and bypass privilege checks."
+    },
+    {
+      "test_id": "WB-005",
+      "endpoint": "update_password_me",
+      "method": "GET",
+      "verdict": "Password verification order allows timing side-channel",
+      "resoning": "The same-password check (current == new) is done after the verify_password call. The check compares plaintext passwords, which is acceptable, but the order means an attacker with wrong password never sees the same-password error."
+    },
+    {
+      "test_id": "WB-006",
+      "endpoint": "update_user_me, update_password_me, delete_user_me, register_user, delete_user",
+      "method": "GET",
+      "verdict": "Missing commit error handling across all write endpoints",
+      "resoning": "No try/except blocks wrap session.commit() calls. A database error will result in an unhandled 500 with potentially leaked internal details rather than a graceful error response."
+    },
+    {
+      "test_id": "WB-007",
+      "endpoint": "create_user, register_user",
+      "method": "GET",
+      "verdict": "Incorrect HTTP status code for duplicate user on creation",
+      "resoning": "A 400 Bad Request is returned when a user with the email already exists. The semantically correct code for a conflict on a resource is 409 Conflict, which is already used in update endpoints."
+    },
+    {
+      "test_id": "WB-008",
+      "endpoint": "delete_user_me",
+      "method": "GET",
+      "verdict": "Items deleted without cascade in delete_user_me",
+      "resoning": "delete_user_me deletes the user but does not explicitly delete or handle the user's owned items. The admin delete_user endpoint does clean up items, but the self-delete path does not."
+    },
+    {
+      "test_id": "WB-009",
+      "endpoint": "read_users",
+      "method": "GET",
+      "verdict": "Pagination skip and limit not validated for negative or excessive values",
+      "resoning": "The skip and limit parameters have no validation. Negative skip or a very large limit could cause unexpected query behavior or performance issues."
+    },
+    {
+      "test_id": "WB-010",
+      "endpoint": "register_user",
+      "method": "GET",
+      "verdict": "Signup may be disabled by default per requirements but no guard exists",
+      "resoning": "Requirements state 'Signup may be disabled by default'. The current implementation has no mechanism to disable the signup endpoint, contradicting this requirement."
+    }
+  ]
+}

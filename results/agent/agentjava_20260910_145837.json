@@ -1,0 +1,169 @@
+{
+  "meta": {
+    "target": "java",
+    "mode": "white",
+    "timestamp": "2026-09-10T14:58:37.855483",
+    "base_url": "http://localhost:8080",
+    "spec_url": "http://localhost:8080/v3/api-docs",
+    "iterations": 1,
+    "token_usage": 2388,
+    "termination_reason": null
+  },
+  "summary": {
+    "test_cases_generated": 0,
+    "tests_executed": 0,
+    "bugs_detected": 9,
+    "false_positives": 0,
+    "endpoints_covered": 0
+  },
+  "test_cases": [],
+  "results": [],
+  "evaluations": [
+    {
+      "test_id": "WB-001",
+      "endpoint": "TaskController",
+      "bug_detected": true,
+      "verdict": "Missing Authentication Enforcement",
+      "reasoning": "@SecurityRequirement is a Swagger documentation annotation only and does not enforce authentication. Unauthenticated requests may still reach all endpoints if Spring Security is not configured to protect /tasks.",
+      "severity": "high",
+      "recommendation": "Ensure Spring Security configuration explicitly requires authentication for /tasks/** endpoints, not just documentation annotations."
+    },
+    {
+      "test_id": "WB-002",
+      "endpoint": "TaskController.createTask",
+      "bug_detected": true,
+      "verdict": "Missing Input Validation on Task Creation",
+      "reasoning": "No validation is performed on the request body. Task title can be null or empty, violating the requirement that title is required and cannot be empty.",
+      "severity": "medium",
+      "recommendation": "Add @Valid annotation to @RequestBody and use @NotBlank on the title field in TaskCreateRequest DTO."
+    },
+    {
+      "test_id": "WB-003",
+      "endpoint": "TaskController.createTask",
+      "bug_detected": true,
+      "verdict": "Incorrect HTTP Status Code on Task Creation",
+      "reasoning": "Requirements state that creating a task should return HTTP 201 Created. The current implementation returns HTTP 200 OK via ResponseEntity.ok().",
+      "severity": "high",
+      "recommendation": "Change ResponseEntity.ok(toResponse(saved)) to ResponseEntity.status(HttpStatus.CREATED).body(toResponse(saved))."
+    },
+    {
+      "test_id": "WB-004",
+      "endpoint": "TaskController.getTask",
+      "bug_detected": true,
+      "verdict": "Incorrect HTTP Status Code for Non-Existent Task",
+      "reasoning": "Requirements state that getting a non-existent task should return 404. The current implementation returns HTTP 200 OK with an empty TaskResponse object instead.",
+      "severity": "high",
+      "recommendation": "Change .orElse(ResponseEntity.ok(new TaskResponse())) to .orElse(ResponseEntity.notFound().build())."
+    },
+    {
+      "test_id": "WB-005",
+      "endpoint": "TaskController.deleteTask",
+      "bug_detected": true,
+      "verdict": "Incorrect HTTP Status Code on Task Deletion",
+      "reasoning": "Requirements state that deleting a task should return HTTP 204 No Content. The current implementation returns HTTP 200 OK with the deleted task body.",
+      "severity": "high",
+      "recommendation": "Change return to ResponseEntity.noContent().build() after successful deletion instead of ResponseEntity.ok(toResponse(task))."
+    },
+    {
+      "test_id": "WB-006",
+      "endpoint": "TaskController.deleteTask",
+      "bug_detected": true,
+      "verdict": "Incorrect Return Type for Delete Endpoint",
+      "reasoning": "The deleteTask method declares ResponseEntity<TaskResponse> as return type but semantically delete should return no body. This is misleading and incorrect per requirements.",
+      "severity": "medium",
+      "recommendation": "Change the return type to ResponseEntity<Void> and return ResponseEntity.noContent().build() on success."
+    },
+    {
+      "test_id": "WB-007",
+      "endpoint": "TaskController.updateTask",
+      "bug_detected": true,
+      "verdict": "Missing Input Validation on Task Update",
+      "reasoning": "No validation is performed on the update request body. An empty or null title could overwrite a valid title if partial update logic is changed in future.",
+      "severity": "low",
+      "recommendation": "Add validation annotations to TaskUpdateRequest and apply @Valid where appropriate."
+    },
+    {
+      "test_id": "WB-008",
+      "endpoint": "TaskController.getTasks",
+      "bug_detected": true,
+      "verdict": "getTasks Returns Raw List Without ResponseEntity",
+      "reasoning": "getTasks returns a raw List instead of ResponseEntity, making it inconsistent with other endpoints and limiting ability to return proper HTTP status codes or headers.",
+      "severity": "low",
+      "recommendation": "Change return type to ResponseEntity<List<TaskResponse>> for consistency and flexibility."
+    },
+    {
+      "test_id": "WB-009",
+      "endpoint": "Requirements / Auth configuration",
+      "bug_detected": true,
+      "verdict": "Hardcoded Credentials in Requirements Reflected in Codebase Context",
+      "reasoning": "Requirements hardcode credentials (admin/passu123salis) and a static token (validation-token-123). If these are implemented as-is in auth code, it is a critical security vulnerability.",
+      "severity": "critical",
+      "recommendation": "Use environment variables or a secrets manager for credentials. Implement proper JWT generation rather than a static token."
+    }
+  ],
+  "bugs": [
+    {
+      "test_id": "WB-001",
+      "endpoint": "TaskController",
+      "method": "GET",
+      "verdict": "Missing Authentication Enforcement",
+      "resoning": "@SecurityRequirement is a Swagger documentation annotation only and does not enforce authentication. Unauthenticated requests may still reach all endpoints if Spring Security is not configured to protect /tasks."
+    },
+    {
+      "test_id": "WB-002",
+      "endpoint": "TaskController.createTask",
+      "method": "GET",
+      "verdict": "Missing Input Validation on Task Creation",
+      "resoning": "No validation is performed on the request body. Task title can be null or empty, violating the requirement that title is required and cannot be empty."
+    },
+    {
+      "test_id": "WB-003",
+      "endpoint": "TaskController.createTask",
+      "method": "GET",
+      "verdict": "Incorrect HTTP Status Code on Task Creation",
+      "resoning": "Requirements state that creating a task should return HTTP 201 Created. The current implementation returns HTTP 200 OK via ResponseEntity.ok()."
+    },
+    {
+      "test_id": "WB-004",
+      "endpoint": "TaskController.getTask",
+      "method": "GET",
+      "verdict": "Incorrect HTTP Status Code for Non-Existent Task",
+      "resoning": "Requirements state that getting a non-existent task should return 404. The current implementation returns HTTP 200 OK with an empty TaskResponse object instead."
+    },
+    {
+      "test_id": "WB-005",
+      "endpoint": "TaskController.deleteTask",
+      "method": "GET",
+      "verdict": "Incorrect HTTP Status Code on Task Deletion",
+      "resoning": "Requirements state that deleting a task should return HTTP 204 No Content. The current implementation returns HTTP 200 OK with the deleted task body."
+    },
+    {
+      "test_id": "WB-006",
+      "endpoint": "TaskController.deleteTask",
+      "method": "GET",
+      "verdict": "Incorrect Return Type for Delete Endpoint",
+      "resoning": "The deleteTask method declares ResponseEntity<TaskResponse> as return type but semantically delete should return no body. This is misleading and incorrect per requirements."
+    },
+    {
+      "test_id": "WB-007",
+      "endpoint": "TaskController.updateTask",
+      "method": "GET",
+      "verdict": "Missing Input Validation on Task Update",
+      "resoning": "No validation is performed on the update request body. An empty or null title could overwrite a valid title if partial update logic is changed in future."
+    },
+    {
+      "test_id": "WB-008",
+      "endpoint": "TaskController.getTasks",
+      "method": "GET",
+      "verdict": "getTasks Returns Raw List Without ResponseEntity",
+      "resoning": "getTasks returns a raw List instead of ResponseEntity, making it inconsistent with other endpoints and limiting ability to return proper HTTP status codes or headers."
+    },
+    {
+      "test_id": "WB-009",
+      "endpoint": "Requirements / Auth configuration",
+      "method": "GET",
+      "verdict": "Hardcoded Credentials in Requirements Reflected in Codebase Context",
+      "resoning": "Requirements hardcode credentials (admin/passu123salis) and a static token (validation-token-123). If these are implemented as-is in auth code, it is a critical security vulnerability."
+    }
+  ]
+}

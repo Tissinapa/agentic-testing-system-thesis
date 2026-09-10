@@ -2,11 +2,11 @@
   "meta": {
     "target": "python",
     "mode": "black",
-    "timestamp": "2026-09-02T14:06:01.469154",
+    "timestamp": "2026-09-10T14:53:33.538782",
     "base_url": "http://localhost:8000",
     "spec_url": "http://localhost:8000/openapi.json",
     "iterations": 1,
-    "token_usage": 18271,
+    "token_usage": 19668,
     "termination_reason": null
   },
   "summary": {
@@ -14,11 +14,11 @@
     "tests_executed": 20,
     "bugs_detected": 8,
     "false_positives": 0,
-    "endpoints_covered": 5
+    "endpoints_covered": 4
   },
   "test_cases": [
     {
-      "id": "TC-1D7E56B3",
+      "id": "TC-B8E7CBA3",
       "endpoint": "/auth/login",
       "method": "POST",
       "headers": {
@@ -32,7 +32,7 @@
       "rationale": "Happy path - valid credentials return access_token"
     },
     {
-      "id": "TC-D7E9D6E5",
+      "id": "TC-3AFBA90C",
       "endpoint": "/auth/login",
       "method": "POST",
       "headers": {
@@ -46,7 +46,7 @@
       "rationale": "Invalid password should return 401 unauthorized"
     },
     {
-      "id": "TC-872B208E",
+      "id": "TC-588CDFD5",
       "endpoint": "/auth/login",
       "method": "POST",
       "headers": {
@@ -59,18 +59,7 @@
       "rationale": "Missing password field should return 422 validation error"
     },
     {
-      "id": "TC-36746740",
-      "endpoint": "/health",
-      "method": "GET",
-      "headers": {
-        "Content-Type": "application/json"
-      },
-      "payload": null,
-      "expected_status": 200,
-      "rationale": "Health endpoint should return 200 without authentication"
-    },
-    {
-      "id": "TC-A7913606",
+      "id": "TC-8843F46C",
       "endpoint": "/tasks",
       "method": "GET",
       "headers": {
@@ -82,7 +71,7 @@
       "rationale": "Happy path - get all tasks with valid auth token"
     },
     {
-      "id": "TC-CBAF2223",
+      "id": "TC-F15021BA",
       "endpoint": "/tasks",
       "method": "GET",
       "headers": {
@@ -93,7 +82,7 @@
       "rationale": "Missing Authorization header should return 401"
     },
     {
-      "id": "TC-C987E7FB",
+      "id": "TC-9C8C511A",
       "endpoint": "/tasks",
       "method": "GET",
       "headers": {
@@ -102,10 +91,10 @@
       },
       "payload": null,
       "expected_status": 401,
-      "rationale": "Invalid auth token should return 401 unauthorized"
+      "rationale": "Invalid token should return 401 unauthorized"
     },
     {
-      "id": "TC-C8341565",
+      "id": "TC-3D3FFFD1",
       "endpoint": "/tasks",
       "method": "POST",
       "headers": {
@@ -114,14 +103,14 @@
       },
       "payload": {
         "title": "Buy groceries",
-        "priority": 1,
-        "description": "Milk, eggs, bread"
+        "description": "Milk and eggs",
+        "priority": 1
       },
       "expected_status": 201,
-      "rationale": "Happy path - create task with valid auth and required fields returns 201"
+      "rationale": "Happy path - create task with valid data and auth returns 201"
     },
     {
-      "id": "TC-232AE126",
+      "id": "TC-499F2DE2",
       "endpoint": "/tasks",
       "method": "POST",
       "headers": {
@@ -132,10 +121,10 @@
         "priority": 1
       },
       "expected_status": 401,
-      "rationale": "Create task without Authorization header should return 401"
+      "rationale": "Create task without auth header should return 401"
     },
     {
-      "id": "TC-E0330F73",
+      "id": "TC-A402F45D",
       "endpoint": "/tasks",
       "method": "POST",
       "headers": {
@@ -147,10 +136,10 @@
         "priority": 1
       },
       "expected_status": 422,
-      "rationale": "Empty title should fail validation - title is required and cannot be empty"
+      "rationale": "Empty task title should return 422 - title is required and cannot be empty"
     },
     {
-      "id": "TC-D63562A9",
+      "id": "TC-9E3DF666",
       "endpoint": "/tasks",
       "method": "POST",
       "headers": {
@@ -158,13 +147,14 @@
         "Authorization": "Bearer Taman-ei-p1t1a1s-0lla-na1n-123"
       },
       "payload": {
-        "priority": 2
+        "description": "No title here",
+        "priority": 1
       },
       "expected_status": 422,
       "rationale": "Missing required title field should return 422 validation error"
     },
     {
-      "id": "TC-4C20D75E",
+      "id": "TC-2F0B51D7",
       "endpoint": "/tasks",
       "method": "POST",
       "headers": {
@@ -179,22 +169,22 @@
       "rationale": "Priority as string instead of integer should return 422 validation error"
     },
     {
-      "id": "TC-16EAC003",
+      "id": "TC-B6B8BCAF",
       "endpoint": "/tasks",
       "method": "POST",
       "headers": {
         "Content-Type": "application/json",
-        "Authorization": "Bearer invalid-token-xyz"
+        "Authorization": "Bearer invalid-bad-token"
       },
       "payload": {
-        "title": "Fix bug",
-        "priority": 1
+        "title": "Test task",
+        "priority": 2
       },
       "expected_status": 401,
       "rationale": "Create task with invalid token should return 401"
     },
     {
-      "id": "TC-5432615F",
+      "id": "TC-5652DBE6",
       "endpoint": "/tasks/1",
       "method": "GET",
       "headers": {
@@ -206,7 +196,7 @@
       "rationale": "Happy path - get existing task by ID with valid auth"
     },
     {
-      "id": "TC-C9FD20C0",
+      "id": "TC-7770058D",
       "endpoint": "/tasks/99999",
       "method": "GET",
       "headers": {
@@ -215,10 +205,10 @@
       },
       "payload": null,
       "expected_status": 404,
-      "rationale": "Getting a non-existent task should return 404"
+      "rationale": "Getting a non-existent task ID should return 404"
     },
     {
-      "id": "TC-8FA56C79",
+      "id": "TC-3283F07D",
       "endpoint": "/tasks/1",
       "method": "GET",
       "headers": {
@@ -226,10 +216,10 @@
       },
       "payload": null,
       "expected_status": 401,
-      "rationale": "Get task by ID without Authorization header should return 401"
+      "rationale": "Get specific task without auth header should return 401"
     },
     {
-      "id": "TC-6890C7CB",
+      "id": "TC-672C6418",
       "endpoint": "/tasks/1",
       "method": "PUT",
       "headers": {
@@ -238,29 +228,42 @@
       },
       "payload": {
         "title": "Updated task title",
-        "priority": 2,
-        "description": "Updated description"
+        "priority": 3
       },
       "expected_status": 200,
-      "rationale": "Happy path - update existing task with valid auth and valid payload"
+      "rationale": "Happy path - update existing task with valid data and auth"
     },
     {
-      "id": "TC-E8D14907",
+      "id": "TC-218ECDBE",
       "endpoint": "/tasks/1",
+      "method": "PUT",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "title": "Updated task title",
+        "priority": 3
+      },
+      "expected_status": 401,
+      "rationale": "Update task without auth header should return 401"
+    },
+    {
+      "id": "TC-1111563C",
+      "endpoint": "/tasks/99999",
       "method": "PUT",
       "headers": {
         "Content-Type": "application/json",
         "Authorization": "Bearer Taman-ei-p1t1a1s-0lla-na1n-123"
       },
       "payload": {
-        "title": "",
+        "title": "Ghost task update",
         "priority": 1
       },
-      "expected_status": 422,
-      "rationale": "Update task with empty title should return 422 - title cannot be empty"
+      "expected_status": 404,
+      "rationale": "Update non-existent task should return 404"
     },
     {
-      "id": "TC-3F853CA8",
+      "id": "TC-AF606398",
       "endpoint": "/tasks/1",
       "method": "DELETE",
       "headers": {
@@ -269,10 +272,10 @@
       },
       "payload": null,
       "expected_status": 204,
-      "rationale": "Happy path - delete existing task with valid auth should return 204"
+      "rationale": "Happy path - delete existing task with valid auth returns 204"
     },
     {
-      "id": "TC-52BC4215",
+      "id": "TC-9B0F89C7",
       "endpoint": "/tasks/1",
       "method": "DELETE",
       "headers": {
@@ -280,7 +283,7 @@
       },
       "payload": null,
       "expected_status": 401,
-      "rationale": "Delete task without Authorization header should return 401"
+      "rationale": "Delete task without auth header should return 401"
     },
     {
       "id": "TC-R001",
@@ -291,15 +294,55 @@
         "Authorization": "Bearer Taman-ei-p1t1a1s-0lla-na1n-123"
       },
       "payload": {
-        "title": "Valid Title",
-        "priority": "2",
-        "description": "Testing string priority"
+        "title": "Updated title",
+        "priority": "3"
       },
       "expected_status": 200,
-      "rationale": "Confirm PUT accepts string priority as schema mismatch bug suggests it expects string not integer"
+      "rationale": "Test PUT with priority as string to confirm API expects string type, contradicting requirements"
     },
     {
       "id": "TC-R002",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer Taman-ei-p1t1a1s-0lla-na1n-123"
+      },
+      "payload": {
+        "title": "Zero priority task",
+        "priority": 0
+      },
+      "expected_status": 422,
+      "rationale": "Test zero priority value validation - DB already has zero-priority tasks, confirm if API still accepts 0"
+    },
+    {
+      "id": "TC-R003",
+      "endpoint": "/tasks",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": null,
+      "expected_status": 401,
+      "rationale": "GET /tasks without auth token should return 401 per requirements, testing auth enforcement gap"
+    },
+    {
+      "id": "TC-R004",
+      "endpoint": "/tasks",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer Taman-ei-p1t1a1s-0lla-na1n-123"
+      },
+      "payload": {
+        "title": "Task for delete test",
+        "priority": 1
+      },
+      "expected_status": 201,
+      "rationale": "Create a fresh task to get a valid ID, then verify DELETE works on a known-existing task ID"
+    },
+    {
+      "id": "TC-R005",
       "endpoint": "/tasks",
       "method": "POST",
       "headers": {
@@ -311,53 +354,12 @@
         "priority": 1
       },
       "expected_status": 422,
-      "rationale": "Confirm whitespace-only title is also accepted, expanding on empty title validation bug found in TC-E0330F73"
-    },
-    {
-      "id": "TC-R003",
-      "endpoint": "/tasks",
-      "method": "POST",
-      "headers": {
-        "Content-Type": "application/json"
-      },
-      "payload": {
-        "title": "Unauth Task",
-        "priority": 1
-      },
-      "expected_status": 401,
-      "rationale": "Verify unauthenticated POST /tasks returns 401 - auth header is optional in schema which may mean auth is not enforced"
-    },
-    {
-      "id": "TC-R004",
-      "endpoint": "/tasks",
-      "method": "POST",
-      "headers": {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer Taman-ei-p1t1a1s-0lla-na1n-123"
-      },
-      "payload": {
-        "title": "Priority Zero Test",
-        "priority": 0
-      },
-      "expected_status": 422,
-      "rationale": "Verify priority 0 is rejected - existing data shows priority 0 stored, suggesting invalid priority range not enforced"
-    },
-    {
-      "id": "TC-R005",
-      "endpoint": "/tasks/99999",
-      "method": "DELETE",
-      "headers": {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer Taman-ei-p1t1a1s-0lla-na1n-123"
-      },
-      "payload": null,
-      "expected_status": 404,
-      "rationale": "Confirm DELETE on non-existent task returns 404 - combined with ghost object bug this probes whether DELETE ever returns 204 or always 404"
+      "rationale": "Whitespace-only title should fail validation same as empty string, testing boundary of title validation"
     }
   ],
   "results": [
     {
-      "test_id": "TC-1D7E56B3",
+      "test_id": "TC-B8E7CBA3",
       "endpoint": "/auth/login",
       "method": "POST",
       "status_received": 200,
@@ -366,7 +368,7 @@
       "error": null
     },
     {
-      "test_id": "TC-D7E9D6E5",
+      "test_id": "TC-3AFBA90C",
       "endpoint": "/auth/login",
       "method": "POST",
       "status_received": 401,
@@ -375,7 +377,7 @@
       "error": null
     },
     {
-      "test_id": "TC-872B208E",
+      "test_id": "TC-588CDFD5",
       "endpoint": "/auth/login",
       "method": "POST",
       "status_received": 422,
@@ -384,16 +386,7 @@
       "error": null
     },
     {
-      "test_id": "TC-36746740",
-      "endpoint": "/health",
-      "method": "GET",
-      "status_received": 200,
-      "status_expected": 200,
-      "passed": true,
-      "error": null
-    },
-    {
-      "test_id": "TC-A7913606",
+      "test_id": "TC-8843F46C",
       "endpoint": "/tasks",
       "method": "GET",
       "status_received": 200,
@@ -402,7 +395,7 @@
       "error": null
     },
     {
-      "test_id": "TC-CBAF2223",
+      "test_id": "TC-F15021BA",
       "endpoint": "/tasks",
       "method": "GET",
       "status_received": 401,
@@ -411,7 +404,7 @@
       "error": null
     },
     {
-      "test_id": "TC-C987E7FB",
+      "test_id": "TC-9C8C511A",
       "endpoint": "/tasks",
       "method": "GET",
       "status_received": 401,
@@ -420,7 +413,7 @@
       "error": null
     },
     {
-      "test_id": "TC-C8341565",
+      "test_id": "TC-3D3FFFD1",
       "endpoint": "/tasks",
       "method": "POST",
       "status_received": 200,
@@ -429,7 +422,7 @@
       "error": null
     },
     {
-      "test_id": "TC-232AE126",
+      "test_id": "TC-499F2DE2",
       "endpoint": "/tasks",
       "method": "POST",
       "status_received": 401,
@@ -438,7 +431,7 @@
       "error": null
     },
     {
-      "test_id": "TC-E0330F73",
+      "test_id": "TC-A402F45D",
       "endpoint": "/tasks",
       "method": "POST",
       "status_received": 200,
@@ -447,7 +440,7 @@
       "error": null
     },
     {
-      "test_id": "TC-D63562A9",
+      "test_id": "TC-9E3DF666",
       "endpoint": "/tasks",
       "method": "POST",
       "status_received": 422,
@@ -456,7 +449,7 @@
       "error": null
     },
     {
-      "test_id": "TC-4C20D75E",
+      "test_id": "TC-2F0B51D7",
       "endpoint": "/tasks",
       "method": "POST",
       "status_received": 422,
@@ -465,7 +458,7 @@
       "error": null
     },
     {
-      "test_id": "TC-16EAC003",
+      "test_id": "TC-B6B8BCAF",
       "endpoint": "/tasks",
       "method": "POST",
       "status_received": 401,
@@ -474,7 +467,7 @@
       "error": null
     },
     {
-      "test_id": "TC-5432615F",
+      "test_id": "TC-5652DBE6",
       "endpoint": "/tasks/1",
       "method": "GET",
       "status_received": 200,
@@ -483,7 +476,7 @@
       "error": null
     },
     {
-      "test_id": "TC-C9FD20C0",
+      "test_id": "TC-7770058D",
       "endpoint": "/tasks/99999",
       "method": "GET",
       "status_received": 200,
@@ -492,7 +485,7 @@
       "error": null
     },
     {
-      "test_id": "TC-8FA56C79",
+      "test_id": "TC-3283F07D",
       "endpoint": "/tasks/1",
       "method": "GET",
       "status_received": 401,
@@ -501,7 +494,7 @@
       "error": null
     },
     {
-      "test_id": "TC-6890C7CB",
+      "test_id": "TC-672C6418",
       "endpoint": "/tasks/1",
       "method": "PUT",
       "status_received": 422,
@@ -510,16 +503,25 @@
       "error": null
     },
     {
-      "test_id": "TC-E8D14907",
+      "test_id": "TC-218ECDBE",
       "endpoint": "/tasks/1",
       "method": "PUT",
-      "status_received": 422,
-      "status_expected": 422,
+      "status_received": 401,
+      "status_expected": 401,
       "passed": true,
       "error": null
     },
     {
-      "test_id": "TC-3F853CA8",
+      "test_id": "TC-1111563C",
+      "endpoint": "/tasks/99999",
+      "method": "PUT",
+      "status_received": 422,
+      "status_expected": 404,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-AF606398",
       "endpoint": "/tasks/1",
       "method": "DELETE",
       "status_received": 404,
@@ -528,7 +530,7 @@
       "error": null
     },
     {
-      "test_id": "TC-52BC4215",
+      "test_id": "TC-9B0F89C7",
       "endpoint": "/tasks/1",
       "method": "DELETE",
       "status_received": 401,
@@ -539,202 +541,242 @@
   ],
   "evaluations": [
     {
-      "test_id": "TC-1D7E56B3",
+      "test_id": "TC-B8E7CBA3",
       "endpoint": "/auth/login",
       "bug_detected": false,
       "verdict": "Valid login returns 200 with access_token as expected",
-      "resoning": "Status code and response body match the expected spec. Token value matches the documented token."
+      "reasoning": "Status code and response body match requirements exactly. Token value matches the specified value.",
+      "severity": null,
+      "recommendation": null
     },
     {
-      "test_id": "TC-D7E9D6E5",
+      "test_id": "TC-3AFBA90C",
       "endpoint": "/auth/login",
       "bug_detected": false,
-      "verdict": "Invalid password correctly returns 401 with error detail",
-      "resoning": "Status code and error message are correct per the requirements."
+      "verdict": "Invalid password correctly returns 401",
+      "reasoning": "API correctly rejects wrong password with 401 and appropriate error detail.",
+      "severity": null,
+      "recommendation": null
     },
     {
-      "test_id": "TC-872B208E",
+      "test_id": "TC-588CDFD5",
       "endpoint": "/auth/login",
       "bug_detected": false,
       "verdict": "Missing password field correctly returns 422 validation error",
-      "resoning": "The API correctly identifies the missing field and returns a structured validation error."
+      "reasoning": "API correctly validates required fields and returns structured validation error.",
+      "severity": null,
+      "recommendation": null
     },
     {
-      "test_id": "TC-36746740",
-      "endpoint": "/health",
-      "bug_detected": false,
-      "verdict": "Health endpoint returns 200 without authentication",
-      "resoning": "Response is correct and the endpoint is publicly accessible as expected."
-    },
-    {
-      "test_id": "TC-A7913606",
+      "test_id": "TC-8843F46C",
       "endpoint": "/tasks",
       "bug_detected": true,
-      "verdict": "Tasks list includes records with empty or whitespace-only titles which should have been rejected",
-      "resoning": "Multiple tasks with empty string or whitespace-only titles (ids 8, 11, 13, 15, 17, 18, 26, 29) exist in the database, violating the business rule that title cannot be empty. Additionally tasks with priority 0 and -1 are stored, which may indicate missing validation on priority range."
+      "verdict": "Tasks with empty titles and invalid priorities exist in the database due to missing validation",
+      "reasoning": "Multiple tasks with empty titles (e.g. ids 8, 11, 13) and tasks with zero or negative priorities (ids 19, 22) are stored, indicating the API previously accepted invalid data. This confirms a validation bug allowing empty titles and invalid priority values.",
+      "severity": null,
+      "recommendation": null
     },
     {
-      "test_id": "TC-CBAF2223",
+      "test_id": "TC-F15021BA",
       "endpoint": "/tasks",
       "bug_detected": false,
-      "verdict": "Missing Authorization header correctly returns 401",
-      "resoning": "Authentication guard works correctly for unauthenticated GET requests."
+      "verdict": "Missing auth header correctly returns 401",
+      "reasoning": "API correctly enforces authentication requirement on protected endpoint.",
+      "severity": null,
+      "recommendation": null
     },
     {
-      "test_id": "TC-C987E7FB",
+      "test_id": "TC-9C8C511A",
       "endpoint": "/tasks",
       "bug_detected": false,
-      "verdict": "Invalid bearer token correctly returns 401",
-      "resoning": "The API correctly rejects an invalid token with 401 Unauthorized."
+      "verdict": "Invalid token correctly returns 401",
+      "reasoning": "API correctly rejects invalid bearer tokens with 401 Unauthorized.",
+      "severity": null,
+      "recommendation": null
     },
     {
-      "test_id": "TC-C8341565",
+      "test_id": "TC-3D3FFFD1",
       "endpoint": "/tasks",
       "bug_detected": true,
       "verdict": "Task creation returns 200 instead of required 201",
-      "resoning": "The requirements explicitly state that creating a task should return 201 on success, but the API returned 200. This is a clear spec violation."
+      "reasoning": "Requirements explicitly state creating a task should return 201 on success, but the API returned 200. This is a spec violation even though the task was created correctly.",
+      "severity": null,
+      "recommendation": null
     },
     {
-      "test_id": "TC-232AE126",
+      "test_id": "TC-499F2DE2",
       "endpoint": "/tasks",
       "bug_detected": false,
-      "verdict": "Unauthenticated POST to /tasks correctly returns 401",
-      "resoning": "Authentication guard correctly blocks unauthenticated task creation attempts."
+      "verdict": "Unauthenticated task creation correctly returns 401",
+      "reasoning": "API correctly enforces authentication on POST /tasks endpoint.",
+      "severity": null,
+      "recommendation": null
     },
     {
-      "test_id": "TC-E0330F73",
+      "test_id": "TC-A402F45D",
       "endpoint": "/tasks",
       "bug_detected": true,
-      "verdict": "Empty title accepted instead of returning 422 validation error",
-      "resoning": "The requirements state that task title is required and cannot be empty, but the API accepted an empty string title and created the task successfully, violating the business rule."
+      "verdict": "Empty task title accepted instead of returning 422 validation error",
+      "reasoning": "Requirements state task title is required and cannot be empty, but the API accepted an empty string title and returned 200. This is a validation bug allowing invalid data into the system.",
+      "severity": null,
+      "recommendation": null
     },
     {
-      "test_id": "TC-D63562A9",
+      "test_id": "TC-9E3DF666",
       "endpoint": "/tasks",
       "bug_detected": false,
-      "verdict": "Correct 422 returned for missing required title field",
-      "resoning": "The API correctly identified the missing title field and returned a 422 with a clear validation error message."
+      "verdict": "Missing title field correctly returns 422 validation error",
+      "reasoning": "API correctly validates that the title field is required and returns structured 422 error when omitted.",
+      "severity": null,
+      "recommendation": null
     },
     {
-      "test_id": "TC-4C20D75E",
+      "test_id": "TC-2F0B51D7",
       "endpoint": "/tasks",
       "bug_detected": false,
-      "verdict": "Correct 422 returned for invalid priority type",
-      "resoning": "The API correctly rejected a string value for the integer priority field and returned a 422 with an appropriate error message."
+      "verdict": "Correct validation error for string priority",
+      "reasoning": "API correctly rejects a string value for priority field with 422 and a descriptive int_parsing error.",
+      "severity": null,
+      "recommendation": null
     },
     {
-      "test_id": "TC-16EAC003",
+      "test_id": "TC-B6B8BCAF",
       "endpoint": "/tasks",
       "bug_detected": false,
-      "verdict": "Correct 401 returned for invalid token",
-      "resoning": "The API correctly rejected the invalid Bearer token and returned a 401 Unauthorized response."
+      "verdict": "Correct 401 for invalid token",
+      "reasoning": "API properly rejects an invalid Bearer token with 401 Unauthorized as expected.",
+      "severity": null,
+      "recommendation": null
     },
     {
-      "test_id": "TC-5432615F",
+      "test_id": "TC-5652DBE6",
       "endpoint": "/tasks/1",
       "bug_detected": true,
-      "verdict": "Response body contains suspicious default/empty values for task ID 1",
-      "resoning": "The returned task has id=0, empty title, null created_at, and priority=0, which suggests a placeholder or uninitialized object is being returned rather than a real persisted task, indicating a data integrity bug."
+      "verdict": "Response contains empty/zero-value fields suggesting stub or uninitialized data",
+      "reasoning": "The task returned has id=0, empty title, and null created_at which suggests the API is returning a default/empty object rather than real task data, indicating a potential bug in task retrieval logic.",
+      "severity": null,
+      "recommendation": null
     },
     {
-      "test_id": "TC-C9FD20C0",
+      "test_id": "TC-7770058D",
       "endpoint": "/tasks/99999",
       "bug_detected": true,
-      "verdict": "Non-existent task ID 99999 returned 200 instead of 404",
-      "resoning": "The API should return 404 for a task that does not exist, but instead returned 200 with a default empty object, violating the business rule and potentially masking data errors."
+      "verdict": "Non-existent task returns 200 instead of 404",
+      "reasoning": "The API returns 200 with a blank/zero-value task object for a non-existent ID (99999), violating the requirement that a non-existent task should return 404.",
+      "severity": null,
+      "recommendation": null
     },
     {
-      "test_id": "TC-8FA56C79",
+      "test_id": "TC-3283F07D",
       "endpoint": "/tasks/1",
       "bug_detected": false,
-      "verdict": "Correct 401 returned for missing Authorization header",
-      "resoning": "The API correctly rejected the request with no Authorization header and returned a 401 Unauthorized response."
+      "verdict": "Correct 401 for missing auth header",
+      "reasoning": "API correctly returns 401 when no Authorization header is provided for a protected endpoint.",
+      "severity": null,
+      "recommendation": null
     },
     {
-      "test_id": "TC-6890C7CB",
+      "test_id": "TC-672C6418",
       "endpoint": "/tasks/1",
       "bug_detected": true,
       "verdict": "PUT /tasks/1 rejects integer priority, expecting string instead",
-      "resoning": "The API returned a validation error saying priority must be a string, but the requirement states priority should be an integer. This is a schema mismatch bug in the PUT endpoint."
+      "reasoning": "The API returns 422 saying priority must be a string, but the requirements state priority should be an integer. The PUT endpoint schema is inconsistent with the POST endpoint and the business rules.",
+      "severity": null,
+      "recommendation": null
     },
     {
-      "test_id": "TC-E8D14907",
-      "endpoint": "/tasks/1",
-      "bug_detected": true,
-      "verdict": "422 returned but for wrong reason - priority type error instead of empty title",
-      "resoning": "The test passed because 422 was expected, but the validation error is about priority being a string rather than rejecting the empty title, indicating the schema for PUT is incorrectly typed for priority and the empty title validation may not be enforced."
-    },
-    {
-      "test_id": "TC-3F853CA8",
-      "endpoint": "/tasks/1",
-      "bug_detected": true,
-      "verdict": "DELETE /tasks/1 returned 404 instead of expected 204",
-      "resoning": "The API could not find task ID 1 to delete, which combined with TC-5432615F returning a ghost object for ID 1, suggests tasks are not actually being persisted, revealing a critical data storage bug."
-    },
-    {
-      "test_id": "TC-52BC4215",
+      "test_id": "TC-218ECDBE",
       "endpoint": "/tasks/1",
       "bug_detected": false,
-      "verdict": "Correct 401 returned for DELETE without Authorization header",
-      "resoning": "The API correctly rejected the unauthenticated DELETE request and returned a 401 Unauthorized response."
+      "verdict": "Correct 401 for missing auth on PUT",
+      "reasoning": "API correctly returns 401 when no Authorization header is provided for a protected PUT endpoint.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-1111563C",
+      "endpoint": "/tasks/99999",
+      "bug_detected": true,
+      "verdict": "PUT validates body type before checking task existence, returning wrong error code",
+      "reasoning": "Expected 404 for a non-existent task but got 422 due to schema mismatch (priority must be string per the PUT schema). This reveals two bugs: wrong priority type expectation and failure to return 404 for missing resources.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-AF606398",
+      "endpoint": "/tasks/1",
+      "bug_detected": true,
+      "verdict": "DELETE returns 404 for task that should exist",
+      "reasoning": "The happy path delete of task ID 1 returns 404, which may indicate the task does not persist properly or task ID 1 was never created, pointing to a data setup or persistence bug.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-9B0F89C7",
+      "endpoint": "/tasks/1",
+      "bug_detected": false,
+      "verdict": "Correct 401 for missing auth on DELETE",
+      "reasoning": "API correctly returns 401 when no Authorization header is provided for a protected DELETE endpoint.",
+      "severity": null,
+      "recommendation": null
     }
   ],
   "bugs": [
     {
-      "test_id": "TC-A7913606",
+      "test_id": "TC-8843F46C",
       "endpoint": "/tasks",
       "method": "GET",
-      "verdict": "Tasks list includes records with empty or whitespace-only titles which should have been rejected",
-      "resoning": "Multiple tasks with empty string or whitespace-only titles (ids 8, 11, 13, 15, 17, 18, 26, 29) exist in the database, violating the business rule that title cannot be empty. Additionally tasks with priority 0 and -1 are stored, which may indicate missing validation on priority range."
+      "verdict": "Tasks with empty titles and invalid priorities exist in the database due to missing validation",
+      "resoning": "Multiple tasks with empty titles (e.g. ids 8, 11, 13) and tasks with zero or negative priorities (ids 19, 22) are stored, indicating the API previously accepted invalid data. This confirms a validation bug allowing empty titles and invalid priority values."
     },
     {
-      "test_id": "TC-C8341565",
+      "test_id": "TC-3D3FFFD1",
       "endpoint": "/tasks",
       "method": "POST",
       "verdict": "Task creation returns 200 instead of required 201",
-      "resoning": "The requirements explicitly state that creating a task should return 201 on success, but the API returned 200. This is a clear spec violation."
+      "resoning": "Requirements explicitly state creating a task should return 201 on success, but the API returned 200. This is a spec violation even though the task was created correctly."
     },
     {
-      "test_id": "TC-E0330F73",
+      "test_id": "TC-A402F45D",
       "endpoint": "/tasks",
       "method": "POST",
-      "verdict": "Empty title accepted instead of returning 422 validation error",
-      "resoning": "The requirements state that task title is required and cannot be empty, but the API accepted an empty string title and created the task successfully, violating the business rule."
+      "verdict": "Empty task title accepted instead of returning 422 validation error",
+      "resoning": "Requirements state task title is required and cannot be empty, but the API accepted an empty string title and returned 200. This is a validation bug allowing invalid data into the system."
     },
     {
-      "test_id": "TC-5432615F",
+      "test_id": "TC-5652DBE6",
       "endpoint": "/tasks/1",
       "method": "GET",
-      "verdict": "Response body contains suspicious default/empty values for task ID 1",
-      "resoning": "The returned task has id=0, empty title, null created_at, and priority=0, which suggests a placeholder or uninitialized object is being returned rather than a real persisted task, indicating a data integrity bug."
+      "verdict": "Response contains empty/zero-value fields suggesting stub or uninitialized data",
+      "resoning": "The task returned has id=0, empty title, and null created_at which suggests the API is returning a default/empty object rather than real task data, indicating a potential bug in task retrieval logic."
     },
     {
-      "test_id": "TC-C9FD20C0",
+      "test_id": "TC-7770058D",
       "endpoint": "/tasks/99999",
       "method": "GET",
-      "verdict": "Non-existent task ID 99999 returned 200 instead of 404",
-      "resoning": "The API should return 404 for a task that does not exist, but instead returned 200 with a default empty object, violating the business rule and potentially masking data errors."
+      "verdict": "Non-existent task returns 200 instead of 404",
+      "resoning": "The API returns 200 with a blank/zero-value task object for a non-existent ID (99999), violating the requirement that a non-existent task should return 404."
     },
     {
-      "test_id": "TC-6890C7CB",
+      "test_id": "TC-672C6418",
       "endpoint": "/tasks/1",
       "method": "PUT",
       "verdict": "PUT /tasks/1 rejects integer priority, expecting string instead",
-      "resoning": "The API returned a validation error saying priority must be a string, but the requirement states priority should be an integer. This is a schema mismatch bug in the PUT endpoint."
+      "resoning": "The API returns 422 saying priority must be a string, but the requirements state priority should be an integer. The PUT endpoint schema is inconsistent with the POST endpoint and the business rules."
     },
     {
-      "test_id": "TC-E8D14907",
-      "endpoint": "/tasks/1",
+      "test_id": "TC-1111563C",
+      "endpoint": "/tasks/99999",
       "method": "PUT",
-      "verdict": "422 returned but for wrong reason - priority type error instead of empty title",
-      "resoning": "The test passed because 422 was expected, but the validation error is about priority being a string rather than rejecting the empty title, indicating the schema for PUT is incorrectly typed for priority and the empty title validation may not be enforced."
+      "verdict": "PUT validates body type before checking task existence, returning wrong error code",
+      "resoning": "Expected 404 for a non-existent task but got 422 due to schema mismatch (priority must be string per the PUT schema). This reveals two bugs: wrong priority type expectation and failure to return 404 for missing resources."
     },
     {
-      "test_id": "TC-3F853CA8",
+      "test_id": "TC-AF606398",
       "endpoint": "/tasks/1",
       "method": "DELETE",
-      "verdict": "DELETE /tasks/1 returned 404 instead of expected 204",
-      "resoning": "The API could not find task ID 1 to delete, which combined with TC-5432615F returning a ghost object for ID 1, suggests tasks are not actually being persisted, revealing a critical data storage bug."
+      "verdict": "DELETE returns 404 for task that should exist",
+      "resoning": "The happy path delete of task ID 1 returns 404, which may indicate the task does not persist properly or task ID 1 was never created, pointing to a data setup or persistence bug."
     }
   ]
 }

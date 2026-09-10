@@ -77,12 +77,14 @@ def _parse_findings(raw: str) -> list[EvaluationResult]:
                     rationale=f"White-box: {finding.get('type', 'issue')}"
                 )
                 findings.append(EvaluationResult(
-                    test_case=tc,
-                    status_received=0,
-                    passed=False,
-                    bug_detected=True,
-                    verdict=finding.get("title", "Issue found"),
-                    reasoning=finding.get("description", ""),
+                        test_case=tc,
+                        status_received=0,
+                        passed=False,
+                        bug_detected=True,
+                        verdict=finding.get("title", "Issue found"),
+                        reasoning=finding.get("description", ""),
+                        severity=finding.get("severity"),
+                        recommendation=finding.get("recommendation"),
                 )) 
             except Exception as e:
                 print(f"Warning: skipping findings: {e}")        

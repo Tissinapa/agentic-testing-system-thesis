@@ -1,0 +1,886 @@
+{
+  "meta": {
+    "target": "python_os",
+    "mode": "hybrid",
+    "timestamp": "2026-09-10T15:20:18.221557",
+    "base_url": "http://localhost",
+    "spec_url": "http://localhost/api/v1/openapi.json",
+    "iterations": 1,
+    "token_usage": 29012,
+    "termination_reason": null
+  },
+  "summary": {
+    "test_cases_generated": 25,
+    "tests_executed": 20,
+    "bugs_detected": 13,
+    "false_positives": 14,
+    "endpoints_covered": 9
+  },
+  "test_cases": [
+    {
+      "id": "TC-73D11609",
+      "endpoint": "/api/v1/utils/health-check/",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": null,
+      "expected_status": 200,
+      "rationale": "Health check endpoint should return true without authentication"
+    },
+    {
+      "id": "TC-A39AC162",
+      "endpoint": "/api/v1/login/access-token",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      "payload": null,
+      "expected_status": 200,
+      "rationale": "Happy path - login with valid admin credentials returns access token"
+    },
+    {
+      "id": "TC-4269FBE4",
+      "endpoint": "/api/v1/login/access-token",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      "payload": null,
+      "expected_status": 400,
+      "rationale": "Login with invalid credentials should return 400 error"
+    },
+    {
+      "id": "TC-CB9BED52",
+      "endpoint": "/api/v1/login/access-token",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      "payload": null,
+      "expected_status": 422,
+      "rationale": "Login missing username field should return 422 validation error"
+    },
+    {
+      "id": "TC-130551B4",
+      "endpoint": "/api/v1/login/test-token",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": null,
+      "expected_status": 200,
+      "rationale": "Happy path - test token with valid bearer token returns user info"
+    },
+    {
+      "id": "TC-F8E5C62E",
+      "endpoint": "/api/v1/login/test-token",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": null,
+      "expected_status": 401,
+      "rationale": "Test token endpoint without Authorization header should return 401"
+    },
+    {
+      "id": "TC-2419F511",
+      "endpoint": "/api/v1/users/",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": null,
+      "expected_status": 200,
+      "rationale": "Happy path - get all users with valid superuser auth token"
+    },
+    {
+      "id": "TC-7B2955C4",
+      "endpoint": "/api/v1/users/",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": null,
+      "expected_status": 401,
+      "rationale": "Get users without Authorization header should return 401"
+    },
+    {
+      "id": "TC-228836D1",
+      "endpoint": "/api/v1/users/",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer invalidtoken123"
+      },
+      "payload": null,
+      "expected_status": 401,
+      "rationale": "Get users with invalid token should return 401 unauthorized"
+    },
+    {
+      "id": "TC-10DE0F00",
+      "endpoint": "/api/v1/users/me",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": null,
+      "expected_status": 200,
+      "rationale": "Happy path - get current user profile with valid auth token"
+    },
+    {
+      "id": "TC-701E7C43",
+      "endpoint": "/api/v1/users/me",
+      "method": "PATCH",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": {
+        "full_name": "Updated Name"
+      },
+      "expected_status": 200,
+      "rationale": "Happy path - update current user profile with valid auth token"
+    },
+    {
+      "id": "TC-E31633D9",
+      "endpoint": "/api/v1/users/me/password",
+      "method": "PATCH",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": {
+        "current_password": "changethis",
+        "new_password": "newpassword123"
+      },
+      "expected_status": 200,
+      "rationale": "Happy path - update own password with valid current password and auth token"
+    },
+    {
+      "id": "TC-C54E7F33",
+      "endpoint": "/api/v1/users/me/password",
+      "method": "PATCH",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": {
+        "current_password": "wrongpassword",
+        "new_password": "newpassword123"
+      },
+      "expected_status": 400,
+      "rationale": "Update password with wrong current password should return 400"
+    },
+    {
+      "id": "TC-974A8E0A",
+      "endpoint": "/api/v1/users/",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": {
+        "email": "newuser@example.com",
+        "password": "password123",
+        "full_name": "New User"
+      },
+      "expected_status": 200,
+      "rationale": "Happy path - create user with valid superuser auth and required fields"
+    },
+    {
+      "id": "TC-9380E59C",
+      "endpoint": "/api/v1/users/",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": {
+        "full_name": "No Email User"
+      },
+      "expected_status": 422,
+      "rationale": "Create user missing required email field should return 422 validation error"
+    },
+    {
+      "id": "TC-2B9B8462",
+      "endpoint": "/api/v1/users/00000000-0000-0000-0000-000000000000",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": null,
+      "expected_status": 404,
+      "rationale": "Get user by non-existent UUID should return 404 not found"
+    },
+    {
+      "id": "TC-CA34015F",
+      "endpoint": "/api/v1/users/not-a-valid-uuid",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": null,
+      "expected_status": 422,
+      "rationale": "Get user by invalid UUID format should return 422 validation error"
+    },
+    {
+      "id": "TC-9B189802",
+      "endpoint": "/api/v1/items/",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": null,
+      "expected_status": 200,
+      "rationale": "Happy path - get all items with valid auth token"
+    },
+    {
+      "id": "TC-6C8FBEE6",
+      "endpoint": "/api/v1/items/",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": {
+        "title": "Test Item",
+        "description": "A test item description"
+      },
+      "expected_status": 200,
+      "rationale": "Happy path - create item with valid auth token and required title field"
+    },
+    {
+      "id": "TC-7FEFD9B6",
+      "endpoint": "/api/v1/items/",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "title": "Test Item",
+        "description": "A test item description"
+      },
+      "expected_status": 401,
+      "rationale": "Create item without Authorization header should return 401 unauthorized"
+    },
+    {
+      "id": "TC-R001",
+      "endpoint": "/api/v1/login/test-token",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": null,
+      "expected_status": 401,
+      "rationale": "No Authorization header at all should return 401; confirms if 403 bug applies to missing token too"
+    },
+    {
+      "id": "TC-R002",
+      "endpoint": "/api/v1/users/",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": null,
+      "expected_status": 401,
+      "rationale": "No Authorization header on users list; checks if omitting header also triggers 403 instead of 401"
+    },
+    {
+      "id": "TC-R003",
+      "endpoint": "/api/v1/login/test-token",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.fake.signature"
+      },
+      "payload": null,
+      "expected_status": 401,
+      "rationale": "Malformed but JWT-shaped token; confirms 403 vs 401 bug with structurally valid but invalid JWT"
+    },
+    {
+      "id": "TC-R004",
+      "endpoint": "/api/v1/login/access-token",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      "payload": null,
+      "expected_status": 400,
+      "rationale": "Login with valid username but wrong password; checks correct error code for bad credentials"
+    },
+    {
+      "id": "TC-R005",
+      "endpoint": "/api/v1/login/access-token",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      "payload": null,
+      "expected_status": 200,
+      "rationale": "Login with valid default credentials to obtain real token and confirm auth flow works end-to-end"
+    }
+  ],
+  "results": [
+    {
+      "test_id": "TC-73D11609",
+      "endpoint": "/api/v1/utils/health-check/",
+      "method": "GET",
+      "status_received": 0,
+      "status_expected": 200,
+      "passed": false,
+      "error": "2 validation errors for ApiTestResult\nresponse_body.dict[any,any]\n  Input should be a valid dictionary [type=dict_type, input_value=True, input_type=bool]\n    For further information visit https://errors.pydantic.dev/2.13/v/dict_type\nresponse_body.list[any]\n  Input should be a valid list [type=list_type, input_value=True, input_type=bool]\n    For further information visit https://errors.pydantic.dev/2.13/v/list_type"
+    },
+    {
+      "test_id": "TC-A39AC162",
+      "endpoint": "/api/v1/login/access-token",
+      "method": "POST",
+      "status_received": 422,
+      "status_expected": 200,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-4269FBE4",
+      "endpoint": "/api/v1/login/access-token",
+      "method": "POST",
+      "status_received": 422,
+      "status_expected": 400,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-CB9BED52",
+      "endpoint": "/api/v1/login/access-token",
+      "method": "POST",
+      "status_received": 422,
+      "status_expected": 422,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-130551B4",
+      "endpoint": "/api/v1/login/test-token",
+      "method": "POST",
+      "status_received": 403,
+      "status_expected": 200,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-F8E5C62E",
+      "endpoint": "/api/v1/login/test-token",
+      "method": "POST",
+      "status_received": 401,
+      "status_expected": 401,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-2419F511",
+      "endpoint": "/api/v1/users/",
+      "method": "GET",
+      "status_received": 403,
+      "status_expected": 200,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-7B2955C4",
+      "endpoint": "/api/v1/users/",
+      "method": "GET",
+      "status_received": 401,
+      "status_expected": 401,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-228836D1",
+      "endpoint": "/api/v1/users/",
+      "method": "GET",
+      "status_received": 403,
+      "status_expected": 401,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-10DE0F00",
+      "endpoint": "/api/v1/users/me",
+      "method": "GET",
+      "status_received": 403,
+      "status_expected": 200,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-701E7C43",
+      "endpoint": "/api/v1/users/me",
+      "method": "PATCH",
+      "status_received": 403,
+      "status_expected": 200,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-E31633D9",
+      "endpoint": "/api/v1/users/me/password",
+      "method": "PATCH",
+      "status_received": 403,
+      "status_expected": 200,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-C54E7F33",
+      "endpoint": "/api/v1/users/me/password",
+      "method": "PATCH",
+      "status_received": 403,
+      "status_expected": 400,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-974A8E0A",
+      "endpoint": "/api/v1/users/",
+      "method": "POST",
+      "status_received": 403,
+      "status_expected": 200,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-9380E59C",
+      "endpoint": "/api/v1/users/",
+      "method": "POST",
+      "status_received": 403,
+      "status_expected": 422,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-2B9B8462",
+      "endpoint": "/api/v1/users/00000000-0000-0000-0000-000000000000",
+      "method": "GET",
+      "status_received": 403,
+      "status_expected": 404,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-CA34015F",
+      "endpoint": "/api/v1/users/not-a-valid-uuid",
+      "method": "GET",
+      "status_received": 403,
+      "status_expected": 422,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-9B189802",
+      "endpoint": "/api/v1/items/",
+      "method": "GET",
+      "status_received": 403,
+      "status_expected": 200,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-6C8FBEE6",
+      "endpoint": "/api/v1/items/",
+      "method": "POST",
+      "status_received": 403,
+      "status_expected": 200,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-7FEFD9B6",
+      "endpoint": "/api/v1/items/",
+      "method": "POST",
+      "status_received": 401,
+      "status_expected": 401,
+      "passed": true,
+      "error": null
+    }
+  ],
+  "evaluations": [
+    {
+      "test_id": "TC-73D11609",
+      "endpoint": "/api/v1/utils/health-check/",
+      "bug_detected": false,
+      "verdict": "Test framework error, not an API bug",
+      "reasoning": "The API returned boolean true as expected per requirements, but the test framework failed to parse a boolean response body as a dict or list. This is a test harness issue, not an API defect.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-A39AC162",
+      "endpoint": "/api/v1/login/access-token",
+      "bug_detected": false,
+      "verdict": "Test sent no payload, so 422 is correct; test case is misconfigured",
+      "reasoning": "The test did not send username and password fields, so the API correctly returned 422 validation error. The test case itself is flawed for not including valid credentials in the payload.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-4269FBE4",
+      "endpoint": "/api/v1/login/access-token",
+      "bug_detected": false,
+      "verdict": "Test sent no payload; 422 vs 400 is a test design issue",
+      "reasoning": "The test expected 400 for invalid credentials but sent no payload at all, so 422 is the correct response for missing required fields. The test is misconfigured rather than exposing an API bug.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-CB9BED52",
+      "endpoint": "/api/v1/login/access-token",
+      "bug_detected": false,
+      "verdict": "Correct 422 returned for missing required fields",
+      "reasoning": "The API correctly returns 422 with validation errors when username and password are absent, matching the expected status and behavior.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-130551B4",
+      "endpoint": "/api/v1/login/test-token",
+      "bug_detected": true,
+      "verdict": "Invalid token returns 403 instead of expected 401",
+      "reasoning": "Per standard HTTP semantics, an invalid or unrecognized token should return 401 Unauthorized, but the API returns 403 Forbidden. This is a potential security concern as it conflates authentication failure with authorization failure.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-F8E5C62E",
+      "endpoint": "/api/v1/login/test-token",
+      "bug_detected": false,
+      "verdict": "Correct 401 returned when no Authorization header is provided",
+      "reasoning": "The API correctly returns 401 Not authenticated when no Authorization header is present, matching the expected status code.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-2419F511",
+      "endpoint": "/api/v1/users/",
+      "bug_detected": false,
+      "verdict": "Test used placeholder token; 403 is expected behavior for bad token",
+      "reasoning": "The test sent NO_TOKEN_PROVIDED as the bearer token, which is invalid, so credential validation failure is expected. The 403 vs 401 discrepancy is a separate concern noted in TC-130551B4.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-7B2955C4",
+      "endpoint": "/api/v1/users/",
+      "bug_detected": false,
+      "verdict": "Correct 401 returned when no Authorization header is provided",
+      "reasoning": "The API correctly returns 401 Not authenticated for requests missing the Authorization header, matching expected behavior.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-228836D1",
+      "endpoint": "/api/v1/users/",
+      "bug_detected": true,
+      "verdict": "Invalid token returns 403 instead of 401",
+      "reasoning": "An invalid token should trigger a 401 Unauthorized response indicating authentication failure, but the API returns 403 Forbidden. This is semantically incorrect and could mask authentication issues from clients.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-10DE0F00",
+      "endpoint": "/api/v1/users/me",
+      "bug_detected": false,
+      "verdict": "Test used placeholder token; failure is due to bad test data",
+      "reasoning": "The test sent NO_TOKEN_PROVIDED as the bearer token rather than a real token, so the API correctly rejects it. The 403 vs 401 issue is a consistent API behavior noted in other test cases.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-701E7C43",
+      "endpoint": "/api/v1/users/me",
+      "bug_detected": false,
+      "verdict": "Test configuration error - no valid token provided",
+      "reasoning": "The test used NO_TOKEN_PROVIDED as the bearer token, so 403 is expected. The test setup is flawed, not the API.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-E31633D9",
+      "endpoint": "/api/v1/users/me/password",
+      "bug_detected": false,
+      "verdict": "Test configuration error - no valid token provided",
+      "reasoning": "The test used NO_TOKEN_PROVIDED as the bearer token, so 403 is expected. The test setup is flawed, not the API.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-C54E7F33",
+      "endpoint": "/api/v1/users/me/password",
+      "bug_detected": false,
+      "verdict": "Test configuration error - no valid token provided",
+      "reasoning": "Authentication fails before password validation can occur; the API correctly rejects the invalid token before checking the password.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-974A8E0A",
+      "endpoint": "/api/v1/users/",
+      "bug_detected": false,
+      "verdict": "Test configuration error - no valid token provided",
+      "reasoning": "The test used NO_TOKEN_PROVIDED as the bearer token, so 403 is expected. The test setup is flawed, not the API.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-9380E59C",
+      "endpoint": "/api/v1/users/",
+      "bug_detected": false,
+      "verdict": "Test configuration error - auth fails before validation can occur",
+      "reasoning": "Authentication is checked before payload validation, so 403 is returned instead of 422. This is correct API behavior; test setup is flawed.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-2B9B8462",
+      "endpoint": "/api/v1/users/00000000-0000-0000-0000-000000000000",
+      "bug_detected": false,
+      "verdict": "Test configuration error - auth fails before resource lookup",
+      "reasoning": "Authentication is checked before the resource lookup, so 403 is returned instead of 404. This is correct API behavior; test setup is flawed.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-CA34015F",
+      "endpoint": "/api/v1/users/not-a-valid-uuid",
+      "bug_detected": false,
+      "verdict": "Test configuration error - auth fails before UUID validation",
+      "reasoning": "Authentication is checked before UUID format validation, so 403 is returned instead of 422. This is correct API behavior; test setup is flawed.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-9B189802",
+      "endpoint": "/api/v1/items/",
+      "bug_detected": false,
+      "verdict": "Test configuration error - no valid token provided",
+      "reasoning": "The test used NO_TOKEN_PROVIDED as the bearer token, so 403 is expected. The test setup is flawed, not the API.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-6C8FBEE6",
+      "endpoint": "/api/v1/items/",
+      "bug_detected": false,
+      "verdict": "Test configuration error - no valid token provided",
+      "reasoning": "The test used NO_TOKEN_PROVIDED as the bearer token, so 403 is expected. The test setup is flawed, not the API.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-7FEFD9B6",
+      "endpoint": "/api/v1/items/",
+      "bug_detected": false,
+      "verdict": "Correct 401 returned when no Authorization header is present",
+      "reasoning": "The API correctly returns 401 with 'Not authenticated' when no Authorization header is provided, matching the expected behavior.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "WB-001",
+      "endpoint": "create_user",
+      "bug_detected": true,
+      "verdict": "Plaintext password sent via email",
+      "reasoning": "The raw plaintext password from user_in.password is passed to generate_new_account_email and potentially included in email content. Passwords should never be transmitted in plaintext.",
+      "severity": "high",
+      "recommendation": "Send a password reset link instead of the plaintext password. Never include raw passwords in email content."
+    },
+    {
+      "test_id": "WB-002",
+      "endpoint": "register_user",
+      "bug_detected": true,
+      "verdict": "Open user registration may violate requirements",
+      "reasoning": "The /signup endpoint allows anyone to register without authentication. Requirements state signup may be disabled by default, but no settings.users_open_registration guard is present.",
+      "severity": "high",
+      "recommendation": "Add a check like: if not settings.users_open_registration: raise HTTPException(status_code=403, detail='Open registration is disabled')"
+    },
+    {
+      "test_id": "WB-003",
+      "endpoint": "read_user_by_id",
+      "bug_detected": true,
+      "verdict": "403 returned before 404 check in read_user_by_id",
+      "reasoning": "When a non-superuser requests a user_id that does not belong to them and the user does not exist, a 403 is raised instead of 404. This leaks information about privilege checks vs existence.",
+      "severity": "high",
+      "recommendation": "Check if user is None first and raise 404, then check superuser privilege and raise 403."
+    },
+    {
+      "test_id": "WB-004",
+      "endpoint": "update_password_me",
+      "bug_detected": true,
+      "verdict": "Incorrect order of password verification and equality check",
+      "reasoning": "The current_password == new_password check happens after verify_password. If current_password is wrong and equals new_password, the wrong error is surfaced. More critically, the order means an attacker can infer password equality.",
+      "severity": "high",
+      "recommendation": "Check that current_password != new_password before verifying the current password against the hash to avoid any timing or logic issues."
+    },
+    {
+      "test_id": "WB-005",
+      "endpoint": "update_password_me",
+      "bug_detected": true,
+      "verdict": "verify_password return value partially ignored",
+      "reasoning": "verify_password returns a tuple (verified, _) but the second value is silently discarded with underscore. If the second value carries updated hash info (e.g. rehash signal), it is ignored.",
+      "severity": "medium",
+      "recommendation": "Inspect what the second return value represents and handle it appropriately, such as updating the stored hash if rehashing is needed."
+    },
+    {
+      "test_id": "WB-006",
+      "endpoint": "create_user, register_user",
+      "bug_detected": true,
+      "verdict": "Missing HTTP 201 status code for resource creation endpoints",
+      "reasoning": "POST endpoints that create new resources return the default 200 status code instead of the semantically correct 201 Created.",
+      "severity": "medium",
+      "recommendation": "Add status_code=201 to the @router.post decorator for create_user and register_user."
+    },
+    {
+      "test_id": "WB-007",
+      "endpoint": "read_users",
+      "bug_detected": true,
+      "verdict": "No limit validation on skip and limit query parameters",
+      "reasoning": "The skip and limit parameters have no validation. A caller could pass limit=1000000 causing excessive database load or negative skip values causing query errors.",
+      "severity": "medium",
+      "recommendation": "Use FastAPI Query with ge=0 and le constraints, e.g. skip: int = Query(default=0, ge=0), limit: int = Query(default=100, ge=1, le=1000)."
+    },
+    {
+      "test_id": "WB-008",
+      "endpoint": "delete_user",
+      "bug_detected": true,
+      "verdict": "Deleting user items without transaction safety",
+      "reasoning": "Items are deleted with session.exec then the user is deleted in sequence. If the second delete fails, items are already gone but the user remains, causing data inconsistency.",
+      "severity": "medium",
+      "recommendation": "Wrap both delete operations in an explicit transaction or rely on cascade delete configured at the database level."
+    },
+    {
+      "test_id": "WB-009",
+      "endpoint": "create_user",
+      "bug_detected": true,
+      "verdict": "No error handling around send_email call",
+      "reasoning": "If send_email raises an exception, the user is already created but the caller receives a 500 error with no indication the user was created. This causes confusion and possible duplicate creation attempts.",
+      "severity": "low",
+      "recommendation": "Wrap send_email in a try/except block and log the failure without raising, since user creation succeeded."
+    },
+    {
+      "test_id": "WB-010",
+      "endpoint": "read_users",
+      "bug_detected": true,
+      "verdict": "UserPublic.model_validate called manually instead of using response_model serialization",
+      "reasoning": "Manually constructing UserPublic instances via model_validate in a list comprehension is redundant since FastAPI serializes the response via response_model automatically.",
+      "severity": "low",
+      "recommendation": "Return UsersPublic(data=users, count=count) directly and let FastAPI handle serialization via response_model=UsersPublic."
+    },
+    {
+      "test_id": "WB-011",
+      "endpoint": "register_user",
+      "bug_detected": true,
+      "verdict": "Signup endpoint active despite requirement stating it may be disabled",
+      "reasoning": "Requirements state signup may be disabled by default. The endpoint is unconditionally active with no configuration flag to disable it.",
+      "severity": "medium",
+      "recommendation": "Guard the endpoint body with a settings flag such as settings.users_open_registration and return 403 if registration is disabled."
+    }
+  ],
+  "bugs": [
+    {
+      "test_id": "TC-130551B4",
+      "endpoint": "/api/v1/login/test-token",
+      "method": "POST",
+      "verdict": "Invalid token returns 403 instead of expected 401",
+      "resoning": "Per standard HTTP semantics, an invalid or unrecognized token should return 401 Unauthorized, but the API returns 403 Forbidden. This is a potential security concern as it conflates authentication failure with authorization failure."
+    },
+    {
+      "test_id": "TC-228836D1",
+      "endpoint": "/api/v1/users/",
+      "method": "GET",
+      "verdict": "Invalid token returns 403 instead of 401",
+      "resoning": "An invalid token should trigger a 401 Unauthorized response indicating authentication failure, but the API returns 403 Forbidden. This is semantically incorrect and could mask authentication issues from clients."
+    },
+    {
+      "test_id": "WB-001",
+      "endpoint": "create_user",
+      "method": "GET",
+      "verdict": "Plaintext password sent via email",
+      "resoning": "The raw plaintext password from user_in.password is passed to generate_new_account_email and potentially included in email content. Passwords should never be transmitted in plaintext."
+    },
+    {
+      "test_id": "WB-002",
+      "endpoint": "register_user",
+      "method": "GET",
+      "verdict": "Open user registration may violate requirements",
+      "resoning": "The /signup endpoint allows anyone to register without authentication. Requirements state signup may be disabled by default, but no settings.users_open_registration guard is present."
+    },
+    {
+      "test_id": "WB-003",
+      "endpoint": "read_user_by_id",
+      "method": "GET",
+      "verdict": "403 returned before 404 check in read_user_by_id",
+      "resoning": "When a non-superuser requests a user_id that does not belong to them and the user does not exist, a 403 is raised instead of 404. This leaks information about privilege checks vs existence."
+    },
+    {
+      "test_id": "WB-004",
+      "endpoint": "update_password_me",
+      "method": "GET",
+      "verdict": "Incorrect order of password verification and equality check",
+      "resoning": "The current_password == new_password check happens after verify_password. If current_password is wrong and equals new_password, the wrong error is surfaced. More critically, the order means an attacker can infer password equality."
+    },
+    {
+      "test_id": "WB-005",
+      "endpoint": "update_password_me",
+      "method": "GET",
+      "verdict": "verify_password return value partially ignored",
+      "resoning": "verify_password returns a tuple (verified, _) but the second value is silently discarded with underscore. If the second value carries updated hash info (e.g. rehash signal), it is ignored."
+    },
+    {
+      "test_id": "WB-006",
+      "endpoint": "create_user, register_user",
+      "method": "GET",
+      "verdict": "Missing HTTP 201 status code for resource creation endpoints",
+      "resoning": "POST endpoints that create new resources return the default 200 status code instead of the semantically correct 201 Created."
+    },
+    {
+      "test_id": "WB-007",
+      "endpoint": "read_users",
+      "method": "GET",
+      "verdict": "No limit validation on skip and limit query parameters",
+      "resoning": "The skip and limit parameters have no validation. A caller could pass limit=1000000 causing excessive database load or negative skip values causing query errors."
+    },
+    {
+      "test_id": "WB-008",
+      "endpoint": "delete_user",
+      "method": "GET",
+      "verdict": "Deleting user items without transaction safety",
+      "resoning": "Items are deleted with session.exec then the user is deleted in sequence. If the second delete fails, items are already gone but the user remains, causing data inconsistency."
+    },
+    {
+      "test_id": "WB-009",
+      "endpoint": "create_user",
+      "method": "GET",
+      "verdict": "No error handling around send_email call",
+      "resoning": "If send_email raises an exception, the user is already created but the caller receives a 500 error with no indication the user was created. This causes confusion and possible duplicate creation attempts."
+    },
+    {
+      "test_id": "WB-010",
+      "endpoint": "read_users",
+      "method": "GET",
+      "verdict": "UserPublic.model_validate called manually instead of using response_model serialization",
+      "resoning": "Manually constructing UserPublic instances via model_validate in a list comprehension is redundant since FastAPI serializes the response via response_model automatically."
+    },
+    {
+      "test_id": "WB-011",
+      "endpoint": "register_user",
+      "method": "GET",
+      "verdict": "Signup endpoint active despite requirement stating it may be disabled",
+      "resoning": "Requirements state signup may be disabled by default. The endpoint is unconditionally active with no configuration flag to disable it."
+    }
+  ]
+}

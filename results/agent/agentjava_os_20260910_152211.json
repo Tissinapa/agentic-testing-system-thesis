@@ -1,0 +1,865 @@
+{
+  "meta": {
+    "target": "java_os",
+    "mode": "black",
+    "timestamp": "2026-09-10T15:22:11.307383",
+    "base_url": "https://petstore3.swagger.io/api/v3",
+    "spec_url": "https://petstore3.swagger.io/api/v3/openapi.json",
+    "iterations": 1,
+    "token_usage": 24262,
+    "termination_reason": null
+  },
+  "summary": {
+    "test_cases_generated": 25,
+    "tests_executed": 20,
+    "bugs_detected": 13,
+    "false_positives": 0,
+    "endpoints_covered": 11
+  },
+  "test_cases": [
+    {
+      "id": "TC-97742E64",
+      "endpoint": "/pet",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": {
+        "id": 1,
+        "name": "Buddy",
+        "status": "available",
+        "photoUrls": [
+          "http://example.com/photo.jpg"
+        ]
+      },
+      "expected_status": 200,
+      "rationale": "Happy path - add a new pet with all required fields"
+    },
+    {
+      "id": "TC-50104F7D",
+      "endpoint": "/pet",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "id": 2,
+        "name": "Max",
+        "status": "available",
+        "photoUrls": [
+          "http://example.com/photo.jpg"
+        ]
+      },
+      "expected_status": 401,
+      "rationale": "Missing Authorization header should return 401 unauthorized"
+    },
+    {
+      "id": "TC-828A8247",
+      "endpoint": "/pet",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer INVALID_TOKEN_XYZ"
+      },
+      "payload": {
+        "id": 3,
+        "name": "Rex",
+        "status": "available",
+        "photoUrls": [
+          "http://example.com/photo.jpg"
+        ]
+      },
+      "expected_status": 401,
+      "rationale": "Invalid auth token should return 401 unauthorized"
+    },
+    {
+      "id": "TC-D2F5D327",
+      "endpoint": "/pet",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": {
+        "id": 4,
+        "status": "available"
+      },
+      "expected_status": 422,
+      "rationale": "Missing required field photoUrls should return validation error"
+    },
+    {
+      "id": "TC-FE856BE4",
+      "endpoint": "/pet",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": {
+        "id": "not-an-integer",
+        "name": "Fido",
+        "status": "available",
+        "photoUrls": [
+          "http://example.com/photo.jpg"
+        ]
+      },
+      "expected_status": 400,
+      "rationale": "Invalid data type for id field - string instead of integer"
+    },
+    {
+      "id": "TC-FF0B085D",
+      "endpoint": "/pet",
+      "method": "PUT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": {
+        "id": 1,
+        "name": "Buddy Updated",
+        "status": "sold",
+        "photoUrls": [
+          "http://example.com/photo.jpg"
+        ]
+      },
+      "expected_status": 200,
+      "rationale": "Happy path - update an existing pet with valid data"
+    },
+    {
+      "id": "TC-F340B519",
+      "endpoint": "/pet",
+      "method": "PUT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": {
+        "id": 99999999,
+        "name": "Ghost",
+        "status": "available",
+        "photoUrls": [
+          "http://example.com/photo.jpg"
+        ]
+      },
+      "expected_status": 404,
+      "rationale": "Update pet with non-existent ID should return 404 not found"
+    },
+    {
+      "id": "TC-E41CA758",
+      "endpoint": "/pet",
+      "method": "PUT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": {
+        "id": -1,
+        "name": "BadPet",
+        "status": "available",
+        "photoUrls": []
+      },
+      "expected_status": 400,
+      "rationale": "Update pet with invalid negative ID should return 400"
+    },
+    {
+      "id": "TC-D5B34AC1",
+      "endpoint": "/pet/findByStatus",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": null,
+      "expected_status": 200,
+      "rationale": "Happy path - find pets by valid status available"
+    },
+    {
+      "id": "TC-3DD51F76",
+      "endpoint": "/pet/findByStatus?status=invalidstatus",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": null,
+      "expected_status": 400,
+      "rationale": "Find pets with invalid status value should return 400"
+    },
+    {
+      "id": "TC-F1F7339C",
+      "endpoint": "/pet/findByTags?tags=dog&tags=cute",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": null,
+      "expected_status": 200,
+      "rationale": "Happy path - find pets by multiple valid tags"
+    },
+    {
+      "id": "TC-A3519983",
+      "endpoint": "/pet/1",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": null,
+      "expected_status": 200,
+      "rationale": "Happy path - find pet by valid existing ID"
+    },
+    {
+      "id": "TC-053CD36B",
+      "endpoint": "/pet/99999999",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": null,
+      "expected_status": 404,
+      "rationale": "Find pet by non-existent ID should return 404"
+    },
+    {
+      "id": "TC-40D228CE",
+      "endpoint": "/pet/abc",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": null,
+      "expected_status": 400,
+      "rationale": "Find pet with non-integer ID should return 400 invalid ID"
+    },
+    {
+      "id": "TC-93788098",
+      "endpoint": "/pet/1",
+      "method": "DELETE",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": null,
+      "expected_status": 200,
+      "rationale": "Happy path - delete a pet with valid existing ID"
+    },
+    {
+      "id": "TC-7CE858EB",
+      "endpoint": "/store/inventory",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": null,
+      "expected_status": 200,
+      "rationale": "Happy path - get store inventory by status"
+    },
+    {
+      "id": "TC-C44572EC",
+      "endpoint": "/store/order",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": {
+        "id": 10,
+        "petId": 1,
+        "quantity": 2,
+        "status": "placed",
+        "complete": false
+      },
+      "expected_status": 200,
+      "rationale": "Happy path - place a valid order for a pet"
+    },
+    {
+      "id": "TC-96B4761A",
+      "endpoint": "/store/order",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": {
+        "id": 11,
+        "petId": 1,
+        "quantity": -5,
+        "status": "placed",
+        "complete": false
+      },
+      "expected_status": 400,
+      "rationale": "Place order with negative quantity should return 400 invalid input"
+    },
+    {
+      "id": "TC-CBBE2E3D",
+      "endpoint": "/user/login?username=testuser&password=testpass",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": null,
+      "expected_status": 200,
+      "rationale": "Happy path - login with valid username and password"
+    },
+    {
+      "id": "TC-AFE0B7CB",
+      "endpoint": "/user",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer NO_TOKEN_PROVIDED"
+      },
+      "payload": {
+        "id": 1,
+        "username": "newuser",
+        "firstName": "John",
+        "lastName": "Doe",
+        "email": "john@example.com",
+        "password": "pass123",
+        "phone": "1234567890",
+        "userStatus": 1
+      },
+      "expected_status": 200,
+      "rationale": "Happy path - create a new user with all fields populated"
+    },
+    {
+      "id": "TC-R001",
+      "endpoint": "/store/inventory",
+      "method": "GET",
+      "headers": {
+        "Accept": "application/json"
+      },
+      "payload": null,
+      "expected_status": 200,
+      "rationale": "Retry /store/inventory with minimal headers to isolate if Content-Type header triggers 500 error"
+    },
+    {
+      "id": "TC-R002",
+      "endpoint": "/user",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "id": 9999,
+        "username": "uniqueuser99",
+        "firstName": "Jane",
+        "lastName": "Smith",
+        "email": "jane99@example.com",
+        "password": "pw",
+        "phone": "0000000000",
+        "userStatus": 0
+      },
+      "expected_status": 200,
+      "rationale": "Retry POST /user with unique ID to check if 500 is caused by duplicate key collision"
+    },
+    {
+      "id": "TC-R003",
+      "endpoint": "/pet/0",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": null,
+      "expected_status": 400,
+      "rationale": "Probe GET /pet/{petId} with ID 0 to check if zero causes same crash as non-existent and negative IDs"
+    },
+    {
+      "id": "TC-R004",
+      "endpoint": "/pet",
+      "method": "PUT",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "id": 1,
+        "name": "UpdatedPet",
+        "status": "available",
+        "photoUrls": [
+          "http://example.com/photo.jpg"
+        ]
+      },
+      "expected_status": 200,
+      "rationale": "Retry PUT /pet with a low valid ID to confirm if crashes are ID-specific or a broader server issue"
+    },
+    {
+      "id": "TC-R005",
+      "endpoint": "/store/order",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "id": 1,
+        "petId": 1,
+        "quantity": 0,
+        "status": "placed",
+        "complete": false
+      },
+      "expected_status": 400,
+      "rationale": "Test order with zero quantity to further probe missing validation alongside the negative quantity bug"
+    }
+  ],
+  "results": [
+    {
+      "test_id": "TC-97742E64",
+      "endpoint": "/pet",
+      "method": "POST",
+      "status_received": 200,
+      "status_expected": 200,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-50104F7D",
+      "endpoint": "/pet",
+      "method": "POST",
+      "status_received": 200,
+      "status_expected": 401,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-828A8247",
+      "endpoint": "/pet",
+      "method": "POST",
+      "status_received": 200,
+      "status_expected": 401,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-D2F5D327",
+      "endpoint": "/pet",
+      "method": "POST",
+      "status_received": 200,
+      "status_expected": 422,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-FE856BE4",
+      "endpoint": "/pet",
+      "method": "POST",
+      "status_received": 400,
+      "status_expected": 400,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-FF0B085D",
+      "endpoint": "/pet",
+      "method": "PUT",
+      "status_received": 200,
+      "status_expected": 200,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-F340B519",
+      "endpoint": "/pet",
+      "method": "PUT",
+      "status_received": 0,
+      "status_expected": 404,
+      "passed": false,
+      "error": "Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "test_id": "TC-E41CA758",
+      "endpoint": "/pet",
+      "method": "PUT",
+      "status_received": 0,
+      "status_expected": 400,
+      "passed": false,
+      "error": "Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "test_id": "TC-D5B34AC1",
+      "endpoint": "/pet/findByStatus",
+      "method": "GET",
+      "status_received": 400,
+      "status_expected": 200,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-3DD51F76",
+      "endpoint": "/pet/findByStatus?status=invalidstatus",
+      "method": "GET",
+      "status_received": 400,
+      "status_expected": 400,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-F1F7339C",
+      "endpoint": "/pet/findByTags?tags=dog&tags=cute",
+      "method": "GET",
+      "status_received": 200,
+      "status_expected": 200,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-A3519983",
+      "endpoint": "/pet/1",
+      "method": "GET",
+      "status_received": 200,
+      "status_expected": 200,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-053CD36B",
+      "endpoint": "/pet/99999999",
+      "method": "GET",
+      "status_received": 0,
+      "status_expected": 404,
+      "passed": false,
+      "error": "Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "test_id": "TC-40D228CE",
+      "endpoint": "/pet/abc",
+      "method": "GET",
+      "status_received": 400,
+      "status_expected": 400,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-93788098",
+      "endpoint": "/pet/1",
+      "method": "DELETE",
+      "status_received": 0,
+      "status_expected": 200,
+      "passed": false,
+      "error": "Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "test_id": "TC-7CE858EB",
+      "endpoint": "/store/inventory",
+      "method": "GET",
+      "status_received": 500,
+      "status_expected": 200,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-C44572EC",
+      "endpoint": "/store/order",
+      "method": "POST",
+      "status_received": 200,
+      "status_expected": 200,
+      "passed": true,
+      "error": null
+    },
+    {
+      "test_id": "TC-96B4761A",
+      "endpoint": "/store/order",
+      "method": "POST",
+      "status_received": 200,
+      "status_expected": 400,
+      "passed": false,
+      "error": null
+    },
+    {
+      "test_id": "TC-CBBE2E3D",
+      "endpoint": "/user/login?username=testuser&password=testpass",
+      "method": "GET",
+      "status_received": 0,
+      "status_expected": 200,
+      "passed": false,
+      "error": "Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "test_id": "TC-AFE0B7CB",
+      "endpoint": "/user",
+      "method": "POST",
+      "status_received": 500,
+      "status_expected": 200,
+      "passed": false,
+      "error": null
+    }
+  ],
+  "evaluations": [
+    {
+      "test_id": "TC-97742E64",
+      "endpoint": "/pet",
+      "bug_detected": true,
+      "verdict": "API accepts NO_TOKEN_PROVIDED as valid auth, indicating no real auth enforcement",
+      "reasoning": "The Authorization header contains 'Bearer NO_TOKEN_PROVIDED' which should not be a valid token, yet the API returns 200. This is a security vulnerability as authentication is not being enforced.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-50104F7D",
+      "endpoint": "/pet",
+      "bug_detected": true,
+      "verdict": "Missing Authorization header allowed through, security bug detected",
+      "reasoning": "The API returned 200 when no Authorization header was provided, expected 401. This is a security vulnerability indicating the endpoint does not enforce authentication.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-828A8247",
+      "endpoint": "/pet",
+      "bug_detected": true,
+      "verdict": "Invalid token accepted, authentication validation is absent",
+      "reasoning": "An invalid token 'INVALID_TOKEN_XYZ' was accepted and the API returned 200 instead of 401. This confirms the API does not validate authorization tokens, representing a critical security flaw.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-D2F5D327",
+      "endpoint": "/pet",
+      "bug_detected": true,
+      "verdict": "Missing required field photoUrls accepted without validation error",
+      "reasoning": "The API accepted a pet without the required 'name' and 'photoUrls' fields and returned 200 instead of 422, indicating input validation is not enforced for required fields.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-FE856BE4",
+      "endpoint": "/pet",
+      "bug_detected": false,
+      "verdict": "Correctly rejected invalid data type for id field with 400",
+      "reasoning": "The API properly returned 400 with a meaningful error message when a string was provided for the integer id field. Behavior matches expectations.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-FF0B085D",
+      "endpoint": "/pet",
+      "bug_detected": false,
+      "verdict": "Pet update happy path returned correct 200 response",
+      "reasoning": "The API correctly updated the pet and returned 200 with the updated data. Response body matches the submitted payload.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-F340B519",
+      "endpoint": "/pet",
+      "bug_detected": true,
+      "verdict": "API returned no response or crashed when updating non-existent pet ID",
+      "reasoning": "Status code 0 and null response body indicate the server returned an empty or malformed response, suggesting a server-side crash or timeout rather than a proper 404 error.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-E41CA758",
+      "endpoint": "/pet",
+      "bug_detected": true,
+      "verdict": "API returned no response or crashed on negative pet ID input",
+      "reasoning": "Similar to TC-F340B519, a status of 0 and null body suggests the server failed to handle a negative ID gracefully, crashing or returning an empty response instead of a proper 400 error.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-D5B34AC1",
+      "endpoint": "/pet/findByStatus",
+      "bug_detected": true,
+      "verdict": "Missing status query param returned 400 instead of expected 200 for happy path",
+      "reasoning": "The test was intended as a happy path with a valid status query but no status parameter was actually sent. The API correctly enforced the required parameter, but the test case itself was misconfigured, resulting in a test failure rather than an API bug.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-3DD51F76",
+      "endpoint": "/pet/findByStatus?status=invalidstatus",
+      "bug_detected": false,
+      "verdict": "Invalid status value correctly rejected with 400",
+      "reasoning": "The API properly validated the status query parameter and returned 400 with a clear error message listing allowable values. Behavior matches expectations.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-F1F7339C",
+      "endpoint": "/pet/findByTags?tags=dog&tags=cute",
+      "bug_detected": false,
+      "verdict": "Correct status returned, empty array is valid when no pets match tags",
+      "reasoning": "The API returned 200 with an empty array, which is acceptable when no pets match the given tags. No bug detected.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-A3519983",
+      "endpoint": "/pet/1",
+      "bug_detected": false,
+      "verdict": "Pet retrieved successfully with correct structure",
+      "reasoning": "The response body contains expected fields and valid data. Status code and response are correct.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-053CD36B",
+      "endpoint": "/pet/99999999",
+      "bug_detected": true,
+      "verdict": "Server returned no response or empty body instead of 404",
+      "reasoning": "A non-existent pet ID should return a 404 with a proper error body, but the server returned a status of 0 with no parseable response, indicating a server-side bug.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-40D228CE",
+      "endpoint": "/pet/abc",
+      "bug_detected": false,
+      "verdict": "Invalid ID type correctly rejected with 400",
+      "reasoning": "The API correctly returned 400 with a descriptive message when a non-integer ID was supplied.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-93788098",
+      "endpoint": "/pet/1",
+      "bug_detected": true,
+      "verdict": "DELETE request returned no parseable response instead of 200",
+      "reasoning": "Deleting a valid pet should return 200, but the server returned status 0 with an empty body, indicating a server error or connection issue.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-7CE858EB",
+      "endpoint": "/store/inventory",
+      "bug_detected": true,
+      "verdict": "GET /store/inventory returned 500 Internal Server Error",
+      "reasoning": "A basic inventory retrieval endpoint should return 200 with inventory data, but a 500 error indicates a server-side bug or misconfiguration.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-C44572EC",
+      "endpoint": "/store/order",
+      "bug_detected": false,
+      "verdict": "Order placed successfully with correct response body",
+      "reasoning": "The response matches the submitted payload and the status code is correct for a successful order placement.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-96B4761A",
+      "endpoint": "/store/order",
+      "bug_detected": true,
+      "verdict": "Negative quantity accepted without validation, should return 400",
+      "reasoning": "The API accepted and stored an order with a negative quantity instead of rejecting it, indicating missing input validation which is a semantic bug.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-CBBE2E3D",
+      "endpoint": "/user/login?username=testuser&password=testpass",
+      "bug_detected": true,
+      "verdict": "Login endpoint returned no parseable response instead of 200",
+      "reasoning": "A valid login request should return 200 with a session token, but the server returned status 0 with no body, indicating a server-side failure.",
+      "severity": null,
+      "recommendation": null
+    },
+    {
+      "test_id": "TC-AFE0B7CB",
+      "endpoint": "/user",
+      "bug_detected": true,
+      "verdict": "POST /user returned 500 Internal Server Error instead of 200",
+      "reasoning": "Creating a new user with fully populated valid fields should succeed with 200, but a 500 error indicates a server-side bug, possibly a duplicate ID or database error.",
+      "severity": null,
+      "recommendation": null
+    }
+  ],
+  "bugs": [
+    {
+      "test_id": "TC-97742E64",
+      "endpoint": "/pet",
+      "method": "POST",
+      "verdict": "API accepts NO_TOKEN_PROVIDED as valid auth, indicating no real auth enforcement",
+      "resoning": "The Authorization header contains 'Bearer NO_TOKEN_PROVIDED' which should not be a valid token, yet the API returns 200. This is a security vulnerability as authentication is not being enforced."
+    },
+    {
+      "test_id": "TC-50104F7D",
+      "endpoint": "/pet",
+      "method": "POST",
+      "verdict": "Missing Authorization header allowed through, security bug detected",
+      "resoning": "The API returned 200 when no Authorization header was provided, expected 401. This is a security vulnerability indicating the endpoint does not enforce authentication."
+    },
+    {
+      "test_id": "TC-828A8247",
+      "endpoint": "/pet",
+      "method": "POST",
+      "verdict": "Invalid token accepted, authentication validation is absent",
+      "resoning": "An invalid token 'INVALID_TOKEN_XYZ' was accepted and the API returned 200 instead of 401. This confirms the API does not validate authorization tokens, representing a critical security flaw."
+    },
+    {
+      "test_id": "TC-D2F5D327",
+      "endpoint": "/pet",
+      "method": "POST",
+      "verdict": "Missing required field photoUrls accepted without validation error",
+      "resoning": "The API accepted a pet without the required 'name' and 'photoUrls' fields and returned 200 instead of 422, indicating input validation is not enforced for required fields."
+    },
+    {
+      "test_id": "TC-F340B519",
+      "endpoint": "/pet",
+      "method": "PUT",
+      "verdict": "API returned no response or crashed when updating non-existent pet ID",
+      "resoning": "Status code 0 and null response body indicate the server returned an empty or malformed response, suggesting a server-side crash or timeout rather than a proper 404 error."
+    },
+    {
+      "test_id": "TC-E41CA758",
+      "endpoint": "/pet",
+      "method": "PUT",
+      "verdict": "API returned no response or crashed on negative pet ID input",
+      "resoning": "Similar to TC-F340B519, a status of 0 and null body suggests the server failed to handle a negative ID gracefully, crashing or returning an empty response instead of a proper 400 error."
+    },
+    {
+      "test_id": "TC-D5B34AC1",
+      "endpoint": "/pet/findByStatus",
+      "method": "GET",
+      "verdict": "Missing status query param returned 400 instead of expected 200 for happy path",
+      "resoning": "The test was intended as a happy path with a valid status query but no status parameter was actually sent. The API correctly enforced the required parameter, but the test case itself was misconfigured, resulting in a test failure rather than an API bug."
+    },
+    {
+      "test_id": "TC-053CD36B",
+      "endpoint": "/pet/99999999",
+      "method": "GET",
+      "verdict": "Server returned no response or empty body instead of 404",
+      "resoning": "A non-existent pet ID should return a 404 with a proper error body, but the server returned a status of 0 with no parseable response, indicating a server-side bug."
+    },
+    {
+      "test_id": "TC-93788098",
+      "endpoint": "/pet/1",
+      "method": "DELETE",
+      "verdict": "DELETE request returned no parseable response instead of 200",
+      "resoning": "Deleting a valid pet should return 200, but the server returned status 0 with an empty body, indicating a server error or connection issue."
+    },
+    {
+      "test_id": "TC-7CE858EB",
+      "endpoint": "/store/inventory",
+      "method": "GET",
+      "verdict": "GET /store/inventory returned 500 Internal Server Error",
+      "resoning": "A basic inventory retrieval endpoint should return 200 with inventory data, but a 500 error indicates a server-side bug or misconfiguration."
+    },
+    {
+      "test_id": "TC-96B4761A",
+      "endpoint": "/store/order",
+      "method": "POST",
+      "verdict": "Negative quantity accepted without validation, should return 400",
+      "resoning": "The API accepted and stored an order with a negative quantity instead of rejecting it, indicating missing input validation which is a semantic bug."
+    },
+    {
+      "test_id": "TC-CBBE2E3D",
+      "endpoint": "/user/login?username=testuser&password=testpass",
+      "method": "GET",
+      "verdict": "Login endpoint returned no parseable response instead of 200",
+      "resoning": "A valid login request should return 200 with a session token, but the server returned status 0 with no body, indicating a server-side failure."
+    },
+    {
+      "test_id": "TC-AFE0B7CB",
+      "endpoint": "/user",
+      "method": "POST",
+      "verdict": "POST /user returned 500 Internal Server Error instead of 200",
+      "resoning": "Creating a new user with fully populated valid fields should succeed with 200, but a 500 error indicates a server-side bug, possibly a duplicate ID or database error."
+    }
+  ]
+}

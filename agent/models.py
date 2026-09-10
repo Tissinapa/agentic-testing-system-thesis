@@ -45,6 +45,8 @@ class EvaluationResult(BaseModel):
     bug_detected: bool
     verdict: str    #LLm short verdict
     reasoning: str  #LLM reasoning
+    severity: Optional[str] = None        # white-box only
+    recommendation: Optional[str] = None    # white-box only
         
         
 # For LangGraph config

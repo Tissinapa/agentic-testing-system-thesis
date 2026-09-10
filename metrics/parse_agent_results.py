@@ -1,97 +1,185 @@
 """
 metrics/parse_agent_results.py
-Parse all agent JSON result files into a single formatted Excel workbook.
+Parse all agent JSON result files into a clean Excel workbook.
 Run from project root: python metrics/parse_agent_results.py
 """
 
 import json
 from pathlib import Path
 import openpyxl
-from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
+from openpyxl.styles import Font, Alignment, Border, Side
+from openpyxl.utils import get_column_letter
+
+
+RESULTS_DIR = Path("results/agent")
+OUTPUT_PATH = Path("results/agent_evaluations.xlsx")
+
 
 # ── Style helpers ─────────────────────────────────────────────────────────────
 
-def fill(hex_color: str) -> PatternFill:
-    return PatternFill("solid", fgColor=hex_color)
-
-def border_thin() -> Border:
-    s = Side(style="thin", color="CCCCCC")
+def thin_border() -> Border:
+    s = Side(style="thin")
     return Border(left=s, right=s, top=s, bottom=s)
 
-def header_cell(ws, row: int, col: int, value: str, bg: str = "1F3864"):
-    c = ws.cell(row=row, column=col, value=value)
-    c.font      = Font(name="Arial", bold=True, color="FFFFFF", size=11)
-    c.fill      = fill(bg)
-    c.alignment = Alignment(horizontal="center", vertical="center", wrap_text=True)
-    c.border    = border_thin()
-    return c
 
-def data_cell(ws, row: int, col: int, value, bg: str = "FFFFFF",
-              bold: bool = False, center: bool = False):
+def header_cell(ws, row: int, col: int, text: str):
+    c = ws.cell(row=row, column=col, value=text)
+    c.font      = Font(name="Calibri", bold=True, size=11)
+    c.alignment = Alignment(horizontal="center", vertical="center", wrap_text=True)
+    c.border    = thin_border()
+
+
+def data_cell(ws, row: int, col: int, value,
+              center: bool = False, bold: bool = False):
     c = ws.cell(row=row, column=col, value=value)
-    c.font      = Font(name="Arial", bold=bold, size=10)
-    c.fill      = fill(bg)
+    c.font      = Font(name="Calibri", bold=bold, size=11)
     c.alignment = Alignment(
         horizontal="center" if center else "left",
         vertical="center",
         wrap_text=True
     )
-    c.border    = border_thin()
-    return c
+    c.border = thin_border()
 
-# ── Colors ────────────────────────────────────────────────────────────────────
 
-BG_BUG      = "FFE0E0"   # red   — bug detected
-BG_CLEAN    = "E8F5E9"   # green — no bug
-BG_HEADER   = "FFF2CC"   # yellow — section header
-BG_META     = "EEF2FF"   # light blue — run metadata
-BG_ALT      = "F9F9F9"   # alternating row
+def set_widths(ws, widths: list[int]):
+    for i, w in enumerate(widths):
+        ws.column_dimensions[get_column_letter(i + 1)].width = w
+
+
+# ── Classify evaluation type ──────────────────────────────────────────────────
+
+def classify(ev: dict) -> str:
+    test_id  = ev.get("test_id", "")
+    endpoint = ev.get("endpoint", "")
+    if test_id.startswith("WB-") or endpoint == "source_code":
+        return "white-box"
+    if test_id.startswith("TC-R"):
+        return "reflection"
+    return "standard"
+
+
+# ── Build one sheet per result file ──────────────────────────────────────────
+
+def build_sheet(wb, data: dict) -> int:
+    meta        = data.get("meta", {})
+    target      = meta.get("target", "unknown")
+    mode        = meta.get("mode", "black")
+    summary     = data.get("summary", {})
+    evaluations = data.get("evaluations", [])
+
+    if not evaluations:
+        return 0
+
+    # Unique sheet name
+    base_name = f"{target}_{mode}"[:28]
+    existing  = [s.title for s in wb.worksheets]
+    name      = base_name
+    counter   = 1
+    while name in existing:
+        name = f"{base_name}_{counter}"
+        counter += 1
+
+    ws = wb.create_sheet(name)
+    ws.freeze_panes = "A3"
+
+    # ── Metadata row ──
+    meta_str = (
+        f"Target: {target}  |  Mode: {mode}  |  "
+        f"Tests executed: {summary.get('tests_executed', 0)}  |  "
+        f"Bugs detected: {summary.get('bugs_detected', 0)}  |  "
+        f"False positives: {summary.get('false_positives', 0)}  |  "
+        f"Tokens: {meta.get('token_usage', 0):,}  |  "
+        f"Timestamp: {meta.get('timestamp', '')[:19]}"
+    )
+    ws.merge_cells(f"A1:{get_column_letter(9)}1")
+    m = ws.cell(row=1, column=1, value=meta_str)
+    m.font      = Font(name="Calibri", size=10, italic=True)
+    m.alignment = Alignment(horizontal="left", vertical="center")
+    ws.row_dimensions[1].height = 16
+
+    # ── Headers ──
+    headers = [
+        "Test ID", "Type", "Endpoint",
+        "Bug Detected", "Status Received", "Severity",
+        "Verdict", "LLM Reasoning", "Recommendation"
+    ]
+    for i, h in enumerate(headers):
+        header_cell(ws, 2, i + 1, h)
+    ws.row_dimensions[2].height = 20
+
+    # ── Data rows ──
+    for i, ev in enumerate(evaluations):
+        row  = i + 3
+        bug  = ev.get("bug_detected", False)
+        kind = classify(ev)
+
+        data_cell(ws, row, 1, ev.get("test_id", ""),                           bold=True)
+        data_cell(ws, row, 2, kind,                                             center=True)
+        data_cell(ws, row, 3, ev.get("endpoint", ""))
+        data_cell(ws, row, 4, "YES" if bug else "no",                          center=True, bold=bug)
+        data_cell(ws, row, 5, ev.get("status_received", "") or "",             center=True)
+        data_cell(ws, row, 6, (ev.get("severity") or "").upper() if ev.get("severity") else "", center=True)
+        data_cell(ws, row, 7, ev.get("verdict", ""))
+        data_cell(ws, row, 8, ev.get("reasoning") or ev.get("resoning", ""))
+        data_cell(ws, row, 9, ev.get("recommendation") or "")
+        ws.row_dimensions[row].height = 60
+
+    set_widths(ws, [14, 10, 28, 12, 14, 10, 35, 50, 40])
+    return len(evaluations)
+
+
+# ── All evaluations combined sheet ────────────────────────────────────────────
+
+def build_all_sheet(wb, all_rows: list[dict]):
+    ws = wb.create_sheet("All Evaluations", 0)   # first sheet
+    ws.freeze_panes = "A2"
+
+    headers = [
+        "Run", "App", "Mode", "Test ID", "Type",
+        "Endpoint", "Bug Detected", "Severity",
+        "Verdict", "LLM Reasoning", "Recommendation"
+    ]
+    for i, h in enumerate(headers):
+        header_cell(ws, 1, i + 1, h)
+    ws.row_dimensions[1].height = 20
+
+    for i, r in enumerate(all_rows):
+        row = i + 2
+        bug = r["bug_detected"]
+        data_cell(ws, row, 1,  r["run"],                                        bold=True)
+        data_cell(ws, row, 2,  r["app"])
+        data_cell(ws, row, 3,  r["mode"],                                       center=True)
+        data_cell(ws, row, 4,  r["test_id"],                                    bold=True)
+        data_cell(ws, row, 5,  r["kind"],                                       center=True)
+        data_cell(ws, row, 6,  r["endpoint"])
+        data_cell(ws, row, 7,  "YES" if bug else "no",                          center=True, bold=bug)
+        data_cell(ws, row, 8,  (r["severity"] or "").upper() if r["severity"] else "", center=True)
+        data_cell(ws, row, 9,  r["verdict"])
+        data_cell(ws, row, 10, r["reasoning"])
+        data_cell(ws, row, 11, r["recommendation"] or "")
+        ws.row_dimensions[row].height = 60
+
+    set_widths(ws, [18, 12, 10, 14, 10, 28, 12, 10, 35, 50, 40])
+
 
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
-    results_dir = Path("results/agent")
-    output_path = Path("results/agent_evaluations.xlsx")
-
-    if not results_dir.exists():
+    if not RESULTS_DIR.exists():
         print("No results/agent directory found.")
         return
 
-    files = sorted(results_dir.glob("*.json"))
+    files = sorted(RESULTS_DIR.glob("*.json"))
     if not files:
         print("No agent JSON result files found.")
         return
 
-    wb = openpyxl.Workbook()
+    wb       = openpyxl.Workbook()
     wb.remove(wb.active)
 
-    # ── Sheet 1: All evaluations combined ─────────────────────────────────────
-    ws_all = wb.create_sheet("All Evaluations")
-    ws_all.sheet_view.showGridLines = False
-    ws_all.freeze_panes = "A3"
+    all_rows = []
+    total    = 0
 
-    # Title
-    ws_all.merge_cells("A1:H1")
-    t = ws_all["A1"]
-    t.value     = "AI Agent — All Evaluation Results"
-    t.font      = Font(name="Arial", bold=True, size=14, color="1F3864")
-    t.fill      = fill(BG_HEADER)
-    t.alignment = Alignment(horizontal="center", vertical="center")
-    t.border    = border_thin()
-    ws_all.row_dimensions[1].height = 28
-
-    headers = [
-        "Run", "App", "Mode",
-        "Test ID", "Endpoint",
-        "Bug Detected", "Verdict", "LLM Reasoning"
-    ]
-    for i, h in enumerate(headers):
-        header_cell(ws_all, 2, i+1, h)
-    ws_all.row_dimensions[2].height = 20
-
-    all_row = 3
-
-    # ── One sheet per result file ──────────────────────────────────────────────
     for f in files:
         try:
             with open(f) as fp:
@@ -100,122 +188,37 @@ def main():
             print(f"Warning: could not load {f.name}: {e}")
             continue
 
-        meta        = data.get("meta", {})
-        target      = meta.get("target", "unknown")
-        mode        = meta.get("mode", "black")
-        evaluations = data.get("evaluations", [])
-        summary     = data.get("summary", {})
+        meta   = data.get("meta", {})
+        target = meta.get("target", "unknown")
+        mode   = meta.get("mode", "black")
+        run    = f"{target} / {mode}"
 
-        if not evaluations:
-            print(f"Skipping {f.name} — no evaluations")
-            continue
+        # Collect rows for All sheet
+        for ev in data.get("evaluations", []):
+            all_rows.append({
+                "run":            run,
+                "app":            target,
+                "mode":           mode,
+                "test_id":        ev.get("test_id", ""),
+                "kind":           classify(ev),
+                "endpoint":       ev.get("endpoint", ""),
+                "bug_detected":   ev.get("bug_detected", False),
+                "severity":       ev.get("severity"),
+                "verdict":        ev.get("verdict", ""),
+                "reasoning":      ev.get("reasoning") or ev.get("resoning", ""),
+                "recommendation": ev.get("recommendation") or "",
+            })
 
-        # Create per-file sheet
-        sheet_name = f"{target}_{mode}"[:31]   # Excel sheet name limit
-        # Make unique if duplicate
-        existing = [s.title for s in wb.worksheets]
-        if sheet_name in existing:
-            sheet_name = sheet_name[:28] + f"_{len(existing)}"
+        count = build_sheet(wb, data)
+        print(f"  {f.name}: {count} evaluations")
+        total += count
 
-        ws = wb.create_sheet(sheet_name)
-        ws.sheet_view.showGridLines = False
-        ws.freeze_panes = "A4"
+    build_all_sheet(wb, all_rows)
 
-        # Sheet title
-        ws.merge_cells("A1:G1")
-        st = ws["A1"]
-        st.value     = f"Agent Run: {target.upper()} — {mode.upper()} mode"
-        st.font      = Font(name="Arial", bold=True, size=13, color="1F3864")
-        st.fill      = fill(BG_HEADER)
-        st.alignment = Alignment(horizontal="center", vertical="center")
-        st.border    = border_thin()
-        ws.row_dimensions[1].height = 24
-
-        # Metadata row
-        bugs_found = summary.get("bugs_detected", 0)
-        fp_count   = summary.get("false_positives", 0)
-        tokens     = meta.get("token_usage", 0)
-        meta_str   = (
-            f"Tests executed: {summary.get('tests_executed',0)}  |  "
-            f"Bugs detected: {bugs_found}  |  "
-            f"False positives: {fp_count}  |  "
-            f"Tokens: {tokens:,}  |  "
-            f"Timestamp: {meta.get('timestamp','')[:19]}"
-        )
-        ws.merge_cells("A2:G2")
-        m = ws["A2"]
-        m.value     = meta_str
-        m.font      = Font(name="Arial", size=9, italic=True)
-        m.fill      = fill(BG_META)
-        m.alignment = Alignment(horizontal="left", vertical="center")
-        m.border    = border_thin()
-        ws.row_dimensions[2].height = 16
-
-        # Headers
-        sheet_headers = [
-            "Test ID", "Endpoint", "Bug Detected",
-            "Status Received", "Passed", "Verdict", "LLM Reasoning"
-        ]
-        for i, h in enumerate(sheet_headers):
-            header_cell(ws, 3, i+1, h)
-        ws.row_dimensions[3].height = 20
-
-        # Data rows
-        for i, ev in enumerate(evaluations):
-            row    = i + 4
-            bug    = ev.get("bug_detected", False)
-            passed = ev.get("passed", False)
-            bg     = BG_BUG if bug else (BG_CLEAN if passed else BG_ALT)
-
-            data_cell(ws, row, 1, ev.get("test_id", ""),       bg=BG_ALT, bold=True)
-            data_cell(ws, row, 2, ev.get("endpoint", ""),      bg=bg)
-            data_cell(ws, row, 3, "YES" if bug else "no",      bg=bg, bold=bug, center=True)
-            data_cell(ws, row, 4, ev.get("status_received", ""), bg=bg, center=True)
-            data_cell(ws, row, 5, "✓" if passed else "✗",      bg=bg, center=True)
-            data_cell(ws, row, 6, ev.get("verdict", ""),       bg=bg)
-            data_cell(ws, row, 7, ev.get("reasoning") or ev.get("resoning", ""), bg="FFFFFF")
-
-            ws.row_dimensions[row].height = 70
-
-            # Also add to All Evaluations sheet
-            run_label = f"{target} / {mode}"
-            all_bg    = BG_BUG if bug else BG_CLEAN
-            data_cell(ws_all, all_row, 1, run_label,                    bg=BG_ALT, bold=True)
-            data_cell(ws_all, all_row, 2, target,                       bg=BG_ALT)
-            data_cell(ws_all, all_row, 3, mode,                         bg=BG_ALT)
-            data_cell(ws_all, all_row, 4, ev.get("test_id", ""),        bg=BG_ALT)
-            data_cell(ws_all, all_row, 5, ev.get("endpoint", ""),       bg=all_bg)
-            data_cell(ws_all, all_row, 6, "YES" if bug else "no",       bg=all_bg, bold=bug, center=True)
-            data_cell(ws_all, all_row, 7, ev.get("verdict", ""),        bg=all_bg)
-            data_cell(ws_all, all_row, 8, ev.get("reasoning") or ev.get("resoning", ""), bg="FFFFFF")
-            ws_all.row_dimensions[all_row].height = 70
-            all_row += 1
-
-        # Column widths per-sheet
-        ws.column_dimensions["A"].width = 14
-        ws.column_dimensions["B"].width = 30
-        ws.column_dimensions["C"].width = 13
-        ws.column_dimensions["D"].width = 14
-        ws.column_dimensions["E"].width = 8
-        ws.column_dimensions["F"].width = 38
-        ws.column_dimensions["G"].width = 60
-
-        print(f"  {sheet_name}: {len(evaluations)} evaluations")
-
-    # All Evaluations column widths
-    ws_all.column_dimensions["A"].width = 18
-    ws_all.column_dimensions["B"].width = 12
-    ws_all.column_dimensions["C"].width = 10
-    ws_all.column_dimensions["D"].width = 14
-    ws_all.column_dimensions["E"].width = 30
-    ws_all.column_dimensions["F"].width = 13
-    ws_all.column_dimensions["G"].width = 38
-    ws_all.column_dimensions["H"].width = 60
-
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    wb.save(output_path)
-    print(f"\nSaved: {output_path}")
-    print(f"Total evaluation rows: {all_row - 3}")
+    OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    wb.save(OUTPUT_PATH)
+    print(f"\nSaved: {OUTPUT_PATH}")
+    print(f"Total evaluation rows: {total}")
 
 
 if __name__ == "__main__":

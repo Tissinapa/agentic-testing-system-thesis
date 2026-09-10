@@ -85,24 +85,36 @@ def render_reflection_cases(r: dict):
             if tc.get("payload"):
                 st.json(tc.get("payload"))
 def render_evaluation_card(ev: dict):
-    bug      = ev.get("bug_detected", False)
-    kind     = classify_eval(ev)
+    bug       = ev.get("bug_detected", False)
+    kind      = classify_eval(ev)
     kind_icon = {"white_box": "🔍", "reflection": "🔄", "standard": "🔵"}.get(kind, "")
     bug_icon  = "🐛" if bug else "✅"
+    severity  = ev.get("severity")
 
-    label = (
-        f"{bug_icon} {kind_icon} "
-        f"{ev.get('test_id','')} — {ev.get('endpoint','')}"
-    )
+    # Add severity to label if available
+    sev_label = f" [{severity.upper()}]" if severity else ""
+    label = f"{bug_icon} {kind_icon}{sev_label} {ev.get('test_id','')} — {ev.get('endpoint','')}"
+
     with st.expander(label):
         c1, c2, c3 = st.columns(3)
         c1.markdown(f"**Bug detected:** {'Yes' if bug else 'No'}")
         c2.markdown(f"**Status received:** `{ev.get('status_received','')}`")
         c3.markdown(f"**Type:** {kind.replace('_',' ').title()}")
+
+        if severity:
+            sev_colors = {
+                "critical": "🔴",
+                "high":     "🟠",
+                "medium":   "🟡",
+                "low":      "🟢",
+            }
+            st.markdown(f"**Severity:** {sev_colors.get(severity.lower(), '⚪')} {severity.upper()}")
+
         st.markdown(f"**Verdict:** {ev.get('verdict','')}")
-        st.markdown(
-            f"**LLM Reasoning:** *{ev.get('reasoning') or ev.get('resoning','')}*"
-        )
+        st.markdown(f"**LLM Reasoning:** *{ev.get('reasoning') or ev.get('resoning','')}*")
+
+        if ev.get("recommendation"):
+            st.markdown(f"**Recommendation:** {ev.get('recommendation')}")
 
 
 def render_results_tab(r: dict):
