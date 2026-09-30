@@ -127,6 +127,58 @@ def build_sheet(wb, data: dict) -> int:
     set_widths(ws, [14, 10, 28, 12, 14, 10, 35, 50, 40])
     return len(evaluations)
 
+def build_reflection_sheet(wb, data: dict):
+    """Sheet showing reflection-generated test cases that were not executed."""
+    meta        = data.get("meta", {})
+    target      = meta.get("target", "unknown")
+    mode        = meta.get("mode", "black")
+    all_cases   = data.get("test_cases", [])
+
+    reflection_cases = [tc for tc in all_cases 
+                       if tc.get("id", "").startswith("TC-R")]
+
+    if not reflection_cases:
+        return 0
+
+    name = f"{target}_{mode}_reflection"[:31]
+    existing = [s.title for s in wb.worksheets]
+    counter  = 1
+    while name in existing:
+        name = f"{name[:28]}_{counter}"
+        counter += 1
+
+    ws = wb.create_sheet(name)
+    ws.freeze_panes = "A3"
+
+    # Metadata row
+    meta_str = (
+        f"Target: {target}  |  Mode: {mode}  |  "
+        f"Reflection cases generated: {len(reflection_cases)}  |  "
+        f"Note: these cases were generated but NOT executed in this iteration"
+    )
+    ws.merge_cells(f"A1:{get_column_letter(5)}1")
+    m = ws.cell(row=1, column=1, value=meta_str)
+    m.font      = Font(name="Calibri", size=10, italic=True)
+    m.alignment = Alignment(horizontal="left", vertical="center")
+    ws.row_dimensions[1].height = 16
+
+    # Headers
+    headers = ["Test ID", "Endpoint", "Method", "Expected Status", "Rationale"]
+    for i, h in enumerate(headers):
+        header_cell(ws, 2, i + 1, h)
+    ws.row_dimensions[2].height = 20
+
+    for i, tc in enumerate(reflection_cases):
+        row = i + 3
+        data_cell(ws, row, 1, tc.get("id", ""),             bold=True)
+        data_cell(ws, row, 2, tc.get("endpoint", ""))
+        data_cell(ws, row, 3, tc.get("method", ""),          center=True)
+        data_cell(ws, row, 4, tc.get("expected_status", ""), center=True)
+        data_cell(ws, row, 5, tc.get("rationale", ""))
+        ws.row_dimensions[row].height = 50
+
+    set_widths(ws, [14, 30, 8, 14, 60])
+    return len(reflection_cases)
 
 # ── All evaluations combined sheet ────────────────────────────────────────────
 
@@ -161,6 +213,35 @@ def build_all_sheet(wb, all_rows: list[dict]):
 
     set_widths(ws, [18, 12, 10, 14, 10, 28, 12, 10, 35, 50, 40])
 
+def build_all_reflection_sheet(wb, all_reflection: list[dict]):
+    if not all_reflection:
+        return
+
+    ws = wb.create_sheet("All Reflection Cases")
+    ws.freeze_panes = "A2"
+
+    headers = ["Run", "App", "Mode", "Test ID", "Endpoint", 
+               "Method", "Expected Status", "Rationale"]
+    for i, h in enumerate(headers):
+        header_cell(ws, 1, i + 1, h)
+
+    for i, r in enumerate(all_reflection):
+        row = i + 2
+        data_cell(ws, row, 1, r["run"],              bold=True)
+        data_cell(ws, row, 2, r["app"])
+        data_cell(ws, row, 3, r["mode"],             center=True)
+        data_cell(ws, row, 4, r["test_id"],          bold=True)
+        data_cell(ws, row, 5, r["endpoint"])
+        data_cell(ws, row, 6, r["method"],           center=True)
+        data_cell(ws, row, 7, r["expected_status"],  center=True)
+        data_cell(ws, row, 8, r["rationale"])
+        ws.row_dimensions[row].height = 50
+
+    ws.cell(row=len(all_reflection) + 3, column=1,
+            value="Note: reflection cases are generated after evaluation but not executed in the same iteration — future work").font = Font(
+                name="Calibri", size=9, italic=True)
+
+    set_widths(ws, [18, 12, 10, 14, 30, 8, 14, 60])
 
 # ── Main ──────────────────────────────────────────────────────────────────────
 
@@ -174,11 +255,12 @@ def main():
         print("No agent JSON result files found.")
         return
 
-    wb       = openpyxl.Workbook()
+    wb        = openpyxl.Workbook()
     wb.remove(wb.active)
 
-    all_rows = []
-    total    = 0
+    all_rows       = []
+    all_reflection = []
+    total          = 0
 
     for f in files:
         try:
@@ -193,7 +275,7 @@ def main():
         mode   = meta.get("mode", "black")
         run    = f"{target} / {mode}"
 
-        # Collect rows for All sheet
+        # Collect evaluation rows for All sheet
         for ev in data.get("evaluations", []):
             all_rows.append({
                 "run":            run,
@@ -209,16 +291,34 @@ def main():
                 "recommendation": ev.get("recommendation") or "",
             })
 
+        # Collect reflection rows
+        for tc in data.get("test_cases", []):
+            if tc.get("id", "").startswith("TC-R"):
+                all_reflection.append({
+                    "run":             run,
+                    "app":             target,
+                    "mode":            mode,
+                    "test_id":         tc.get("id", ""),
+                    "endpoint":        tc.get("endpoint", ""),
+                    "method":          tc.get("method", ""),
+                    "expected_status": tc.get("expected_status", ""),
+                    "rationale":       tc.get("rationale", ""),
+                })
+
         count = build_sheet(wb, data)
-        print(f"  {f.name}: {count} evaluations")
+        build_reflection_sheet(wb, data)
+        print(f"  {f.name}: {count} evaluations, "
+              f"{len([tc for tc in data.get('test_cases',[]) if tc.get('id','').startswith('TC-R')])} reflection cases")
         total += count
 
     build_all_sheet(wb, all_rows)
+    build_all_reflection_sheet(wb, all_reflection)
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     wb.save(OUTPUT_PATH)
     print(f"\nSaved: {OUTPUT_PATH}")
     print(f"Total evaluation rows: {total}")
+    print(f"Total reflection cases: {len(all_reflection)}")
 
 
 if __name__ == "__main__":
