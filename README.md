@@ -149,27 +149,17 @@ uv run robot --outputdir results/robot/javaAPI tests/robot/java_api.robot
 ### Pytest + HTTPX
 
 ```bash
-pytest tests/pytest/test_python_api.py -v \
-  --json-report \
-  --json-report-file=results/pytest/python_results.json
+pytest tests/pytest/test_python_api.py -v --json-report --json-report-file=results/pytest/python_results.json
 ```
 
 ### Schemathesis
 
 ```bash
 # Python app
-uv run schemathesis run http://localhost:8000/openapi.json \
-  --checks all \
-  -H "Authorization: Bearer Taman-ei-p1t1a1s-0lla-na1n-123" \
-  --report junit \
-  --report-dir results/schemathesis/python
+uv run schemathesis run http://localhost:8000/openapi.json --checks all -H "Authorization: Bearer Taman-ei-p1t1a1s-0lla-na1n-123" --report junit --report-dir results/schemathesis/python
 
 # Java app
-uv run schemathesis run http://localhost:8080/v3/api-docs \
-  --checks all \
-  -H "Authorization: Bearer validation-token-123" \
-  --report junit \
-  --report-dir results/schemathesis/java
+uv run schemathesis run http://localhost:8080/v3/api-docs --checks all -H "Authorization: Bearer validation-token-123" --report junit --report-dir results/schemathesis/java
 ```
 
 ---
