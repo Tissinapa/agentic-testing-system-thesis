@@ -54,11 +54,7 @@ source .venv/bin/activate
 uv pip install -e .
 ```
 
-### 4. Configure environment
 
-```bash
-cp .env.example .env
-```
 
 Edit `.env` and add your Anthropic API key:
 
